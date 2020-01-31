@@ -187,6 +187,8 @@ GameObject:
   - component: {fileID: 275881439}
   - component: {fileID: 275881440}
   - component: {fileID: 275881438}
+  - component: {fileID: 275881441}
+  - component: {fileID: 275881442}
   m_Layer: 0
   m_Name: Flowchart
   m_TagString: Untagged
@@ -218,8 +220,10 @@ MonoBehaviour:
     y: -340
     width: 1114
     height: 859
-  selectedBlocks: []
-  selectedCommands: []
+  selectedBlocks:
+  - {fileID: 275881439}
+  selectedCommands:
+  - {fileID: 275881441}
   variables:
   - {fileID: 275881437}
   description: 
@@ -260,8 +264,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeRect:
     serializedVersion: 2
-    x: 53.136364
-    y: 52.590908
+    x: -22.863636
+    y: 50.590908
     width: 120
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
@@ -335,8 +339,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeRect:
     serializedVersion: 2
-    x: 272.50897
-    y: 139.8375
+    x: 182.50897
+    y: 150.8375
     width: 120
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
@@ -345,7 +349,9 @@ MonoBehaviour:
   blockName: Beat 1
   description: 
   eventHandler: {fileID: 0}
-  commandList: []
+  commandList:
+  - {fileID: 275881441}
+  - {fileID: 275881442}
 --- !u!114 &275881440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -410,6 +416,62 @@ MonoBehaviour:
   vector3Data:
     vector3Ref: {fileID: 0}
     vector3Val: {x: 0, y: 0, z: 0}
+--- !u!114 &275881441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275881432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 4
+  indentLevel: 0
+  storyText: 'What the hell was going on out there?
+
+'
+  description: 
+  character: {fileID: 1392086864}
+  portrait: {fileID: 21300000, guid: 957f499d802ba32438e024b4b168a407, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
+--- !u!114 &275881442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275881432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec422cd568a9c4a31ad7c36d0572b9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 5
+  indentLevel: 0
+  storyText: "I did what I had to \n"
+  description: 
+  character: {fileID: 170776676}
+  portrait: {fileID: 21300000, guid: b77e99cf840c98f428910a21b039cfa7, type: 3}
+  voiceOverClip: {fileID: 0}
+  showAlways: 1
+  showCount: 1
+  extendPrevious: 0
+  fadeWhenDone: 1
+  waitForClick: 1
+  stopVoiceover: 1
+  waitForVO: 0
+  setSayDialog: {fileID: 0}
 --- !u!1 &338076854
 GameObject:
   m_ObjectHideFlags: 1
