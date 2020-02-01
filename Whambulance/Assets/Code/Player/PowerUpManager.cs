@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class PowerUpManager : MonoBehaviour
 {
+
+    public int yeet;
     // Start is called before the first frame update
     void Start()
     {
         //WAKE ME UP INSIDE (I CAN'T WAKE UP)
-        //WAKE ME UP INSIDE (I CAN'T WAKE UP)
+        //SAAAVE ME
+        //save me from the DARKNESS I dont know the words lmao
     }
 
     // Update is called once per frame
