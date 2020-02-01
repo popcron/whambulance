@@ -8,7 +8,7 @@ public class PowerUpManager : MonoBehaviour
     void Start()
     {
         //WAKE ME UP INSIDE (I CAN'T WAKE UP)
-        //WAKE ME UP INSIDE (I CAN'T WAKE UP)
+        //SAAAVE ME
     }
 
     // Update is called once per frame
