@@ -5,7 +5,7 @@ using UnityEngine;
 public class PowerUpManager : MonoBehaviour
 {
 
-    public int yeet;
+    public int yeet = 1;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,14 +18,11 @@ public class PowerUpManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-<<<<<<< Updated upstream
-        
-=======
-        //LOOOOOOOOOOOOOOOOOOOOOOl
+
         if (yeet != 0)
         {
             yeet++;
         }
->>>>>>> Stashed changes
+
     }
 }
