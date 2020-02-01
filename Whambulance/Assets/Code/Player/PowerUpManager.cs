@@ -6,22 +6,21 @@ public class PowerUpManager : MonoBehaviour
 {
 
     public int yeet = 1;
-    // Start is called before the first frame update
+    bool isJessDumb;
+
     void Start()
     {
-        //WAKE ME UP INSIDE (I CAN'T WAKE UP)
-        //SAAAVE ME
-        //save me from the DARKNESS I dont know the words lmao
         yeet = 0;
+        isJessDumb = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
 
         if (yeet != 0)
         {
             yeet++;
+            isJessDumb = true;
         }
 
     }
