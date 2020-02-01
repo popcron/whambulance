@@ -5,7 +5,7 @@ using UnityEngine;
 public class PowerUpManager : MonoBehaviour
 {
 
-    public int yeet;
+    public int yeet = 1;
     // Start is called before the first frame update
     void Start()
     {
