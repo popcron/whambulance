@@ -15,7 +15,9 @@ public class Player : MonoBehaviour
     private void Update()
     {
         //send inputs to the movement thingy
-        Vector2 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        float x = Input.GetAxisRaw("Horizontal");
+        float y = Input.GetAxisRaw("Vertical");
+        Vector2 input = new Vector2(x, y);
         Movement.Input = input;
 
         if (Input.GetButtonDown("Jump"))
