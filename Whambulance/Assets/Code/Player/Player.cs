@@ -31,11 +31,10 @@ public class Player : MonoBehaviour
         {
             for (int i = 0; i < carsHit.Length; i++)
             {
-                Debug.Log(carsHit[i]);
-
                 if (carsHit[i].GetComponent<CarHit>())
                 {
                     Debug.Log("HIT CAR");
+                    carsHit[i].GetComponent<CarHit>().LaunchCar();
                 }
             }
             
