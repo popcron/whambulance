@@ -7,7 +7,8 @@ public class PowerUpManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //yeet me into the void
+        //WAKE ME UP INSIDE (I CAN'T WAKE UP)
+        //WAKE ME UP INSIDE (I CAN'T WAKE UP)
     }
 
     // Update is called once per frame
