@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PowerUpManager : MonoBehaviour
 {
+
+    public int yeet;
     // Start is called before the first frame update
     void Start()
     {
