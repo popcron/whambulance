@@ -198,6 +198,7 @@ GameObject:
   - component: {fileID: 7362563463100040952}
   - component: {fileID: 4337583021238783181}
   - component: {fileID: -726610161227712668}
+  - component: {fileID: -6787681336033986350}
   m_Layer: 0
   m_Name: BlockC
   m_TagString: Untagged
@@ -291,3 +292,21 @@ MonoBehaviour:
   - {r: 0.375, g: 0.41414076, b: 0.5, a: 1}
   spriteRenderers:
   - {fileID: 7451919133188504510}
+--- !u!114 &-6787681336033986350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3932504501469302559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2f8a140b647eda42b71f07e5e5483e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colors:
+  - {r: 0.41960788, g: 0.7843138, b: 0.30588236, a: 1}
+  - {r: 0.53788495, g: 0.78431374, b: 0.30588233, a: 1}
+  - {r: 0.30588233, g: 0.78431374, b: 0.43307862, a: 1}
+  spriteRenderers:
+  - {fileID: 6217058816251401989}
