@@ -7,20 +7,28 @@ public class PowerUpManager : MonoBehaviour
 
     public int yeet = 1;
     bool isJessDumb;
+    bool isJasmineDumb;
 
     void Start()
     {
-        yeet = 0;
-        isJessDumb = false;
+        yeet = 1;
+        isJessDumb = true;
+        isJasmineDumb = false;
+        
     }
 
     void Update()
     {
 
-        if (yeet != 0)
+        if (yeet != 1)
         {
             yeet++;
-            isJessDumb = true;
+            isJessDumb = false;
+        }
+        else {
+
+            isJasmineDumb = true;
+
         }
 
     }
