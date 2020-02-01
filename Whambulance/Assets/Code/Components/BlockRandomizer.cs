@@ -5,6 +5,7 @@ public class BlockRandomizer : MonoBehaviour
     [SerializeField]
     private Color[] colors = { };
 
+    [SerializeField]
     private SpriteRenderer[] spriteRenderers = { };
 
     private void Awake()
