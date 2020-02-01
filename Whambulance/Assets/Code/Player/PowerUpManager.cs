@@ -7,6 +7,7 @@ public class PowerUpManager : MonoBehaviour
 
     public int yeet = 0;
     bool isJessDumb;
+   
 
     void Start()
     {
@@ -21,6 +22,11 @@ public class PowerUpManager : MonoBehaviour
         {
             yeet++;
             isJessDumb = true;
+        }
+        else
+        {
+            yeet = 0;
+            isJessDumb = false;
         }
 
     }
