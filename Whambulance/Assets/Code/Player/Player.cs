@@ -17,5 +17,34 @@ public class Player : MonoBehaviour
         //send inputs to the movement thingy
         Vector2 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         Movement.Input = input;
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            FindCar();
+        }
+    }
+
+    void FindCar()
+    {
+        Collider2D[] carsHit = Physics2D.OverlapCircleAll(transform.position, 0.8f);
+        if (carsHit.Length > 0)
+        {
+            for (int i = 0; i < carsHit.Length; i++)
+            {
+                Debug.Log(carsHit[i]);
+
+                if (carsHit[i].GetComponent<CarHit>())
+                {
+                    Debug.Log("HIT CAR");
+                }
+            }
+            
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, 0.8f);
     }
 }
