@@ -5,30 +5,30 @@ using UnityEngine;
 public class PowerUpManager : MonoBehaviour
 {
 
+
     public int yeet = 100;
+
     bool isJessDumb;
-    bool isJasmineDumb;
+   
 
     void Start()
     {
-        yeet = 1;
-        isJessDumb = true;
-        isJasmineDumb = false;
-        
+        yeet = 0;
+        isJessDumb = false;
     }
 
     void Update()
     {
 
-        if (yeet != 1)
+        if (yeet != 0)
         {
             yeet++;
-            isJessDumb = false;
+            isJessDumb = true;
         }
-        else {
-
-            isJasmineDumb = true;
-
+        else
+        {
+            yeet = 0;
+            isJessDumb = false;
         }
 
     }
