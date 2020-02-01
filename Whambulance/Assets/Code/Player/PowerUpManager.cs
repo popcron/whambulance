@@ -12,11 +12,20 @@ public class PowerUpManager : MonoBehaviour
         //WAKE ME UP INSIDE (I CAN'T WAKE UP)
         //SAAAVE ME
         //save me from the DARKNESS I dont know the words lmao
+        yeet = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
+<<<<<<< Updated upstream
         
+=======
+        //LOOOOOOOOOOOOOOOOOOOOOOl
+        if (yeet != 0)
+        {
+            yeet++;
+        }
+>>>>>>> Stashed changes
     }
 }
