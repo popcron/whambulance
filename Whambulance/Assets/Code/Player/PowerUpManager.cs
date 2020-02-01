@@ -5,7 +5,7 @@ using UnityEngine;
 public class PowerUpManager : MonoBehaviour
 {
 
-    public int yeet = 1;
+    public int yeet = 100;
     bool isJessDumb;
     bool isJasmineDumb;
 
