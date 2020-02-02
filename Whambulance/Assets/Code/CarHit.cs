@@ -8,12 +8,14 @@ public class CarHit : MonoBehaviour
     public Player player;
 
     //Public Variables
-    public float launchDistance;
+    public float launchSpeed;
     public float spriteGrowth;
+    public int carMoveFrames;
 
     //Local Variables
     bool isCarActive;
     Rigidbody2D carBody;
+    int iterations;
 
     // Start is called before the first frame update
     void Start()
@@ -21,11 +23,28 @@ public class CarHit : MonoBehaviour
         carBody = GetComponent<Rigidbody2D>();
     }
 
+
     public void LaunchCar()
     {
         Vector2 launchDirection = -(player.transform.position - transform.position).normalized;
 
-        carBody.velocity += (launchDirection * launchDistance);
+        carBody.velocity += (launchDirection * launchSpeed);
+        StartCoroutine(SlowDownImpact(launchDirection));
+    }
+
+    IEnumerator SlowDownImpact(Vector2 direction)
+    {
+        while (carMoveFrames > 0)
+        {
+            carBody.velocity -= Vector2.one * direction * Time.deltaTime;
+            carMoveFrames--;
+            if (carMoveFrames <= 0)
+            {
+                carBody.velocity = Vector2.zero;
+            }
+            yield return null;
+        }
+        
     }
 
 }
