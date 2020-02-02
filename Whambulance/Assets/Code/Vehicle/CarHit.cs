@@ -10,12 +10,13 @@ public class CarHit : MonoBehaviour
     //Public Variables
     public float launchSpeed;
     public float spriteGrowth;
-    public int carMoveFrames;
+
 
     //Local Variables
-    bool isCarActive;
+    bool didCollide;
     Rigidbody2D carBody;
     int iterations;
+    int carMoveFrames = 90;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +28,7 @@ public class CarHit : MonoBehaviour
 
     public void LaunchCar()
     {
+        carMoveFrames = 90;
         //finds the direction from the center of the player versus the center of the vehicle hit
         Vector2 launchDirection = -(player.transform.position - transform.position).normalized;
 
@@ -42,13 +44,17 @@ public class CarHit : MonoBehaviour
         {
             carBody.velocity -= Vector2.one * direction * Time.deltaTime;
             carMoveFrames--;
-            if (carMoveFrames <= 0)
+            if (carMoveFrames <= 0 || didCollide)
             {
                 carBody.velocity = Vector2.zero;
             }
             yield return null;
         }
-        
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        didCollide = true;
+        carMoveFrames = 0;
+    }
 }
