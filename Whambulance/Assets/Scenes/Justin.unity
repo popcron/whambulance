@@ -260,8 +260,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 785029621}
-  launchDistance: 2
+  launchSpeed: 2
   spriteGrowth: 0
+  carMoveFrames: 90
 --- !u!61 &811198691
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -325,7 +326,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 271ed0d3e7ed7ea46a4c46428b0a76b5, type: 3}
   m_Color: {r: 0.2971698, g: 0.6159704, b: 1, a: 1}
   m_FlipX: 0
@@ -585,6 +586,11 @@ PrefabInstance:
       propertyPath: m_Color.b
       value: 0.19357423
       objectReference: {fileID: 0}
+    - target: {fileID: 6759821999600147287, guid: 05de400106e62cc439f841d20adeb0ee,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2405630978148349079, guid: 05de400106e62cc439f841d20adeb0ee,
         type: 3}
       propertyPath: m_Color.r
@@ -599,6 +605,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.b
       value: 0.25373533
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405630978148349079, guid: 05de400106e62cc439f841d20adeb0ee,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5063881522307269903, guid: 05de400106e62cc439f841d20adeb0ee,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05de400106e62cc439f841d20adeb0ee, type: 3}
