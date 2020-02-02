@@ -19,5 +19,37 @@ public class Player : MonoBehaviour
         float y = Input.GetAxisRaw("Vertical");
         Vector2 input = new Vector2(x, y);
         Movement.Input = input;
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            FindCar();
+        }
+    }
+
+    //finds the cars within the circle collider's range
+    void FindCar()
+    {
+        //Collects car's hit info and stores it in array
+        Collider2D[] carsHit = Physics2D.OverlapCircleAll(transform.position, 0.8f);
+        if (carsHit.Length > 0)
+        {
+            for (int i = 0; i < carsHit.Length; i++)
+            {
+                if (carsHit[i].GetComponent<CarHit>())
+                {
+                    Debug.Log("HIT CAR");
+                    //Calls the hit car's launch function
+                    carsHit[i].GetComponent<CarHit>().LaunchCar();
+                }
+            }
+            
+        }
+    }
+
+    //So we can see and adjust the OverlapCircle gizmo
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, 0.8f);
     }
 }
