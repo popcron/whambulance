@@ -19,14 +19,13 @@ public class BlockRandomizer : MonoBehaviour
             //check if it exists just in case
             if (spriteRenderer)
             {
-		//get random index, then random color, then assign it lastly
-		int randomIndex = Random.Range(0, colors.Length);
-		Color color = colors[randomIndex];
+                //get random index, then random color, then assign it lastly
+                int randomIndex = Random.Range(0, colors.Length);
+                Color color = colors[randomIndex];
                 spriteRenderer.color = color;
             }
         }
-
+        
         yeet = true;
-
     }
 }
