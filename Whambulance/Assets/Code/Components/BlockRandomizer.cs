@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class BlockRandomizer : MonoBehaviour
 {
@@ -16,7 +16,10 @@ public class BlockRandomizer : MonoBehaviour
             //check if it exists just in case
             if (spriteRenderer)
             {
-                spriteRenderer.color = colors[Random.Range(0, colors.Length)];
+		//get random index, then random color, then assign it lastly
+		int randomIndex = Random.Range(0, colors.Length);
+		Color color = colors[randomIndex];
+                spriteRenderer.color = color;
             }
         }
     }
