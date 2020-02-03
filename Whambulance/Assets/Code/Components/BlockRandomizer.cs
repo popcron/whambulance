@@ -7,6 +7,7 @@ public class BlockRandomizer : MonoBehaviour
 
     [SerializeField]
     private SpriteRenderer[] spriteRenderers = { };
+    bool yeet;
 
     private void Awake()
     {
@@ -19,5 +20,7 @@ public class BlockRandomizer : MonoBehaviour
                 spriteRenderer.color = colors[Random.Range(0, colors.Length)];
             }
         }
+        yeet = true;
+
     }
 }
