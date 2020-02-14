@@ -10,7 +10,7 @@ public class InGame : HUDElement
     {
         get
         {
-            return false;
+            return Game.IsPlaying;
         }
     }
 

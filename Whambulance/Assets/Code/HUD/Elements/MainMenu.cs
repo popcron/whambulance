@@ -3,29 +3,29 @@
 public class MainMenu : HUDElement
 {
     /// <summary>
-    /// Only displays if the player prefs setting for mainMenu is 1
+    /// Only displays if the game isnt being played atm.
     /// </summary>
     public override bool ShouldDisplay
     {
         get
         {
-            return PlayerPrefs.GetInt("mainMenu") == 1;
+            return !GameManager.IsPlaying;
         }
     }
 
     public void ClickedPlay()
     {
-
+        Game.Play();
     }
 
     public void ClickedSettings()
     {
-
+        Debug.Log("settings");
     }
 
     public void ClickedQuit()
     {
-
+        Game.Quit();
     }
 
     private void Update()
