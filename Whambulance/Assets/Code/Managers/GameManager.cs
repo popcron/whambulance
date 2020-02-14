@@ -1,10 +1,12 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     private static GameManager gameManager;
 
+    /// <summary>
+    /// Is the game considered to be in the play state?
+    /// </summary>
     public static bool IsPlaying
     {
         get
@@ -24,6 +26,18 @@ public class GameManager : MonoBehaviour
             }
 
             gameManager.isPlaying = value;
+        }
+    }
+
+    /// <summary>
+    /// Is the game currently considered to be paused?
+    /// </summary>
+    public static bool IsPaused
+    {
+        get
+        {
+            //time scale so small that time is practically stopped
+            return Mathf.Abs(Time.timeScale) <= 0.001f;
         }
     }
 
@@ -84,6 +98,7 @@ public class GameManager : MonoBehaviour
 
         LevelManager.Clear();
         DestroyPlayer();
+        Unpause();
         IsPlaying = false;
     }
 
@@ -94,5 +109,15 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("GameManager.Quit");
         Application.Quit();
+    }
+
+    public static void Pause()
+    {
+        Time.timeScale = 0.001f;
+    }
+
+    public static void Unpause()
+    {
+        Time.timeScale = 1f;
     }
 }
