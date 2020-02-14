@@ -30,16 +30,65 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private bool isPlaying;
 
+    [SerializeField]
+    private Player playerPrefab;
+
     /// <summary>
     /// Starts the game, thats about it.
     /// </summary>
     public static void Play()
     {
         Debug.Log("GameManager.Play");
+
+        //load the test level and spawn a player into it
+        LevelManager.Load("TestLevel");
+        IsPlaying = true;
+        SpawnPlayer();
     }
 
     /// <summary>
-    /// Quits the game, duh.
+    /// Spawns a new player and returns its instance.
+    /// If a player already exists, it will simply replace this new player.
+    /// </summary>
+    private static Player SpawnPlayer()
+    {
+        Debug.Log("GameManager.SpawnPlayer");
+
+        DestroyPlayer();
+
+        Player newPlayer = Instantiate(gameManager.playerPrefab);
+        newPlayer.name = gameManager.playerPrefab.name;
+        return newPlayer;
+    }
+
+    /// <summary>
+    /// Stealthly destroys the player from the game.
+    /// </summary>
+    public static void DestroyPlayer()
+    {
+        Debug.Log("GameManager.DestroyPlayer");
+
+        Player[] players = FindObjectsOfType<Player>();
+        foreach (Player player in players)
+        {
+            Destroy(player.gameObject);
+        }
+    }
+
+    /// <summary>
+    /// Makes the game stop playing.
+    /// </summary>
+    public static void Leave()
+    {
+        Debug.Log("GameManager.Leave");
+
+        LevelManager.Clear();
+        DestroyPlayer();
+        IsPlaying = false;
+    }
+
+    /// <summary>
+    /// Quits and closes the game, duh.
     /// </summary>
     public static void Quit()
     {
