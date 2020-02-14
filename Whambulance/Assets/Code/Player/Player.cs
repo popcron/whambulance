@@ -30,19 +30,17 @@ public class Player : MonoBehaviour
     void FindCar()
     {
         //Collects car's hit info and stores it in array
-        Collider2D[] carsHit = Physics2D.OverlapCircleAll(transform.position, 0.8f);
+        Collider2D[] carsHit = Physics2D.OverlapCircleAll(transform.position + transform.up, 0.8f);
         if (carsHit.Length > 0)
         {
             for (int i = 0; i < carsHit.Length; i++)
             {
                 if (carsHit[i].GetComponent<CarHit>())
                 {
-                    Debug.Log("HIT CAR");
                     //Calls the hit car's launch function
                     carsHit[i].GetComponent<CarHit>().LaunchCar();
                 }
             }
-            
         }
     }
 
@@ -50,6 +48,6 @@ public class Player : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, 0.8f);
+        Gizmos.DrawWireSphere(transform.position + transform.up, 0.8f);
     }
 }
