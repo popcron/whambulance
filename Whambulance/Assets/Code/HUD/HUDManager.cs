@@ -7,7 +7,7 @@ public class HUDManager : MonoBehaviour
 
     private void Awake()
     {
-        canvas = GetComponent<Canvas>();
+        canvas = GetComponentInChildren<Canvas>();
         elements = canvas.GetComponentsInChildren<HUDElement>();
     }
 
