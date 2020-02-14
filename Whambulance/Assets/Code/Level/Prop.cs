@@ -40,12 +40,10 @@ public class Prop : MonoBehaviour
         {
             //get vector on XY axis
             Vector2 vector = Player.Instance.transform.position - transform.position;
-            float sqrDistance = vector.sqrMagnitude;
-            float playerRadius = 0.5f;
-            float maxRadius = propRadius + playerRadius;
+            float distance = vector.magnitude - Player.Radius;
 
             //compare radii
-            return sqrDistance <= maxRadius * maxRadius;
+            return distance <= propRadius;
         }
 
         return false;

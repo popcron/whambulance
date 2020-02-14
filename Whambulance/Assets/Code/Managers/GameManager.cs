@@ -106,6 +106,15 @@ public class GameManager : MonoBehaviour
 
         Player newPlayer = Instantiate(Manager.playerPrefab);
         newPlayer.name = Manager.playerPrefab.name;
+
+        //find a random spawnpoint, and put the player there
+        Spawnpoint[] spawnpoints = FindObjectsOfType<Spawnpoint>();
+        if (spawnpoints.Length > 0)
+        {
+            Spawnpoint randomSpawnpoint = spawnpoints[Random.Range(0, spawnpoints.Length)];
+            newPlayer.transform.position = randomSpawnpoint.transform.position;
+        }
+
         return newPlayer;
     }
 
