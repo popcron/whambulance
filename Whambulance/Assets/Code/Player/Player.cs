@@ -3,6 +3,11 @@
 public class Player : MonoBehaviour
 {
     /// <summary>
+    /// The current player in existence.
+    /// </summary>
+    public static Player Instance { get; private set; }
+
+    /// <summary>
     /// The movement component attached to this player.
     /// </summary>
     public PlayerMovement Movement { get; private set; }
@@ -10,6 +15,11 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         Movement = GetComponent<PlayerMovement>();
+    }
+
+    private void OnEnable()
+    {
+        Instance = this;
     }
 
     private void Update()

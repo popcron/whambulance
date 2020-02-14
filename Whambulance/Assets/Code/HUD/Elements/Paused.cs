@@ -15,18 +15,15 @@ public class Paused : HUDElement
 
     public void ClickedResume()
     {
-        Debug.Log("Paused.ClickedResume");
         GameManager.Unpause();
     }
 
     public void ClickedSettings()
     {
-        Debug.Log("Paused.ClickedSettings");
     }
 
     public void ClickedLeave()
     {
-        Debug.Log("Paused.ClickedLeave");
         GameManager.Leave();
     }
 }

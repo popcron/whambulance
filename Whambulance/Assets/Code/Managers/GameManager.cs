@@ -4,10 +4,32 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager gameManager;
 
+    public delegate void OnWon();
+    public delegate void OnLost();
+    public delegate void OnStoppedPlaying();
+    public delegate void OnStartedPlaying();
+
     /// <summary>
-    /// Is the game considered to be in the play state?
+    /// Happens when the player wins the game.
     /// </summary>
-    public static bool IsPlaying
+    public static OnWon onWon;
+
+    /// <summary>
+    /// Happens when the player loses.
+    /// </summary>
+    public static OnLost onLost;
+
+    /// <summary>
+    /// Happens when the Leave method is called.
+    /// </summary>
+    public static OnStoppedPlaying onStoppedPlaying;
+
+    /// <summary>
+    /// Happens when the Play method is called.
+    /// </summary>
+    public static OnStartedPlaying onStartedPlaying;
+
+    private static GameManager Manager
     {
         get
         {
@@ -16,17 +38,25 @@ public class GameManager : MonoBehaviour
                 gameManager = FindObjectOfType<GameManager>();
             }
 
-            return gameManager.isPlaying;
+            return gameManager;
         }
-        private set
-        {
-            if (!gameManager)
-            {
-                gameManager = FindObjectOfType<GameManager>();
-            }
+    }
 
-            gameManager.isPlaying = value;
-        }
+    /// <summary>
+    /// Did the player won or lost while playing the game.
+    /// </summary>
+    public static bool IsConcluded
+    {
+        get => Manager.isPlaying && (Manager.won || Manager.lost);
+    }
+
+    /// <summary>
+    /// Is the game considered to be in the play state?
+    /// </summary>
+    public static bool IsPlaying
+    {
+        get => Manager.isPlaying;
+        private set => Manager.isPlaying = value;
     }
 
     /// <summary>
@@ -34,15 +64,18 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public static bool IsPaused
     {
-        get
-        {
-            //time scale so small that time is practically stopped
-            return Mathf.Abs(Time.timeScale) <= 0.001f;
-        }
+        //time scale so small that time is practically stopped
+        get => Mathf.Abs(Time.timeScale) <= 0.001f;
     }
 
     [SerializeField]
     private bool isPlaying;
+
+    [SerializeField]
+    private bool won;
+
+    [SerializeField]
+    private bool lost;
 
     [SerializeField]
     private Player playerPrefab;
@@ -52,12 +85,15 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public static void Play()
     {
-        Debug.Log("GameManager.Play");
-
-        //load the test level and spawn a player into it
+        Unpause();
+        Time.timeScale = 1f;
+        Manager.won = false;
+        Manager.lost = false;
         LevelManager.Load("TestLevel");
         IsPlaying = true;
         SpawnPlayer();
+
+        onStartedPlaying?.Invoke();
     }
 
     /// <summary>
@@ -66,12 +102,10 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private static Player SpawnPlayer()
     {
-        Debug.Log("GameManager.SpawnPlayer");
-
         DestroyPlayer();
 
-        Player newPlayer = Instantiate(gameManager.playerPrefab);
-        newPlayer.name = gameManager.playerPrefab.name;
+        Player newPlayer = Instantiate(Manager.playerPrefab);
+        newPlayer.name = Manager.playerPrefab.name;
         return newPlayer;
     }
 
@@ -80,8 +114,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public static void DestroyPlayer()
     {
-        Debug.Log("GameManager.DestroyPlayer");
-
         Player[] players = FindObjectsOfType<Player>();
         foreach (Player player in players)
         {
@@ -94,12 +126,15 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public static void Leave()
     {
-        Debug.Log("GameManager.Leave");
-
         LevelManager.Clear();
+        Time.timeScale = 1f;
+        Manager.won = false;
+        Manager.lost = false;
         DestroyPlayer();
         Unpause();
         IsPlaying = false;
+
+        onStoppedPlaying?.Invoke();
     }
 
     /// <summary>
@@ -107,17 +142,58 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public static void Quit()
     {
-        Debug.Log("GameManager.Quit");
         Application.Quit();
     }
 
+    /// <summary>
+    /// Pauses the game, only if the game hasnt concluded.
+    /// </summary>
     public static void Pause()
     {
-        Time.timeScale = 0.001f;
+        if (!IsConcluded)
+        {
+            Time.timeScale = 0.001f;
+        }
     }
 
+    /// <summary>
+    /// Unpauses teh game, only if the game hasnt concluded.
+    /// </summary>
     public static void Unpause()
     {
-        Time.timeScale = 1f;
+        if (!IsConcluded)
+        {
+            Time.timeScale = 1f;
+        }
+    }
+
+    /// <summary>
+    /// Makes the player win no matter what.
+    /// </summary>
+    public static void Win()
+    {
+        if (IsPlaying && !Manager.won)
+        {
+            Manager.won = true;
+            Manager.lost = false;
+
+            Time.timeScale = 0.5f;
+            onWon?.Invoke();
+        }
+    }
+
+    /// <summary>
+    /// Makes the player lose no matter what.
+    /// </summary>
+    public static void Lose()
+    {
+        if (IsPlaying && !Manager.lost)
+        {
+            Manager.lost = true;
+            Manager.won = false;
+
+            Time.timeScale = 0.5f;
+            onLost?.Invoke();
+        }
     }
 }

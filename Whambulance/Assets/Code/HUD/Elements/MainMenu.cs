@@ -15,18 +15,15 @@ public class MainMenu : HUDElement
 
     public void ClickedPlay()
     {
-        Debug.Log("MainMenu.ClickedPlay");
         GameManager.Play();
     }
 
     public void ClickedSettings()
     {
-        Debug.Log("MainMenu.ClickedSettings");
     }
 
     public void ClickedQuit()
     {
-        Debug.Log("MainMenu.ClickedQuit");
         GameManager.Quit();
     }
 
