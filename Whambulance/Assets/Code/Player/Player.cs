@@ -3,6 +3,19 @@
 public class Player : MonoBehaviour
 {
     /// <summary>
+    /// The current player in existence.
+    /// </summary>
+    public static Player Instance { get; private set; }
+
+    /// <summary>
+    /// Returns the radius of the player.
+    /// </summary>
+    public static float Radius => Instance != null ? Instance.radius : 0.3f;
+
+    [SerializeField]
+    private float radius = 0.3f;
+
+    /// <summary>
     /// The movement component attached to this player.
     /// </summary>
     public PlayerMovement Movement { get; private set; }
@@ -10,6 +23,11 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         Movement = GetComponent<PlayerMovement>();
+    }
+
+    private void OnEnable()
+    {
+        Instance = this;
     }
 
     private void Update()
@@ -44,10 +62,14 @@ public class Player : MonoBehaviour
         }
     }
 
-    //So we can see and adjust the OverlapCircle gizmo
     private void OnDrawGizmos()
     {
+        //So we can see and adjust the OverlapCircle gizmo
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position + transform.up, 0.8f);
+
+        //also show the player radius just in case
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, radius);
     }
 }
