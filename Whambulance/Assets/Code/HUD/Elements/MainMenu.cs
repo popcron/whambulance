@@ -15,17 +15,19 @@ public class MainMenu : HUDElement
 
     public void ClickedPlay()
     {
-        Game.Play();
+        Debug.Log("MainMenu.ClickedPlay");
+        GameManager.Play();
     }
 
     public void ClickedSettings()
     {
-        Debug.Log("settings");
+        Debug.Log("MainMenu.ClickedSettings");
     }
 
     public void ClickedQuit()
     {
-        Game.Quit();
+        Debug.Log("MainMenu.ClickedQuit");
+        GameManager.Quit();
     }
 
     private void Update()

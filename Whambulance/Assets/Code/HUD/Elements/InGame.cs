@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class InGame : HUDElement
 {
@@ -10,12 +9,23 @@ public class InGame : HUDElement
     {
         get
         {
-            return Game.IsPlaying;
+            return GameManager.IsPlaying;
         }
     }
 
     private void Update()
     {
-        
+        //tried to pause lmao
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (GameManager.IsPaused)
+            {
+                GameManager.Unpause();
+            }
+            else
+            {
+                GameManager.Pause();
+            }
+        }
     }
 }
