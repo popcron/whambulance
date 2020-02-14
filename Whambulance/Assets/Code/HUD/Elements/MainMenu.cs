@@ -1,22 +1,35 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class MainMenu : HUDElement
 {
     /// <summary>
-    /// Only displays if the scene is set to 0
+    /// Only displays if the game isnt being played atm.
     /// </summary>
     public override bool ShouldDisplay
     {
         get
         {
-            Scene scene = SceneManager.GetActiveScene();
-            return scene.buildIndex == 0;
+            return !GameManager.IsPlaying;
         }
+    }
+
+    public void ClickedPlay()
+    {
+        Game.Play();
+    }
+
+    public void ClickedSettings()
+    {
+        Debug.Log("settings");
+    }
+
+    public void ClickedQuit()
+    {
+        Game.Quit();
     }
 
     private void Update()
     {
-        
+
     }
 }

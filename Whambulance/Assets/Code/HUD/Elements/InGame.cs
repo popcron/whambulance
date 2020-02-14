@@ -4,14 +4,13 @@ using UnityEngine.SceneManagement;
 public class InGame : HUDElement
 {
     /// <summary>
-    /// Only displays if the scene is set to 0
+    /// Only displays if the game is actually being played.
     /// </summary>
     public override bool ShouldDisplay
     {
         get
         {
-            Scene scene = SceneManager.GetActiveScene();
-            return scene.buildIndex == 1;
+            return Game.IsPlaying;
         }
     }
 
