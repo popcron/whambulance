@@ -62,6 +62,8 @@ public class Player : MonoBehaviour
 
         //parent this to the back transform
         CarryingObjective.transform.SetParent(carriedObjectRoot);
+        CarryingObjective.transform.localPosition = Vector3.zero;
+        CarryingObjective.transform.localEulerAngles = Vector3.zero;
     }
 
     /// <summary>
