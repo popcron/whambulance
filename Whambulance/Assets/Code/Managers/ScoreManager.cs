@@ -1,9 +1,34 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
 {
+    private static ScoreManager scoreManager;
+
+    /// <summary>
+    /// Returns the current bill with all the scores.
+    /// </summary>
+    public static ScoreBill Bill => Manager.bill;
+
+    private static ScoreManager Manager
+    {
+        get
+        {
+            if (!scoreManager)
+            {
+                scoreManager = FindObjectOfType<ScoreManager>();
+            }
+
+            return scoreManager;
+        }
+    }
+
+    [SerializeField]
+    private ScoreBill bill = new ScoreBill();
+
     private void OnEnable()
     {
+        scoreManager = this;
         GameManager.onWon += OnWon;
     }
 
@@ -22,7 +47,7 @@ public class ScoreManager : MonoBehaviour
     /// </summary>
     public static void Clear()
     {
-
+        Manager.bill = new ScoreBill();
     }
 
     /// <summary>
@@ -33,6 +58,25 @@ public class ScoreManager : MonoBehaviour
     /// </summary>
     public static void AwardPoints(string offenceName, int value)
     {
+        //find an existing entry on the bill
+        ScoreBill bill = Bill;
+        for (int i = 0; i < bill.entries.Count; i++)
+        {
+            //its already here!, so just add to the existing value
+            if (bill.entries[i].name.Equals(offenceName, StringComparison.OrdinalIgnoreCase))
+            {
+                bill.entries[i].value += value;
+                return;
+            }
+        }
 
+        //an existing entry wasnt found, so add a new one
+        ScoreBill.Entry newEntry = new ScoreBill.Entry
+        {
+            name = offenceName,
+            value = value
+        };
+
+        bill.entries.Add(newEntry);
     }
 }
