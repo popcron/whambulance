@@ -23,6 +23,9 @@ public class Victory : HUDElement
     [SerializeField]
     private RectTransform noOffences;
 
+    [SerializeField]
+    private TMP_Text totalValueText;
+
     private bool show;
 
     private void OnEnable()
@@ -57,6 +60,8 @@ public class Victory : HUDElement
 
         //in case the bill is empty, show the no offence case
         noOffences.gameObject.SetActive(bill.TotalValue == 0);
+        string totalString = bill.TotalValue.ToString("C");
+        totalValueText.text = totalString;
 
         for (int i = 0; i < bill.entries.Count; i++)
         {
@@ -69,7 +74,7 @@ public class Victory : HUDElement
 
             //set the strings here
             entryName.text = entry.name;
-            entryValue.text = $"${entry.value}";
+            entryValue.text = entry.value.ToString("C");
 
             //set positions of the entry field
             newEntry.anchoredPosition = new Vector2(0, y);
@@ -97,6 +102,9 @@ public class Victory : HUDElement
         //disable the prefab so that its invisibile
         entryTemplate.gameObject.SetActive(false);
         noOffences.gameObject.SetActive(false);
+
+        //reset to default
+        totalValueText.text = 0.ToString("C");
     }
 
     private void OnStoppedPlaying()
