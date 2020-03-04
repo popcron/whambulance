@@ -50,6 +50,25 @@ public class Prop : MonoBehaviour
     }
 
     /// <summary>
+    /// Returns true when the player overlaps with this area.
+    /// </summary>
+    public bool IsPlayerInside(Vector2 propArea)
+    {
+        if (Player.Instance)
+        {
+            Bounds bounds = new Bounds(transform.position, propArea);
+            Vector3 closestPoint = bounds.ClosestPoint(Player.Instance.transform.position);
+            closestPoint.z = 0f;
+
+            //get the direction vector here yea
+            Vector2 vector = Player.Instance.transform.position - closestPoint;
+            return vector.sqrMagnitude <= Player.Radius * Player.Radius;
+        }
+
+        return false;
+    }
+
+    /// <summary>
     /// All the colliders that belong to this prop.
     /// </summary>
     public Collider2D[] Colliders { get; private set; }
