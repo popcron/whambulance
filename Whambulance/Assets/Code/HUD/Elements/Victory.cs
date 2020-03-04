@@ -88,7 +88,7 @@ public class Victory : HUDElement
 
             //set positions of the entry field
             newEntry.anchoredPosition = new Vector2(0, y);
-            y += entryTemplate.sizeDelta.y;
+            y -= entryTemplate.sizeDelta.y;
 
             //finally enable the thingy
             newEntry.gameObject.SetActive(true);
