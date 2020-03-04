@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Did the player won or lost while playing the game.
+    /// Has the player won or lost while playing the game.
     /// </summary>
     public static bool IsConcluded
     {
@@ -89,7 +89,10 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         Manager.won = false;
         Manager.lost = false;
+
         LevelManager.Load("TestLevel");
+        ScoreManager.Clear();
+
         IsPlaying = true;
         SpawnPlayer();
 
@@ -136,6 +139,8 @@ public class GameManager : MonoBehaviour
     public static void Leave()
     {
         LevelManager.Clear();
+        ScoreManager.Clear();
+
         Time.timeScale = 1f;
         Manager.won = false;
         Manager.lost = false;
