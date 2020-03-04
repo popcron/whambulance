@@ -66,6 +66,7 @@ public class ScoreManager : MonoBehaviour
             if (bill.entries[i].name.Equals(offenceName, StringComparison.OrdinalIgnoreCase))
             {
                 bill.entries[i].value += value;
+                bill.entries[i].count++;
                 return;
             }
         }
@@ -74,7 +75,8 @@ public class ScoreManager : MonoBehaviour
         ScoreBill.Entry newEntry = new ScoreBill.Entry
         {
             name = offenceName,
-            value = value
+            value = value,
+            count = 1
         };
 
         bill.entries.Add(newEntry);

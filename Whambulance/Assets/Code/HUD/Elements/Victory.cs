@@ -73,8 +73,18 @@ public class Victory : HUDElement
             TMP_Text entryValue = newEntry.Find("Value").GetComponent<TMP_Text>();
 
             //set the strings here
-            entryName.text = entry.name;
             entryValue.text = entry.value.ToString("C");
+
+            if (entry.count > 1)
+            {
+                //more than 1 offence
+                entryName.text = $"{entry.name} x {entry.count}";
+            }
+            else
+            {
+                //only 1 offence
+                entryName.text = entry.name;
+            }
 
             //set positions of the entry field
             newEntry.anchoredPosition = new Vector2(0, y);

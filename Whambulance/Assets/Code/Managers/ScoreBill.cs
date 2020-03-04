@@ -28,5 +28,6 @@ public class ScoreBill
     {
         public string name;
         public int value;
+        public int count;
     }
 }
