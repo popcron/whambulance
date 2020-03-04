@@ -20,6 +20,8 @@ public class Destination : Prop
         {
             if (IsPlayerInside(area))
             {
+                //drop the patient and win the game
+                Player.Instance.Drop();
                 GameManager.Win();
             }
         }
