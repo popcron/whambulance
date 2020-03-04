@@ -61,3 +61,10 @@ crashlytics-build.properties
 # TextMesh Pro files
 */[Aa]ssets/TextMesh Pro.meta
 */[Aa]ssets/TextMesh*Pro/
+
+# FMOD
+FMODproject/.cache
+FMODproject/.unsaved
+FMODproject/.user
+fmod.log
+fmod_editor.log
