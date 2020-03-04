@@ -13,12 +13,20 @@ public class Player : MonoBehaviour
     public static float Radius => Instance != null ? Instance.radius : 0.3f;
 
     [SerializeField]
+    private Transform carriedObjectRoot;
+
+    [SerializeField]
     private float radius = 0.3f;
 
     /// <summary>
     /// The movement component attached to this player.
     /// </summary>
     public PlayerMovement Movement { get; private set; }
+
+    /// <summary>
+    /// The objective that is being carried if any.
+    /// </summary>
+    public Objective CarryingObjective { get; private set; }
 
     private void Awake()
     {
@@ -41,6 +49,32 @@ public class Player : MonoBehaviour
         if (Input.GetButtonDown("Jump"))
         {
             FindCar();
+        }
+    }
+
+    /// <summary>
+    /// Puts this thing on the player to make it look like its being carried.
+    /// </summary>
+    public void Carry(Objective objective)
+    {
+        CarryingObjective = objective;
+        CarryingObjective.BeganCarrying(this);
+
+        //parent this to the back transform
+        CarryingObjective.transform.SetParent(carriedObjectRoot);
+        CarryingObjective.transform.localPosition = Vector3.zero;
+        CarryingObjective.transform.localEulerAngles = Vector3.zero;
+    }
+
+    /// <summary>
+    /// Drops the current carried objective if any is present.
+    /// </summary>
+    public void Drop()
+    {
+        if (CarryingObjective)
+        {
+            CarryingObjective.Dropped(this);
+            CarryingObjective.transform.SetParent(null);
         }
     }
 
