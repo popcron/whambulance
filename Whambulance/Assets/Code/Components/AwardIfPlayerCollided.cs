@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class AwardPointsOnCollisionWithPlayer : Prop
+public class AwardIfPlayerCollided : Prop
 {
     [SerializeField]
     private string offenceName = "Nuisance";

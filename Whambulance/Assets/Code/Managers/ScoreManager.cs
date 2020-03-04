@@ -58,6 +58,12 @@ public class ScoreManager : MonoBehaviour
     /// </summary>
     public static void AwardPoints(string offenceName, int value)
     {
+        //invalid offence
+        if (value == 0)
+        {
+            return;
+        }
+
         //find an existing entry on the bill
         ScoreBill bill = Bill;
         for (int i = 0; i < bill.entries.Count; i++)
