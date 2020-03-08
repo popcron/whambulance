@@ -120,6 +120,25 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &259289692 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5072289912220657412, guid: 46de3ebaa84320547a581e6dbcb62927,
+    type: 3}
+  m_PrefabInstance: {fileID: 1245087530}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &259289696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 259289692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9f172559854c5d49aa3c12fd2f7291f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothing: 0.217
 --- !u!1001 &1245087530
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -306,6 +325,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_textInfo.pageCount
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7733715140654940302, guid: 46de3ebaa84320547a581e6dbcb62927,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7733715140654940302, guid: 46de3ebaa84320547a581e6dbcb62927,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7733715140654940302, guid: 46de3ebaa84320547a581e6dbcb62927,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7733715140654940302, guid: 46de3ebaa84320547a581e6dbcb62927,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 259289696}
+    - target: {fileID: 7733715140654940302, guid: 46de3ebaa84320547a581e6dbcb62927,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: BeginCameraScript
+      objectReference: {fileID: 0}
+    - target: {fileID: 7733715140654940302, guid: 46de3ebaa84320547a581e6dbcb62927,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 46de3ebaa84320547a581e6dbcb62927, type: 3}
