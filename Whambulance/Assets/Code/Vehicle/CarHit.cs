@@ -1,16 +1,17 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CarHit : MonoBehaviour
 {
     //References
-    public Player player;
+    Player player;
 
     //Public Variables
     public float launchSpeed;
     public float spriteGrowth;
     public float decelModifier;
+    [Range(1f, 2.5f)]
+    public float objectMass;
 
 
     //Local Variables
@@ -26,6 +27,7 @@ public class CarHit : MonoBehaviour
         //Gets the car's rigidbody
         carBody = GetComponent<Rigidbody2D>();
         originalDecel = decelModifier;
+        player = Player.Instance;
     }
 
 
@@ -43,7 +45,7 @@ public class CarHit : MonoBehaviour
         }
 
         //adds an increase in velocity based on the direction
-        carBody.velocity += (launchDirection * new Vector2(launchSpeed - Mathf.Abs(distanceFromCar.x), launchSpeed - Mathf.Abs(distanceFromCar.y)));
+        carBody.velocity += (launchDirection * new Vector2(launchSpeed - Mathf.Abs(distanceFromCar.x), launchSpeed - Mathf.Abs(distanceFromCar.y)) / objectMass);
         StartCoroutine(SlowDownImpact(launchDirection));
     }
 
@@ -52,14 +54,17 @@ public class CarHit : MonoBehaviour
         //during the time specified by carMoveFrames, the car will slow to a stop
         while (carMoveFrames > 0)
         {
+            //determines the speed at which the object is sent after a punch
             carBody.velocity -= (Vector2.one * decelModifier) * direction * Time.deltaTime;
             carMoveFrames--;
+            Debug.Log("SLOWING DOWN");
             if (carMoveFrames <= 0 || didCollide)
             {
                 carBody.velocity = Vector2.zero;
             }
             yield return null;
         }
+        Debug.Log("DONE SLOWING DOWN");
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

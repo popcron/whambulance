@@ -8,8 +8,6 @@ public class BlockRandomizer : MonoBehaviour
     [SerializeField]
     private SpriteRenderer[] spriteRenderers = { };
 
-    [SerializeField]
-    private bool yeet;
 
     private void Awake()
     {
@@ -25,7 +23,5 @@ public class BlockRandomizer : MonoBehaviour
                 spriteRenderer.color = color;
             }
         }
-        
-        yeet = true;
     }
 }
