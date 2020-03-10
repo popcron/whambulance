@@ -24,6 +24,25 @@ public class Player : MonoBehaviour
     public PlayerMovement Movement { get; private set; }
 
     /// <summary>
+    /// The direction that the player should be moving in based on inputs.
+    /// </summary>
+    public Vector2 MovementInput
+    {
+        get
+        {
+            float x = Input.GetAxisRaw("Horizontal");
+            float y = Input.GetAxisRaw("Vertical");
+            Vector2 input = new Vector2(x, y);
+            return input.normalized;
+        }
+    }
+
+    /// <summary>
+    /// The rotation that the player should be looking at based on movement input.
+    /// </summary>
+    public float Rotation { get; private set; }
+
+    /// <summary>
     /// The objective that is being carried if any.
     /// </summary>
     public Objective CarryingObjective { get; private set; }
@@ -41,15 +60,20 @@ public class Player : MonoBehaviour
     private void Update()
     {
         //send inputs to the movement thingy
-        float x = Input.GetAxisRaw("Horizontal");
-        float y = Input.GetAxisRaw("Vertical");
-        Vector2 input = new Vector2(x, y);
+        Vector2 input = MovementInput;
         Movement.Input = input;
-
         if (Input.GetButtonDown("Jump"))
         {
             FindCar();
         }
+
+        //rotate the root
+        if (input.sqrMagnitude > 0.5f)
+        {
+            Rotation = (Mathf.Atan2(input.y, input.x) * Mathf.Rad2Deg) - 90f;
+        }
+
+        transform.eulerAngles = new Vector3(0f, 0f, Rotation);
     }
 
     /// <summary>
