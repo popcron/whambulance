@@ -2,9 +2,6 @@
 
 public class Intersection : MonoBehaviour
 {
-    [SerializeField]
-    private float sideWalkSize = 0.5f;
-
     public Vector2[] Corners => new Vector2[] { UpLeft, UpRight, DownLeft, DownRight };
     public Line[] Sides
     {
@@ -95,10 +92,11 @@ public class Intersection : MonoBehaviour
         Gizmos.DrawLine(DownLeft, UpLeft);
 
         //shrink and draw again
-        Vector2 upLeft = TransformPoint(-transform.localScale.x + sideWalkSize, transform.localScale.y - sideWalkSize);
-        Vector2 upRight = TransformPoint(transform.localScale.x - sideWalkSize, transform.localScale.y - sideWalkSize);
-        Vector2 downLeft = TransformPoint(-transform.localScale.x + sideWalkSize, -transform.localScale.y + sideWalkSize);
-        Vector2 downRight = TransformPoint(transform.localScale.x - sideWalkSize, -transform.localScale.y + sideWalkSize);
+        float adjust = GameManager.Settings.sideWalkSize;
+        Vector2 upLeft = TransformPoint(-transform.localScale.x + adjust, transform.localScale.y - adjust);
+        Vector2 upRight = TransformPoint(transform.localScale.x - adjust, transform.localScale.y - adjust);
+        Vector2 downLeft = TransformPoint(-transform.localScale.x + adjust, -transform.localScale.y + adjust);
+        Vector2 downRight = TransformPoint(transform.localScale.x - adjust, -transform.localScale.y + adjust);
 
         Gizmos.DrawLine(upLeft, upRight);
         Gizmos.DrawLine(upRight, downRight);
