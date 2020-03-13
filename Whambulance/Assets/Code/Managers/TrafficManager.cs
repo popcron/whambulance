@@ -37,7 +37,9 @@ public class TrafficManager : MonoBehaviour
                 Vehicle randomVehicle = GameManager.Settings.vehicles[Random.Range(0, GameManager.Settings.vehicles.Count)];
 
                 Vector2 positionOnRoad = randomRoad.GetRandomPosition(true);
-                Quaternion lookDirection = Quaternion.Euler(randomRoad.Direction);
+                Vector2 roadDir = randomRoad.Direction;
+                float lookAngle = Mathf.Atan2(roadDir.y, roadDir.x) * Mathf.Rad2Deg;
+                Quaternion lookDirection = Quaternion.Euler(0f, 0f, lookAngle);
                 Vehicle newVehicle = Instantiate(randomVehicle, positionOnRoad, lookDirection);
             }
         }

@@ -163,7 +163,7 @@ public class Road
     public Vector2 GetRandomPosition(bool rightHandSide)
     {
         float t = UnityEngine.Random.Range(0f, 1f);
-        Vector2 dir = start.transform.position - end.transform.position;
+        Vector2 dir = end.transform.position - start.transform.position;
         if (rightHandSide)
         {
             Vector2 right = Vector2.Lerp(StartB, Start, 0.5f);
