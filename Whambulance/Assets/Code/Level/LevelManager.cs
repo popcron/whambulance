@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
@@ -25,10 +26,9 @@ public class LevelManager : MonoBehaviour
         Clear();
 
         //check against names
-        name = name.ToLower();
         foreach (Level level in levelManager.levels)
         {
-            if (level.name.ToLower() == name)
+            if (level.name.Equals(name, StringComparison.OrdinalIgnoreCase))
             {
                 Level newLevel = Instantiate(level);
                 newLevel.name = level.name;
