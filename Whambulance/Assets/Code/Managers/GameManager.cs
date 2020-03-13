@@ -43,6 +43,14 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// The game settings to use here.
+    /// </summary>
+    public static GameSettings Settings
+    {
+        get => Manager.gameSettings.settings;
+    }
+
+    /// <summary>
     /// Has the player won or lost while playing the game.
     /// </summary>
     public static bool IsConcluded
@@ -69,6 +77,9 @@ public class GameManager : MonoBehaviour
     }
 
     [SerializeField]
+    private GameSettingsData gameSettings;
+
+    [SerializeField]
     private bool isPlaying;
 
     [SerializeField]
@@ -76,9 +87,6 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private bool lost;
-
-    [SerializeField]
-    private Player playerPrefab;
 
     /// <summary>
     /// Starts the game, thats about it.
@@ -90,7 +98,7 @@ public class GameManager : MonoBehaviour
         Manager.won = false;
         Manager.lost = false;
 
-        LevelManager.Load("TestLevel");
+        LevelManager.Load(Settings.levelToLoad);
         ScoreManager.Clear();
 
         IsPlaying = true;
@@ -107,8 +115,8 @@ public class GameManager : MonoBehaviour
     {
         DestroyPlayer();
 
-        Player newPlayer = Instantiate(Manager.playerPrefab);
-        newPlayer.name = Manager.playerPrefab.name;
+        Player newPlayer = Instantiate(Settings.playerPrefab);
+        newPlayer.name = Settings.playerPrefab.name;
 
         //find a random spawnpoint, and put the player there
         Spawnpoint[] spawnpoints = FindObjectsOfType<Spawnpoint>();
