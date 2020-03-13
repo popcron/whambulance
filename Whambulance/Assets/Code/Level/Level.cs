@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Level : MonoBehaviour
 {
+    private static double nextUpdate = 0f;
+
     public List<Road> roads = new List<Road>();
 
     private Intersection[] intersections = { };
@@ -16,21 +18,24 @@ public class Level : MonoBehaviour
     private void OnDrawGizmos()
     {
 #if UNITY_EDITOR
-        BuildRoadLayout();
+        if (UnityEditor.EditorApplication.timeSinceStartup > nextUpdate)
+        {
+            BuildRoadLayout();
+            nextUpdate = UnityEditor.EditorApplication.timeSinceStartup + 0.25f;
+        }
 #endif
 
         foreach (Road road in roads)
         {
-            Vector2 dir = road.end - road.start;
+            Vector2 dir = road.Direction;
 
             //rotate this vector by 90 degrees
-            Vector2 perpDir = new Vector2(dir.y, dir.x).normalized;
             Gizmos.color = Color.white;
-            Gizmos.DrawLine(road.start + perpDir * road.startWidth * 0.5f, road.end + perpDir * road.endWidth * 0.5f);
-            Gizmos.DrawLine(road.start - perpDir * road.startWidth * 0.5f, road.end - perpDir * road.endWidth * 0.5f);
+            Gizmos.DrawLine(road.StartA, road.EndA);
+            Gizmos.DrawLine(road.StartB, road.EndB);
 
             Gizmos.color = new Color(1f, 1f, 1f, 0.15f);
-            Gizmos.DrawLine(road.start, road.end);
+            Gizmos.DrawLine(road.Start, road.End);
         }
 
         Gizmos.color = Color.black;
@@ -79,7 +84,7 @@ public class Level : MonoBehaviour
 
                     //is this intersection kinda close in angle?
                     Vector2 dir = intersection.transform.position - other.transform.position;
-                    if (Vector2.Angle(dir.normalized, roadDirection) <= 6f)
+                    if (Vector2.Angle(dir.normalized, intersection.transform.TransformDirection(roadDirection)) <= GameManager.Settings.maxRoadAngle)
                     {
                         if (closestDistance > dir.sqrMagnitude)
                         {
@@ -92,89 +97,45 @@ public class Level : MonoBehaviour
                 if (index != -1)
                 {
                     Intersection other = intersections[index];
-                    Road road = new Road();
-                    road.start = intersection.ClosestPoint(other.transform.position);
-                    road.startWidth = intersection.GetRoadWidth(road);
+                    Road newRoad = new Road();
+                    newRoad.start = intersection;
+                    newRoad.end = other;
 
-                    road.end = other.ClosestPoint(intersection.transform.position);
-                    road.endWidth = other.GetRoadWidth(road);
-                    roads.Add(road);
+                    bool roadInvalid = false;
+                    foreach (Road road in roads)
+                    {
+                        //dont add if this identical road already exists
+                        if (road.start == newRoad.start && road.end == newRoad.end)
+                        {
+                            roadInvalid = true;
+                            break;
+                        }
+                        else if (road.start == newRoad.end && road.end == newRoad.start)
+                        {
+                            roadInvalid = true;
+                            break;
+                        }
+                    }
+
+                    if (!roadInvalid)
+                    {
+                        foreach (Road road in roads)
+                        {
+                            //check if this road interests another existing road
+                            if (newRoad.Intersects(road))
+                            {
+                                roadInvalid = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (!roadInvalid)
+                    {
+                        roads.Add(newRoad);
+                    }
                 }
             }
         }
-    }
-
-    /// <summary>
-    /// Returns true when these two city blocks are close.
-    /// </summary>
-    private bool IsClose(CityBlock block, CityBlock other, Vector2 dir, float gap)
-    {
-        Vector2 blockClosest = block.Bounds.ClosestPoint(other.transform.position);
-        Vector2 otherBlockClosest = other.Bounds.ClosestPoint(block.transform.position);
-        if (Vector2.SqrMagnitude(blockClosest - otherBlockClosest) > gap * gap)
-        {
-            return false;
-        }
-
-        //right check
-        if (dir.x == 1 && block.Bounds.max.x - other.Bounds.min.x <= gap * gap)
-        {
-            return true;
-        }
-
-        //left check
-        if (dir.y == -1 && other.Bounds.max.x - block.Bounds.min.x <= gap * gap)
-        {
-            return true;
-        }
-
-        //up check
-        if (dir.y == 1 && block.Bounds.max.y - other.Bounds.min.y <= gap * gap)
-        {
-            return true;
-        }
-
-        //down check
-        if (dir.y == -1 && other.Bounds.max.y - block.Bounds.min.y <= gap * gap)
-        {
-            return true;
-        }
-
-        return false;
-    }
-
-    /// <summary>
-    /// Creates a new road at this direction relative to the city block.
-    /// </summary>
-    private Road GetRoad(Bounds bounds, Vector2 direction)
-    {
-        Vector2 rotatedDirection = new Vector2(direction.y, direction.x).normalized;
-        Vector2 startFarAway = rotatedDirection * 100000f;
-        Vector2 endFarAway = rotatedDirection * -100000f;
-
-        Road road = new Road();
-        road.start = bounds.ClosestPoint(startFarAway);
-        road.startWidth = 2f;
-        road.end = bounds.ClosestPoint(endFarAway);
-        road.endWidth = 4f;
-
-        return road;
-    }
-
-    /// <summary>
-    /// Returns all roads that belong this city block.
-    /// </summary>
-    public List<Road> GetRoadsOfCityBlock(CityBlock block)
-    {
-        List<Road> roads = new List<Road>();
-        foreach (Road road in roads)
-        {
-            if (road.cityBlocks.Contains(block))
-            {
-                roads.Add(road);
-            }
-        }
-
-        return roads;
     }
 }

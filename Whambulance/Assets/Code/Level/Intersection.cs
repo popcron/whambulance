@@ -5,14 +5,33 @@ public class Intersection : MonoBehaviour
     [SerializeField]
     private float sideWalkSize = 0.5f;
 
-    public Vector2 UpLeft => transform.TransformPoint(new Vector3(-transform.localScale.x, transform.localScale.y, 0f));
-    public Vector2 UpRight => transform.TransformPoint(new Vector3(transform.localScale.x, transform.localScale.y, 0f));
-    public Vector2 DownLeft => transform.TransformPoint(new Vector3(-transform.localScale.x, -transform.localScale.y, 0f));
-    public Vector2 DownRight => transform.TransformPoint(new Vector3(transform.localScale.x, -transform.localScale.y, 0f));
+    public Vector2[] Corners => new Vector2[] { UpLeft, UpRight, DownLeft, DownRight };
+    public Line[] Sides
+    {
+        get
+        {
+            Line[] sides = new Line[4];
+            sides[0] = new Line(UpLeft, UpRight);
+            sides[1] = new Line(UpRight, DownRight);
+            sides[2] = new Line(DownRight, DownLeft);
+            sides[3] = new Line(DownLeft, UpLeft);
+            return sides;
+        }
+    }
+
+    public Vector2 UpLeft => TransformPoint(-transform.localScale.x, transform.localScale.y);
+    public Vector2 UpRight => TransformPoint(transform.localScale.x, transform.localScale.y);
+    public Vector2 DownLeft => TransformPoint(-transform.localScale.x, -transform.localScale.y);
+    public Vector2 DownRight => TransformPoint(transform.localScale.x, -transform.localScale.y);
+
+    private Vector2 TransformPoint(float x, float y)
+    {
+        return transform.TransformPoint(x, y, 0f);
+    }
 
     public float GetRoadWidth(Road road)
     {
-        Vector2 dir = road.start - road.end;
+        Vector2 dir = road.start.transform.position - road.end.transform.position;
         dir.Normalize();
 
         if (Vector2.Angle(dir, Vector2.left) <= 45f)
@@ -76,9 +95,14 @@ public class Intersection : MonoBehaviour
         Gizmos.DrawLine(DownLeft, UpLeft);
 
         //shrink and draw again
-        Gizmos.DrawLine(UpLeft + new Vector2(sideWalkSize, -sideWalkSize), UpRight + new Vector2(-sideWalkSize, -sideWalkSize));
-        Gizmos.DrawLine(UpRight + new Vector2(-sideWalkSize, -sideWalkSize), DownRight + new Vector2(-sideWalkSize, sideWalkSize));
-        Gizmos.DrawLine(DownRight + new Vector2(-sideWalkSize, sideWalkSize), DownLeft + new Vector2(sideWalkSize, sideWalkSize));
-        Gizmos.DrawLine(DownLeft + new Vector2(sideWalkSize, sideWalkSize), UpLeft + new Vector2(sideWalkSize, -sideWalkSize));
+        Vector2 upLeft = TransformPoint(-transform.localScale.x + sideWalkSize, transform.localScale.y - sideWalkSize);
+        Vector2 upRight = TransformPoint(transform.localScale.x - sideWalkSize, transform.localScale.y - sideWalkSize);
+        Vector2 downLeft = TransformPoint(-transform.localScale.x + sideWalkSize, -transform.localScale.y + sideWalkSize);
+        Vector2 downRight = TransformPoint(transform.localScale.x - sideWalkSize, -transform.localScale.y + sideWalkSize);
+
+        Gizmos.DrawLine(upLeft, upRight);
+        Gizmos.DrawLine(upRight, downRight);
+        Gizmos.DrawLine(downRight, downLeft);
+        Gizmos.DrawLine(downLeft, upLeft);
     }
 }
