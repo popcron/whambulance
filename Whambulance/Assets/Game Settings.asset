@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84469be5696e7294ebe9540b4aa6f7cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 27ce1086315954440bf0ed035f3ea19f, type: 3}
   m_Name: Game Settings
   m_EditorClassIdentifier: 
   settings:
     levelToLoad: MainLevel
     playerPrefab: {fileID: 8553454928102178898, guid: df1f4e9d32dfa1f4dad2451f76dcd43c,
       type: 3}
+    levels: []
