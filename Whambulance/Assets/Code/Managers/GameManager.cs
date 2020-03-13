@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
     }
 
     [SerializeField]
-    private GameSettingsData gameSettings;
+    private GameSettingsAsset gameSettings;
 
     [SerializeField]
     private bool isPlaying;

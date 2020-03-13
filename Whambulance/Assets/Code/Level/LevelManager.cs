@@ -3,11 +3,6 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    private static LevelManager levelManager;
-
-    [SerializeField]
-    private Level[] levels = { };
-
     private void Awake()
     {
         Clear();
@@ -18,15 +13,10 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     public static Level Load(string name)
     {
-        if (!levelManager)
-        {
-            levelManager = FindObjectOfType<LevelManager>();
-        }
-
         Clear();
 
         //check against names
-        foreach (Level level in levelManager.levels)
+        foreach (Level level in GameManager.Settings.levels)
         {
             if (level.name.Equals(name, StringComparison.OrdinalIgnoreCase))
             {
@@ -36,7 +26,7 @@ public class LevelManager : MonoBehaviour
             }
         }
 
-        Debug.LogError($"Level named {name} is not in the list of levels on the LevelManager");
+        Debug.LogError($"Level named {name} is not in the list of levels on the GameSettings asset");
         return null;
     }
 
