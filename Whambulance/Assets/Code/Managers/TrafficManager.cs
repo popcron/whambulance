@@ -35,7 +35,10 @@ public class TrafficManager : MonoBehaviour
             {
                 Road randomRoad = roadsOffscreen[Random.Range(0, roadsOffscreen.Count)];
                 Vehicle randomVehicle = GameManager.Settings.vehicles[Random.Range(0, GameManager.Settings.vehicles.Count)];
-                Vehicle newVehicle = Instantiate(randomVehicle, randomRoad.Position, Quaternion.identity);
+
+                Vector2 positionOnRoad = randomRoad.GetRandomPosition(true);
+                Quaternion lookDirection = Quaternion.Euler(randomRoad.Direction);
+                Vehicle newVehicle = Instantiate(randomVehicle, positionOnRoad, lookDirection);
             }
         }
     }

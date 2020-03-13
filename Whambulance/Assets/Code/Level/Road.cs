@@ -157,6 +157,25 @@ public class Road
             || Intersects(roadStartA, roadEndA, road.StartB, road.EndB).HasValue || Intersects(roadStartB, roadEndB, road.StartA, road.EndA).HasValue;
     }
 
+    /// <summary>
+    /// Returns a random position on this road.
+    /// </summary>
+    public Vector2 GetRandomPosition(bool rightHandSide)
+    {
+        float t = UnityEngine.Random.Range(0f, 1f);
+        Vector2 dir = start.transform.position - end.transform.position;
+        if (rightHandSide)
+        {
+            Vector2 right = Vector2.Lerp(StartB, Start, 0.5f);
+            return right + dir * t;
+        }
+        else
+        {
+            Vector2 left = Vector2.Lerp(StartA, Start, 0.5f);
+            return left + dir * t;
+        }
+    }
+
     //borrowed from http://csharphelper.com/blog/2014/08/determine-where-two-lines-intersect-in-c/
     private Vector2? Intersects(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4)
     {
