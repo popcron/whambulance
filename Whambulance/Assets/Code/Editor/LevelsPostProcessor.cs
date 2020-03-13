@@ -5,7 +5,7 @@ public class LevelsPostProcessor : AssetPostprocessor
 {
     private static bool IsLevel(string path)
     {
-        if (path.EndsWith(".asset"))
+        if (path.EndsWith(".prefab"))
         {
             GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
             if (!prefab)
@@ -29,7 +29,8 @@ public class LevelsPostProcessor : AssetPostprocessor
         }
 
         string path = AssetDatabase.GUIDToAssetPath(assetGuids[0]);
-        GameSettings settings = AssetDatabase.LoadAssetAtPath<GameSettingsAsset>(path).settings;
+        GameSettingsAsset asset = AssetDatabase.LoadAssetAtPath<GameSettingsAsset>(path);
+        GameSettings settings = asset.settings;
 
         //load all by searching all prefabs
         settings.levels.Clear();
@@ -44,6 +45,10 @@ public class LevelsPostProcessor : AssetPostprocessor
                 settings.levels.Add(level);
             }
         }
+
+        //mark as dirty and save
+        EditorUtility.SetDirty(asset);
+        AssetDatabase.SaveAssets();
     }
 
     private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)

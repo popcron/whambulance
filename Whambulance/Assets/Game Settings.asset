@@ -16,4 +16,6 @@ MonoBehaviour:
     levelToLoad: MainLevel
     playerPrefab: {fileID: 8553454928102178898, guid: df1f4e9d32dfa1f4dad2451f76dcd43c,
       type: 3}
-    levels: []
+    levels:
+    - {fileID: 3229553100082925995, guid: 6acfe3588dcc38f419ad909b32a8ff76, type: 3}
+    - {fileID: -2528275122131165190, guid: 313b3c7de429da3469c6950eaf3a4613, type: 3}
