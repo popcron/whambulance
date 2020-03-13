@@ -9,6 +9,7 @@ public class Road
 
     public Vector2 Start => start.transform.position;
     public Vector2 End => end.transform.position;
+    public Vector2 Position => Vector3.Lerp(Start, End, 0.5f);
 
     public Vector2 StartA
     {

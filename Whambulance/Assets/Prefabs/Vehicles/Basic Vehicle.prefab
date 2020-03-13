@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2739004785816230649}
   - component: {fileID: 2739004785816230648}
   - component: {fileID: 2739004785816230651}
+  - component: {fileID: 7860498384184217907}
   m_Layer: 8
   m_Name: Basic Vehicle
   m_TagString: Untagged
@@ -121,10 +122,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bce917f4046f0b9469c90279ec0a2faf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   launchSpeed: 2
   spriteGrowth: 0
-  carMoveFrames: 90
+  decelModifier: 0
+  objectMass: 0
 --- !u!50 &2739004785816230651
 Rigidbody2D:
   serializedVersion: 4
@@ -146,3 +147,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &7860498384184217907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2739004785816230650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3779391696aac449a6baf9926632def, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

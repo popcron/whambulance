@@ -27,6 +27,11 @@ public class Level : MonoBehaviour
 
         foreach (Road road in roads)
         {
+            if (!road.start || !road.end)
+            {
+                continue;
+            }
+
             Vector2 dir = road.Direction;
 
             //rotate this vector by 90 degrees

@@ -9,4 +9,5 @@ public class GameSettings
     public float maxRoadAngle = 14f;
     public float sideWalkSize = 0.5f;
     public List<Level> levels = new List<Level>();
+    public List<Vehicle> vehicles = new List<Vehicle>();
 }

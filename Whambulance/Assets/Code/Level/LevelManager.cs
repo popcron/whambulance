@@ -3,11 +3,6 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    private void Awake()
-    {
-        Clear();
-    }
-
     /// <summary>
     /// Loads a level by name and returns a new instance if successfull.
     /// </summary>
