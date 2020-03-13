@@ -129,7 +129,18 @@ public class Road
     /// <summary>
     /// Normalized direction of this road.
     /// </summary>
-    public Vector2 Direction => (end.transform.position - start.transform.position).normalized;
+    public Vector2 Direction
+    {
+        get
+        {
+            if (!end || !start)
+            {
+                return default;
+            }
+
+            return (end.transform.position - start.transform.position).normalized;
+        }
+    }
 
     /// <summary>
     /// Returns true when this road intersects the other road.
