@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Game Settings
   m_EditorClassIdentifier: 
   settings:
-    levelToLoad: MainLevel
+    levelToLoad: TestLevel
     playerPrefab: {fileID: 8553454928102178898, guid: df1f4e9d32dfa1f4dad2451f76dcd43c,
       type: 3}
     maxRoadAngle: 14
