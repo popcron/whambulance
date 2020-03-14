@@ -9,14 +9,14 @@ public class TrafficManager : MonoBehaviour
     {
         if (Time.time > nextSpawn)
         {
-            nextSpawn = Time.time + 2f;
+            nextSpawn = Time.time + 1f;
             SpawnCarOffscreen();
         }
 
-        //remove cars that are offscreen for too long
+        //remove cars that are too old
         foreach (Vehicle vehicle in Vehicle.All)
         {
-            if (vehicle.TimeOffscreen > 2f && vehicle.LifeTime > 4f)
+            if (vehicle.LifeTime >= 10f && IsOnScreen(vehicle.transform.position))
             {
                 Destroy(vehicle.gameObject);
                 break;
@@ -24,9 +24,22 @@ public class TrafficManager : MonoBehaviour
         }
     }
 
+    private bool IsOnScreen(Vector2 position)
+    {
+        Vector2 vp = Camera.main.WorldToViewportPoint(position);
+        if (vp.x < 0f || vp.y < 0f || vp.x > 1f || vp.y > 1f)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
     private void SpawnCarOffscreen()
     {
-        if (Vehicle.All.Count > 16)
+        if (Vehicle.All.Count > 24)
         {
             //too many cars on screen!
             return;
@@ -36,12 +49,10 @@ public class TrafficManager : MonoBehaviour
         Level level = FindObjectOfType<Level>();
         if (level)
         {
-            Camera camera = Camera.main;
             List<Road> roadsOffscreen = new List<Road>();
             foreach (Road road in level.roads)
             {
-                Vector2 vp = camera.WorldToViewportPoint(road.Position);
-                if (vp.x < 0f || vp.y < 0f || vp.x > 1f || vp.y > 1f)
+                if (!IsOnScreen(road.Start) && !IsOnScreen(road.End) && !IsOnScreen(road.Position))
                 {
                     roadsOffscreen.Add(road);
                 }
