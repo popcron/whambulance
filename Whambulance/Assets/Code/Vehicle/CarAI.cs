@@ -48,13 +48,6 @@ public class CarAI : MonoBehaviour
             }
         }
 
-        //player in the way!!! stop!!!
-        Player playerAhead = Player.Get(vehicle.FrontPosition, 1f);
-        if (playerAhead)
-        {
-            vehicle.Gas *= 0.8f;
-        }
-
         if (desiredRoad != null)
         {
             //try to arrive to the closest position on the road first
@@ -79,11 +72,5 @@ public class CarAI : MonoBehaviour
             vehicle.Steer = 0f;
             vehicle.Gas = 0f;
         }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        //hit another car, oof
-        vehicle.Gas *= 0.9f;
     }
 }
