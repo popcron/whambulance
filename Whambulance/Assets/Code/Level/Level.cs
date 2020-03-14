@@ -39,6 +39,22 @@ public class Level : MonoBehaviour
             Gizmos.DrawLine(road.StartA, road.EndA);
             Gizmos.DrawLine(road.StartB, road.EndB);
 
+            Vector2? dirA = Road.GetLaneDirection(road, road.StartA, road.EndA);
+            if (dirA.HasValue)
+            {
+                Vector2 start = Vector2.Lerp(road.StartA, road.Start, 0.5f);
+                Vector2 end = Vector2.Lerp(road.EndA, road.End, 0.5f);
+                Helper.DrawGizmoArrow(Vector2.Lerp(start, end, 0.5f), dirA.Value, 1f);
+            }
+
+            Vector2? dirB = Road.GetLaneDirection(road, road.StartB, road.EndB);
+            if (dirB.HasValue)
+            {
+                Vector2 start = Vector2.Lerp(road.StartB, road.Start, 0.5f);
+                Vector2 end = Vector2.Lerp(road.EndB, road.End, 0.5f);
+                Helper.DrawGizmoArrow(Vector2.Lerp(start, end, 0.5f), dirB.Value, 1f);
+            }
+
             Gizmos.color = new Color(1f, 1f, 1f, 0.15f);
             Gizmos.DrawLine(road.Start, road.End);
         }

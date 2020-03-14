@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
@@ -18,8 +19,8 @@ public class Road
             int index = -1;
             float closestCorner = float.MaxValue;
             Vector2 origin = End;
-            Line[] sides = start.Sides;
-            for (int i = 0; i < sides.Length; i++)
+            List<Line> sides = start.Sides;
+            for (int i = 0; i < sides.Count; i++)
             {
                 float sqrDistance = Vector2.SqrMagnitude(sides[i].Position - origin);
                 if (closestCorner > sqrDistance)
@@ -47,8 +48,8 @@ public class Road
             int index = -1;
             float closestCorner = float.MaxValue;
             Vector2 origin = End;
-            Line[] sides = start.Sides;
-            for (int i = 0; i < sides.Length; i++)
+            List<Line> sides = start.Sides;
+            for (int i = 0; i < sides.Count; i++)
             {
                 float sqrDistance = Vector2.SqrMagnitude(sides[i].Position - origin);
                 if (closestCorner > sqrDistance)
@@ -76,8 +77,8 @@ public class Road
             int index = -1;
             float closestCorner = float.MaxValue;
             Vector2 origin = Start;
-            Line[] sides = end.Sides;
-            for (int i = 0; i < sides.Length; i++)
+            List<Line> sides = end.Sides;
+            for (int i = 0; i < sides.Count; i++)
             {
                 float sqrDistance = Vector2.SqrMagnitude(sides[i].Position - origin);
                 if (closestCorner > sqrDistance)
@@ -105,8 +106,8 @@ public class Road
             int index = -1;
             float closestCorner = float.MaxValue;
             Vector2 origin = Start;
-            Line[] sides = end.Sides;
-            for (int i = 0; i < sides.Length; i++)
+            List<Line> sides = end.Sides;
+            for (int i = 0; i < sides.Count; i++)
             {
                 float sqrDistance = Vector2.SqrMagnitude(sides[i].Position - origin);
                 if (closestCorner > sqrDistance)
@@ -160,30 +161,10 @@ public class Road
     /// <summary>
     /// Returns the closest point on this road.
     /// </summary>
-    public Vector2 ClosestPoint(Vector2 position, bool? rightHandSide = null)
+    public Vector2 ClosestPoint(Vector2 position)
     {
-        if (rightHandSide != null)
-        {
-            Vector2 lookDir = ((StartA - StartB).normalized - Direction).normalized;
-            if (Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg > 45f)
-            {
-                //flip the right hand side parameter
-                rightHandSide = !rightHandSide;
-            }
-        }
-
         Vector2 leftPoint = Helper.ClosestPoint(position, Vector2.Lerp(StartA, Start, 0.5f), Vector2.Lerp(EndA, End, 0.5f));
-        if (rightHandSide == false)
-        {
-            return leftPoint;
-        }
-
         Vector2 rightPoint = Helper.ClosestPoint(position, Vector2.Lerp(StartB, Start, 0.5f), Vector2.Lerp(EndB, End, 0.5f));
-        if (rightHandSide == true)
-        {
-            return rightPoint;
-        }
-
         float leftDistance = Vector2.SqrMagnitude(leftPoint - position);
         float rightDistance = Vector2.SqrMagnitude(rightPoint - position);
         if (leftDistance < rightDistance)
@@ -194,6 +175,91 @@ public class Road
         {
             return rightPoint;
         }
+    }
+
+    /// <summary>
+    /// Returns the direction for this line on this road.
+    /// </summary>
+    public static Vector2? GetLaneDirection(Road road, Vector2 a, Vector2 b)
+    {
+        Vector2 dir = a - b;
+        if (Vector2.Angle(dir.normalized, Vector2.left) <= 45f)
+        {
+            float avg = (a.y + b.y) * 0.5f;
+            if (road.start.transform.position.y < avg || road.end.transform.position.y < avg)
+            {
+                return Vector2.left;
+            }
+            else
+            {
+                return Vector2.right;
+            }
+        }
+        else if (Vector2.Angle(dir.normalized, Vector2.right) <= 45f)
+        {
+            float avg = (a.y + b.y) * 0.5f;
+            if (road.start.transform.position.y > avg || road.end.transform.position.y > avg)
+            {
+                return Vector2.right;
+            }
+            else
+            {
+                return Vector2.left;
+            }
+        }
+        else if (Vector2.Angle(dir.normalized, Vector2.up) <= 45f)
+        {
+            float avg = (a.x + b.x) * 0.5f;
+            if (road.start.transform.position.x < avg || road.end.transform.position.x < avg)
+            {
+                return Vector2.up;
+            }
+            else
+            {
+                return Vector2.down;
+            }
+        }
+        else if (Vector2.Angle(dir.normalized, Vector2.down) <= 45f)
+        {
+            float avg = (a.x + b.x) * 0.5f;
+            if (road.start.transform.position.x > avg || road.end.transform.position.x > avg)
+            {
+                return Vector2.down;
+            }
+            else
+            {
+                return Vector2.up;
+            }
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// Returns the closest point on the correct lane of the road.
+    /// </summary>
+    public Vector2 ClosestPoint(Vector2 position, Vector2 direction)
+    {
+        direction.Normalize();
+        Vector2? laneDirection = GetLaneDirection(this, StartA, EndA);
+        if (laneDirection.HasValue)
+        {
+            if (Vector2.SignedAngle(laneDirection.Value, direction) < 90f)
+            {
+                return Helper.ClosestPoint(position, Vector2.Lerp(StartA, Start, 0.5f), Vector2.Lerp(EndA, End, 0.5f));
+            }
+        }
+
+        laneDirection = GetLaneDirection(this, StartB, EndB);
+        if (laneDirection.HasValue)
+        {
+            if (Vector2.SignedAngle(laneDirection.Value, direction) < 90f)
+            {
+                return Helper.ClosestPoint(position, Vector2.Lerp(StartB, Start, 0.5f), Vector2.Lerp(EndB, End, 0.5f));
+            }
+        }
+
+        return Helper.ClosestPoint(position, Start, End);
     }
 
     /// <summary>

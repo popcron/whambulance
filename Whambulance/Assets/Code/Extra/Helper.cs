@@ -2,6 +2,20 @@
 
 public partial class Helper
 {
+    public static void DrawGizmoArrow(Vector2 position, Vector2 direction, float size)
+    {
+        direction.Normalize();
+        float angle = Mathf.Atan2(direction.y, direction.x) + 90f * Mathf.Deg2Rad;
+        float ninenty = 90f * Mathf.Deg2Rad;
+        float half = 45f * Mathf.Deg2Rad;
+        Vector2 tip = position + direction * size;
+        Vector2 left = tip + new Vector2(Mathf.Cos(angle + half), Mathf.Sin(angle + half)) * size * 0.3f;
+        Vector2 right = tip + new Vector2(Mathf.Cos(angle + half + ninenty), Mathf.Sin(angle + half + ninenty)) * size * 0.3f;
+        Gizmos.DrawLine(position, tip);
+        Gizmos.DrawLine(tip, left);
+        Gizmos.DrawLine(tip, right);
+    }
+
     //borrowed from http://csharphelper.com/blog/2014/08/determine-where-two-lines-intersect-in-c/
     /// <summary>
     /// Returns the point where these two lines meet at.

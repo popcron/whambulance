@@ -6,15 +6,19 @@ public class Intersection : MonoBehaviour
     public static List<Intersection> All { get; set; } = new List<Intersection>();
 
     public Vector2[] Corners => new Vector2[] { UpLeft, UpRight, DownLeft, DownRight };
-    public Line[] Sides
+
+    /// <summary>
+    /// Sides of the intersection with no particular order.
+    /// </summary>
+    public List<Line> Sides
     {
         get
         {
-            Line[] sides = new Line[4];
-            sides[0] = new Line(UpLeft, UpRight);
-            sides[1] = new Line(UpRight, DownRight);
-            sides[2] = new Line(DownRight, DownLeft);
-            sides[3] = new Line(DownLeft, UpLeft);
+            List<Line> sides = new List<Line>();
+            sides.Add(new Line(UpLeft, UpRight));
+            sides.Add(new Line(UpRight, DownRight));
+            sides.Add(new Line(DownRight, DownLeft));
+            sides.Add(new Line(DownLeft, UpLeft));
             return sides;
         }
     }

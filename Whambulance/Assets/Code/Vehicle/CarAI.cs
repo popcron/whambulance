@@ -51,13 +51,14 @@ public class CarAI : MonoBehaviour
         if (desiredRoad != null)
         {
             //try to arrive to the closest position on the road first
-            Vector2 closestPoint = desiredRoad.ClosestPoint(vehicle.FrontPosition + vehicle.Rigidbody.velocity.normalized, true);
+            Vector2 velocity = vehicle.Rigidbody.velocity.normalized;
+            Vector2 closestPoint = desiredRoad.ClosestPoint(vehicle.FrontPosition + velocity, velocity);
             Vector2 dirToPoint = closestPoint - vehicle.FrontPosition;
-            float angle = -Vector2.SignedAngle(dirToPoint.normalized, vehicle.Rigidbody.velocity.normalized);
+            float angle = -Vector2.SignedAngle(dirToPoint.normalized, velocity);
             angle *= 0.75f;
 
             Debug.DrawRay(vehicle.FrontPosition, vehicle.ForwardDirection, Color.red);
-            Debug.DrawRay(vehicle.FrontPosition, vehicle.Rigidbody.velocity.normalized, Color.cyan);
+            Debug.DrawRay(vehicle.FrontPosition, velocity, Color.cyan);
             Debug.DrawLine(vehicle.FrontPosition, closestPoint, Color.black);
 
             Vector2 right = new Vector2(vehicle.ForwardDirection.y, vehicle.ForwardDirection.x);
