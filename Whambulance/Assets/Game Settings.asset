@@ -23,5 +23,5 @@ MonoBehaviour:
     - {fileID: -2528275122131165190, guid: 313b3c7de429da3469c6950eaf3a4613, type: 3}
     vehicles:
     - {fileID: 7860498384184217907, guid: 97fe88d470fd9394b9a3ffdd334c1b50, type: 3}
-    maxVehicles: 48
-    vehicleLifeTime: 16
+    maxVehicles: 64
+    vehicleLifeTime: 18

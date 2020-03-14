@@ -5,10 +5,16 @@ public class Level : MonoBehaviour
 {
     private static double nextUpdate = 0f;
 
-    public List<Road> roads = new List<Road>();
+    [SerializeField, HideInInspector]
+    private List<Road> roads = new List<Road>();
 
+    [SerializeField, HideInInspector]
     private Intersection[] intersections = { };
+
+    [SerializeField, HideInInspector]
     private CityBlock[] cityBlocks = { };
+
+    public List<Road> Roads => roads;
 
     private void Awake()
     {

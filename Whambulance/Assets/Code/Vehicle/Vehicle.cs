@@ -56,7 +56,6 @@ public class Vehicle : MonoBehaviour
     /// </summary>
     public float TimeOffscreen { get; private set; }
 
-    public VehicleFront Front { get; private set; }
     public Rigidbody2D Rigidbody { get; private set; }
     public SpriteRenderer[] SpriteRenderers { get; private set; }
 
@@ -92,7 +91,6 @@ public class Vehicle : MonoBehaviour
     private void Awake()
     {
         SpriteRenderers = GetComponentsInChildren<SpriteRenderer>();
-        Front = GetComponentInChildren<VehicleFront>();
         Rigidbody = GetComponent<Rigidbody2D>();
         angle = Rigidbody.rotation;
     }
@@ -115,17 +113,6 @@ public class Vehicle : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //ensure the front is proper?
-        if (Front)
-        {
-            if (Front.Rigidbody)
-            {
-                Front.Rigidbody.MovePosition(Rigidbody.position);
-            }
-
-            Front.transform.localEulerAngles = default;
-        }
-
         //apply movement
         if (speed < Gas)
         {
