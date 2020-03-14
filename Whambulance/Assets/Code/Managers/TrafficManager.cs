@@ -9,14 +9,14 @@ public class TrafficManager : MonoBehaviour
     {
         if (Time.time > nextSpawn)
         {
-            nextSpawn = Time.time + 1f;
+            nextSpawn = Time.time + 0.6f;
             SpawnCarOffscreen();
         }
 
         //remove cars that are too old and off screen
         foreach (Vehicle vehicle in Vehicle.All)
         {
-            if (vehicle.LifeTime >= 10f && !vehicle.IsVisible)
+            if (vehicle.LifeTime >= GameManager.Settings.vehicleLifeTime && vehicle.TimeOffscreen > 6f)
             {
                 Destroy(vehicle.gameObject);
                 break;
@@ -39,7 +39,7 @@ public class TrafficManager : MonoBehaviour
 
     private void SpawnCarOffscreen()
     {
-        if (Vehicle.All.Count > 24)
+        if (Vehicle.All.Count > GameManager.Settings.maxVehicles)
         {
             //too many cars on screen!
             return;

@@ -10,4 +10,6 @@ public class GameSettings
     public float sideWalkSize = 0.5f;
     public List<Level> levels = new List<Level>();
     public List<Vehicle> vehicles = new List<Vehicle>();
+    public int maxVehicles = 48;
+    public float vehicleLifeTime = 16f;
 }
