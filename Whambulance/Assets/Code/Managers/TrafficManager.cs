@@ -13,10 +13,10 @@ public class TrafficManager : MonoBehaviour
             SpawnCarOffscreen();
         }
 
-        //remove cars that are too old
+        //remove cars that are too old and off screen
         foreach (Vehicle vehicle in Vehicle.All)
         {
-            if (vehicle.LifeTime >= 10f && IsOnScreen(vehicle.transform.position))
+            if (vehicle.LifeTime >= 10f && !vehicle.IsVisible)
             {
                 Destroy(vehicle.gameObject);
                 break;
@@ -24,16 +24,16 @@ public class TrafficManager : MonoBehaviour
         }
     }
 
-    private bool IsOnScreen(Vector2 position)
+    private bool IsOnScreen(Vector2 position, float padding = 16f)
     {
-        Vector2 vp = Camera.main.WorldToViewportPoint(position);
-        if (vp.x < 0f || vp.y < 0f || vp.x > 1f || vp.y > 1f)
+        Vector2 screenPoint = Camera.main.WorldToScreenPoint(position);
+        if (screenPoint.x > -padding && screenPoint.y > -padding && screenPoint.x < Screen.width + padding && screenPoint.y < Screen.height - padding)
         {
-            return false;
+            return true;
         }
         else
         {
-            return true;
+            return false;
         }
     }
 

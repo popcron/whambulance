@@ -33,12 +33,32 @@ public class Vehicle : MonoBehaviour
     public float LifeTime { get; private set; }
 
     /// <summary>
+    /// Returns true if this vehicle is visible by any camera.
+    /// </summary>
+    public bool IsVisible
+    {
+        get
+        {
+            foreach (SpriteRenderer renderer in SpriteRenderers)
+            {
+                if (renderer.enabled && renderer.isVisible)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+    }
+
+    /// <summary>
     /// The amount of seconds that this vehicle has been off screen for.
     /// </summary>
     public float TimeOffscreen { get; private set; }
 
     public VehicleFront Front { get; private set; }
     public Rigidbody2D Rigidbody { get; private set; }
+    public SpriteRenderer[] SpriteRenderers { get; private set; }
 
     /// <summary>
     /// The front of the car in world space.
@@ -71,6 +91,7 @@ public class Vehicle : MonoBehaviour
 
     private void Awake()
     {
+        SpriteRenderers = GetComponentsInChildren<SpriteRenderer>();
         Front = GetComponentInChildren<VehicleFront>();
         Rigidbody = GetComponent<Rigidbody2D>();
         angle = Rigidbody.rotation;
@@ -116,14 +137,13 @@ public class Vehicle : MonoBehaviour
         }
 
         Rigidbody.velocity = ForwardDirection * Mathf.Lerp(-movementSpeed * 0.5f, movementSpeed, speed);
-        angle += steer * Time.fixedDeltaTime;
+        angle += steer * Time.fixedDeltaTime * steerSpeed;
         Rigidbody.SetRotation(angle);
     }
 
     private void Update()
     {
-        Vector2 vp = Camera.main.WorldToViewportPoint(transform.position);
-        if (vp.x < 0f || vp.y < 0f || vp.x > 1f || vp.y > 1f)
+        if (!IsVisible)
         {
             //this car is offscreen
             TimeOffscreen += Time.deltaTime;
