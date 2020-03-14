@@ -12,10 +12,26 @@ public class TrafficManager : MonoBehaviour
             nextSpawn = Time.time + 2f;
             SpawnCarOffscreen();
         }
+
+        //remove cars that are offscreen for too long
+        foreach (Vehicle vehicle in Vehicle.All)
+        {
+            if (vehicle.TimeOffscreen > 2f && vehicle.LifeTime > 4f)
+            {
+                Destroy(vehicle.gameObject);
+                break;
+            }
+        }
     }
 
     private void SpawnCarOffscreen()
     {
+        if (Vehicle.All.Count > 16)
+        {
+            //too many cars on screen!
+            return;
+        }
+
         //find a road that is offscreen
         Level level = FindObjectOfType<Level>();
         if (level)

@@ -1,7 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Intersection : MonoBehaviour
 {
+    public static List<Intersection> All { get; set; } = new List<Intersection>();
+
     public Vector2[] Corners => new Vector2[] { UpLeft, UpRight, DownLeft, DownRight };
     public Line[] Sides
     {
@@ -21,66 +24,27 @@ public class Intersection : MonoBehaviour
     public Vector2 DownLeft => TransformPoint(-transform.localScale.x, -transform.localScale.y);
     public Vector2 DownRight => TransformPoint(transform.localScale.x, -transform.localScale.y);
 
+    private void OnEnable()
+    {
+        All.Add(this);
+    }
+
+    private void OnDisable()
+    {
+        All.Remove(this);
+    }
+
     private Vector2 TransformPoint(float x, float y)
     {
         return transform.TransformPoint(x, y, 0f);
     }
 
-    public float GetRoadWidth(Road road)
+    /// <summary>
+    /// Returns true when this position is inside this intersection.
+    /// </summary>
+    public bool Contains(Vector2 position)
     {
-        Vector2 dir = road.start.transform.position - road.end.transform.position;
-        dir.Normalize();
-
-        if (Vector2.Angle(dir, Vector2.left) <= 45f)
-        {
-            return Mathf.Abs(UpLeft.y - DownLeft.y);
-        }
-        else if (Vector2.Angle(dir, Vector2.right) <= 45f)
-        {
-            return Mathf.Abs(UpRight.y - DownRight.y);
-        }
-        else if (Vector2.Angle(dir, Vector2.up) <= 45f)
-        {
-            return Mathf.Abs(UpLeft.x - UpRight.x);
-        }
-        else if (Vector2.Angle(dir, Vector2.down) <= 45f)
-        {
-            return Mathf.Abs(DownLeft.x - DownRight.x);
-        }
-
-        return 0f;
-    }
-
-    public Vector2 ClosestPoint(Vector2 point)
-    {
-        Bounds bounds = new Bounds(transform.position, default);
-        bounds.Encapsulate(UpLeft);
-        bounds.Encapsulate(UpRight);
-        bounds.Encapsulate(DownLeft);
-        bounds.Encapsulate(DownRight);
-
-        //depending on angle, give a closest point lol
-        Vector2 dir = point - (Vector2)transform.position;
-        dir.Normalize();
-
-        if (Vector2.Angle(dir, Vector2.left) <= 45f)
-        {
-            return new Vector2(bounds.min.x, bounds.center.y);
-        }
-        else if (Vector2.Angle(dir, Vector2.right) <= 45f)
-        {
-            return new Vector2(bounds.max.x, bounds.center.y);
-        }
-        else if (Vector2.Angle(dir, Vector2.up) <= 45f)
-        {
-            return new Vector2(bounds.center.x, bounds.max.y);
-        }
-        else if (Vector2.Angle(dir, Vector2.down) <= 45f)
-        {
-            return new Vector2(bounds.center.x, bounds.min.y);
-        }
-
-        return bounds.ClosestPoint(point);
+        return Helper.IsPointInRectangle(position, UpLeft, UpRight, DownLeft, DownRight);
     }
 
     private void OnDrawGizmos()
@@ -102,5 +66,33 @@ public class Intersection : MonoBehaviour
         Gizmos.DrawLine(upRight, downRight);
         Gizmos.DrawLine(downRight, downLeft);
         Gizmos.DrawLine(downLeft, upLeft);
+    }
+
+    /// <summary>
+    /// Returns the closest intersection to this position.
+    /// </summary>
+    public static Intersection Get(Vector2 position)
+    {
+        int index = -1;
+        float closest = float.MaxValue;
+        for (int i = 0; i < All.Count; i++)
+        {
+            float sqrMagnitude = Vector2.SqrMagnitude(position - (Vector2)All[i].transform.position);
+            if (sqrMagnitude < closest)
+            {
+                if (All[i].Contains(position))
+                {
+                    closest = sqrMagnitude;
+                    index = i;
+                }
+            }
+        }
+
+        if (index != -1)
+        {
+            return All[index];
+        }
+
+        return null;
     }
 }

@@ -64,7 +64,15 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public static bool IsConcluded
     {
-        get => Manager.isPlaying && (Manager.won || Manager.lost);
+        get
+        {
+            if (!Manager)
+            {
+                return false;
+            }
+
+            return Manager.isPlaying && (Manager.won || Manager.lost);
+        }
     }
 
     /// <summary>

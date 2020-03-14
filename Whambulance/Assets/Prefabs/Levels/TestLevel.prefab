@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 592648724994098982}
   - component: {fileID: 5776047959782393228}
   m_Layer: 0
-  m_Name: Intersection (2)
+  m_Name: Ice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,7 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97f59bd3a1bc34841b42952a2ce003ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sideWalkSize: 0.5
 --- !u!1 &1327648824764161683
 GameObject:
   m_ObjectHideFlags: 0
@@ -99,7 +98,7 @@ GameObject:
   - component: {fileID: 7187895553936117958}
   - component: {fileID: 8605792727957905928}
   m_Layer: 0
-  m_Name: Intersection
+  m_Name: Middle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -131,7 +130,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97f59bd3a1bc34841b42952a2ce003ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sideWalkSize: 0.5
 --- !u!1 &2067105358706186131
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,7 +222,7 @@ GameObject:
   - component: {fileID: 2448548212772535734}
   - component: {fileID: 4002784406381588772}
   m_Layer: 0
-  m_Name: Intersection (3)
+  m_Name: Pen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -256,7 +254,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97f59bd3a1bc34841b42952a2ce003ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sideWalkSize: 0.5
 --- !u!1 &3881171703286567338
 GameObject:
   m_ObjectHideFlags: 0
@@ -268,7 +265,7 @@ GameObject:
   - component: {fileID: 7285471648660795933}
   - component: {fileID: 1666076289383135238}
   m_Layer: 0
-  m_Name: Intersection (5)
+  m_Name: Pine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -300,7 +297,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97f59bd3a1bc34841b42952a2ce003ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sideWalkSize: 0.5
 --- !u!1 &5053465208885791035
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,96 +356,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roads:
-  - cityBlocks: []
-    start: {x: -8.863076, y: 7.49}
-    startWidth: 2.786152
-    end: {x: -21.174591, y: 7.5699997}
-    endWidth: 2.7908206
-  - cityBlocks: []
-    start: {x: -7.4700003, y: 6.096924}
-    startWidth: 2.786152
-    end: {x: -7.38, y: -6.0058823}
-    endWidth: 3.0282345
-  - cityBlocks: []
-    start: {x: -7.4700003, y: 8.883076}
-    startWidth: 2.7861524
-    end: {x: -7.59, y: 21.194592}
-    endWidth: 2.790821
-  - cityBlocks: []
-    start: {x: -21.174591, y: 7.5699997}
-    startWidth: 2.7908206
-    end: {x: -8.863076, y: 7.49}
-    endWidth: 2.786152
-  - cityBlocks: []
-    start: {x: -22.57, y: 6.174589}
-    startWidth: 2.7908206
-    end: {x: -22.58, y: -6.0058823}
-    endWidth: 3.0282326
-  - cityBlocks: []
-    start: {x: -22.57, y: 8.96541}
-    startWidth: 2.7908206
-    end: {x: -22.49, y: 13.165882}
-    endWidth: 3.0282326
-  - cityBlocks: []
-    start: {x: -24.004116, y: 14.68}
-    startWidth: 3.0282354
-    end: {x: -36.24459, y: 14.789999}
-    endWidth: 2.7908201
-  - cityBlocks: []
-    start: {x: -22.49, y: 13.165882}
-    startWidth: 3.0282354
-    end: {x: -22.57, y: 8.96541}
-    endWidth: 2.790821
-  - cityBlocks: []
-    start: {x: -22.49, y: 16.194118}
-    startWidth: 3.0282354
-    end: {x: -22.48, y: 21.194592}
-    endWidth: 2.790821
-  - cityBlocks: []
-    start: {x: -21.065884, y: -7.5199995}
-    startWidth: 3.028234
-    end: {x: -8.894117, y: -7.5199995}
-    endWidth: 3.028234
-  - cityBlocks: []
-    start: {x: -22.58, y: -6.0058823}
-    startWidth: 3.028234
-    end: {x: -22.57, y: 6.174589}
-    endWidth: 2.790821
-  - cityBlocks: []
-    start: {x: -8.894117, y: -7.5199995}
-    startWidth: 3.028234
-    end: {x: -21.065884, y: -7.5199995}
-    endWidth: 3.028234
-  - cityBlocks: []
-    start: {x: -7.38, y: -6.0058823}
-    startWidth: 3.028234
-    end: {x: -7.4700003, y: 6.096924}
-    endWidth: 2.7861524
-  - cityBlocks: []
-    start: {x: -36.24459, y: 14.789999}
-    startWidth: 2.7908201
-    end: {x: -24.004116, y: 14.68}
-    endWidth: 3.0282354
-  - cityBlocks: []
-    start: {x: -21.08459, y: 22.59}
-    startWidth: 2.790821
-    end: {x: -8.985411, y: 22.59}
-    endWidth: 2.790821
-  - cityBlocks: []
-    start: {x: -22.48, y: 21.194592}
-    startWidth: 2.790821
-    end: {x: -22.49, y: 16.194118}
-    endWidth: 3.0282326
-  - cityBlocks: []
-    start: {x: -8.985411, y: 22.59}
-    startWidth: 2.790821
-    end: {x: -21.08459, y: 22.59}
-    endWidth: 2.790821
-  - cityBlocks: []
-    start: {x: -7.59, y: 21.194592}
-    startWidth: 2.790821
-    end: {x: -7.4700003, y: 8.883076}
-    endWidth: 2.7861524
+  - start: {fileID: 8605792727957905928}
+    end: {fileID: 847491331062327457}
+  - start: {fileID: 8605792727957905928}
+    end: {fileID: 5589016934345571658}
+  - start: {fileID: 8605792727957905928}
+    end: {fileID: 7119154971152418047}
+  - start: {fileID: 847491331062327457}
+    end: {fileID: 4002784406381588772}
+  - start: {fileID: 847491331062327457}
+    end: {fileID: 5776047959782393228}
+  - start: {fileID: 5776047959782393228}
+    end: {fileID: 1666076289383135238}
+  - start: {fileID: 5776047959782393228}
+    end: {fileID: 7997189677119969742}
+  - start: {fileID: 4002784406381588772}
+    end: {fileID: 5589016934345571658}
+  - start: {fileID: 7997189677119969742}
+    end: {fileID: 7119154971152418047}
 --- !u!1 &5204204738199133406
 GameObject:
   m_ObjectHideFlags: 0
@@ -461,7 +385,7 @@ GameObject:
   - component: {fileID: 3775391033186870365}
   - component: {fileID: 5589016934345571658}
   m_Layer: 0
-  m_Name: Intersection (4)
+  m_Name: Banana
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -493,7 +417,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97f59bd3a1bc34841b42952a2ce003ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sideWalkSize: 0.5
 --- !u!1 &6052419068125693973
 GameObject:
   m_ObjectHideFlags: 0
@@ -549,7 +472,7 @@ GameObject:
   - component: {fileID: 4648037328614695653}
   - component: {fileID: 7119154971152418047}
   m_Layer: 0
-  m_Name: Intersection (7)
+  m_Name: Triangle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -581,7 +504,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97f59bd3a1bc34841b42952a2ce003ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sideWalkSize: 0.5
 --- !u!1 &7490133923513290694
 GameObject:
   m_ObjectHideFlags: 0
@@ -593,7 +515,7 @@ GameObject:
   - component: {fileID: 8015898314344881286}
   - component: {fileID: 847491331062327457}
   m_Layer: 0
-  m_Name: Intersection (1)
+  m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -625,7 +547,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97f59bd3a1bc34841b42952a2ce003ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sideWalkSize: 0.5
 --- !u!1 &7622534433674715728
 GameObject:
   m_ObjectHideFlags: 0
@@ -637,7 +558,7 @@ GameObject:
   - component: {fileID: 1770381201944265358}
   - component: {fileID: 7997189677119969742}
   m_Layer: 0
-  m_Name: Intersection (6)
+  m_Name: Cross
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -669,7 +590,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97f59bd3a1bc34841b42952a2ce003ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sideWalkSize: 0.5
 --- !u!1 &8186793573228040145
 GameObject:
   m_ObjectHideFlags: 0
@@ -1986,7 +1906,7 @@ PrefabInstance:
     - target: {fileID: 2739004785816230655, guid: 97fe88d470fd9394b9a3ffdd334c1b50,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.82
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 2739004785816230655, guid: 97fe88d470fd9394b9a3ffdd334c1b50,
         type: 3}
@@ -2032,31 +1952,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 2739004785816230655, guid: 97fe88d470fd9394b9a3ffdd334c1b50,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.4646064
-      objectReference: {fileID: 0}
-    - target: {fileID: 2739004785816230655, guid: 97fe88d470fd9394b9a3ffdd334c1b50,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.86800045
-      objectReference: {fileID: 0}
-    - target: {fileID: 2739004785816230648, guid: 97fe88d470fd9394b9a3ffdd334c1b50,
-        type: 3}
-      propertyPath: launchSpeed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2739004785816230648, guid: 97fe88d470fd9394b9a3ffdd334c1b50,
-        type: 3}
-      propertyPath: decelModifier
-      value: 2.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2739004785816230648, guid: 97fe88d470fd9394b9a3ffdd334c1b50,
-        type: 3}
-      propertyPath: objectMass
-      value: 1.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97fe88d470fd9394b9a3ffdd334c1b50, type: 3}

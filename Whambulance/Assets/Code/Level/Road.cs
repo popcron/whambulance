@@ -7,8 +7,8 @@ public class Road
     public Intersection start;
     public Intersection end;
 
-    public Vector2 Start => start.transform.position;
-    public Vector2 End => end.transform.position;
+    public Vector2 Start => !start ? default : start.transform.position;
+    public Vector2 End => !end ? default : (Vector2)end.transform.position;
     public Vector2 Position => Vector3.Lerp(Start, End, 0.5f);
 
     public Vector2 StartA
@@ -153,8 +153,45 @@ public class Road
         Vector2 roadEndA = EndA - Direction * 0.1f;
         Vector2 roadEndB = EndB - Direction * 0.1f;
 
-        return Intersects(roadStartA, roadEndA, road.StartA, road.EndA).HasValue || Intersects(roadStartB, roadEndB, road.StartB, road.EndB).HasValue
-            || Intersects(roadStartA, roadEndA, road.StartB, road.EndB).HasValue || Intersects(roadStartB, roadEndB, road.StartA, road.EndA).HasValue;
+        return Helper.Intersects(roadStartA, roadEndA, road.StartA, road.EndA).HasValue || Helper.Intersects(roadStartB, roadEndB, road.StartB, road.EndB).HasValue
+            || Helper.Intersects(roadStartA, roadEndA, road.StartB, road.EndB).HasValue || Helper.Intersects(roadStartB, roadEndB, road.StartA, road.EndA).HasValue;
+    }
+
+    /// <summary>
+    /// Returns the closest point on this road.
+    /// </summary>
+    public Vector2 ClosestPoint(Vector2 position, bool? rightHandSide = null)
+    {
+        Vector2 leftPoint = Helper.ClosestPoint(position, Vector2.Lerp(StartA, Start, 0.5f), Vector2.Lerp(EndA, End, 0.5f));
+        if (rightHandSide == false)
+        {
+            return leftPoint;
+        }
+
+        Vector2 rightPoint = Helper.ClosestPoint(position, Vector2.Lerp(StartB, Start, 0.5f), Vector2.Lerp(EndB, End, 0.5f));
+        if (rightHandSide == true)
+        {
+            return rightPoint;
+        }
+
+        float leftDistance = Vector2.SqrMagnitude(leftPoint - position);
+        float rightDistance = Vector2.SqrMagnitude(rightPoint - position);
+        if (leftDistance < rightDistance)
+        {
+            return leftPoint;
+        }
+        else
+        {
+            return rightPoint;
+        }
+    }
+
+    /// <summary>
+    /// Returns true if this road has this position inside it.
+    /// </summary>
+    public bool Contains(Vector2 position)
+    {
+        return Helper.IsPointInRectangle(position, StartA, EndA, EndB, StartB);
     }
 
     /// <summary>
@@ -176,29 +213,8 @@ public class Road
         }
     }
 
-    //borrowed from http://csharphelper.com/blog/2014/08/determine-where-two-lines-intersect-in-c/
-    private Vector2? Intersects(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4)
+    public override string ToString()
     {
-        float dx12 = p2.x - p1.x;
-        float dy12 = p2.y - p1.y;
-        float dx34 = p4.x - p3.x;
-        float dy34 = p4.y - p3.y;
-        float denominator = (dy12 * dx34 - dx12 * dy34);
-        float t1 = ((p1.x - p3.x) * dy34 + (p3.y - p1.y) * dx34) / denominator;
-
-        //lines are perfectly parallel
-        if (float.IsInfinity(t1))
-        {
-            return null;
-        }
-
-        float t2 = ((p3.x - p1.x) * dy12 + (p1.y - p3.y) * dx12) / -denominator;
-        if ((t1 >= 0) && (t1 <= 1) && (t2 >= 0) && (t2 <= 1))
-        {
-            Vector2 point = new Vector2(p1.x + dx12 * t1, p1.y + dy12 * t1);
-            return point;
-        }
-
-        return null;
+        return $"Road {start.name} to {end.name}";
     }
 }

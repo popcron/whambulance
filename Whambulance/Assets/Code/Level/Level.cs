@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Level : MonoBehaviour
@@ -49,6 +50,39 @@ public class Level : MonoBehaviour
             Bounds bounds = block.Bounds;
             Gizmos.DrawWireCube(bounds.center, bounds.size);
         }
+    }
+
+    /// <summary>
+    /// Returns a road that has this position in it.
+    /// </summary>
+    public Road GetRoad(Vector2 position)
+    {
+        for (int i = 0; i < roads.Count; i++)
+        {
+            if (roads[i].Contains(position))
+            {
+                return roads[i];
+            }
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// Gets all of the roads that connected to this intersection.
+    /// </summary>
+    public List<Road> GetConnectedRoads(Intersection intersection)
+    {
+        List<Road> connected = new List<Road>();
+        for (int i = 0; i < roads.Count; i++)
+        {
+            if (roads[i].start == intersection || roads[i].end == intersection)
+            {
+                connected.Add(roads[i]);
+            }
+        }
+
+        return connected;
     }
 
     /// <summary>
