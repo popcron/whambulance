@@ -54,6 +54,7 @@ public class CarAI : MonoBehaviour
             Vector2 closestPoint = desiredRoad.ClosestPoint(vehicle.FrontPosition + vehicle.Rigidbody.velocity.normalized, true);
             Vector2 dirToPoint = closestPoint - vehicle.FrontPosition;
             float angle = -Vector2.SignedAngle(dirToPoint.normalized, vehicle.Rigidbody.velocity.normalized);
+            angle *= 0.75f;
 
             Debug.DrawRay(vehicle.FrontPosition, vehicle.ForwardDirection, Color.red);
             Debug.DrawRay(vehicle.FrontPosition, vehicle.Rigidbody.velocity.normalized, Color.cyan);

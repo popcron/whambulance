@@ -162,6 +162,16 @@ public class Road
     /// </summary>
     public Vector2 ClosestPoint(Vector2 position, bool? rightHandSide = null)
     {
+        if (rightHandSide != null)
+        {
+            Vector2 lookDir = ((StartA - StartB).normalized - Direction).normalized;
+            if (Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg > 45f)
+            {
+                //flip the right hand side parameter
+                rightHandSide = !rightHandSide;
+            }
+        }
+
         Vector2 leftPoint = Helper.ClosestPoint(position, Vector2.Lerp(StartA, Start, 0.5f), Vector2.Lerp(EndA, End, 0.5f));
         if (rightHandSide == false)
         {
@@ -201,6 +211,13 @@ public class Road
     {
         float t = UnityEngine.Random.Range(0f, 1f);
         Vector2 dir = end.transform.position - start.transform.position;
+        Vector2 lookDir = ((StartA - StartB).normalized - dir.normalized).normalized;
+        if (Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg > 45f)
+        {
+            //flip the right hand side parameter
+            rightHandSide = !rightHandSide;
+        }
+
         if (rightHandSide)
         {
             Vector2 right = Vector2.Lerp(StartB, Start, 0.5f);
