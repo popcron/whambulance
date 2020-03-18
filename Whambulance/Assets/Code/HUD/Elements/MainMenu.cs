@@ -9,7 +9,7 @@ public class MainMenu : HUDElement
     {
         get
         {
-            return !GameManager.IsPlaying;
+            return !GameManager.IsPlaying && !Advancements.Show;
         }
     }
 
@@ -24,6 +24,7 @@ public class MainMenu : HUDElement
 
     public void ClickedAdvancements()
     {
+        Advancements.Show = true;
     }
 
     public void ClickedQuit()
