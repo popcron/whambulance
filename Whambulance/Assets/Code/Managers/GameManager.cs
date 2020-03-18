@@ -2,6 +2,7 @@
 
 public class GameManager : MonoBehaviour
 {
+    private static GameSettings defaultSettings = new GameSettings();
     private static GameManager gameManager;
 
     public delegate void OnWon();
@@ -47,7 +48,15 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public static GameSettings Settings
     {
-        get => Manager.gameSettings.settings;
+        get
+        {
+            if (!Manager)
+            {
+                return defaultSettings;
+            }
+
+            return Manager.gameSettings.settings;
+        }
     }
 
     /// <summary>
@@ -55,7 +64,15 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public static bool IsConcluded
     {
-        get => Manager.isPlaying && (Manager.won || Manager.lost);
+        get
+        {
+            if (!Manager)
+            {
+                return false;
+            }
+
+            return Manager.isPlaying && (Manager.won || Manager.lost);
+        }
     }
 
     /// <summary>

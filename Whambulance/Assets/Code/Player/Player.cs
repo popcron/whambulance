@@ -1,7 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public static List<Player> All { get; set; } = new List<Player>();
+
     /// <summary>
     /// The current player in existence.
     /// </summary>
@@ -55,6 +58,12 @@ public class Player : MonoBehaviour
     private void OnEnable()
     {
         Instance = this;
+        All.Add(this);
+    }
+
+    private void OnDisable()
+    {
+        All.Remove(this);
     }
 
     private void Update()
@@ -118,6 +127,35 @@ public class Player : MonoBehaviour
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// Returns the closest player that overlaps with this position.
+    /// </summary>
+    public static Player Get(Vector2 position, float extraRadius = 0f)
+    {
+        int index = -1;
+        float closest = float.MaxValue;
+        for (int i = 0; i < All.Count; i++)
+        {
+            float distance = Vector2.SqrMagnitude(position - (Vector2)All[i].transform.position);
+            if (distance < closest)
+            {
+                closest = distance;
+                index = i;
+            }
+        }
+
+        if (index != -1)
+        {
+            Player player = All[index];
+            if (closest <= (player.radius + extraRadius) * (player.radius + extraRadius))
+            {
+                return player;
+            }
+        }
+
+        return null;
     }
 
     private void OnDrawGizmos()

@@ -3,12 +3,24 @@ using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
 {
+    private static ScoreBill defaultBill = new ScoreBill();
     private static ScoreManager scoreManager;
 
     /// <summary>
     /// Returns the current bill with all the scores.
     /// </summary>
-    public static ScoreBill Bill => Manager.bill;
+    public static ScoreBill Bill
+    {
+        get
+        {
+            if (!Manager)
+            {
+                return defaultBill;
+            }
+
+            return Manager.bill;
+        }
+    }
 
     private static ScoreManager Manager
     {
