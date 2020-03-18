@@ -5,12 +5,26 @@ public class CityBlock : Prop
     private Bounds bounds;
 
     /// <summary>
-    /// The cached bounds from when you do GetBounds() on this object.
+    /// The bounds of this city block.
     /// </summary>
     public Bounds Bounds
     {
-        get => bounds;
+        get
+        {
+            if (bounds == default)
+            {
+                bounds = GetBounds();
+            }
+
+            return bounds;
+        }
         private set => bounds = value;
+    }
+
+    private void OnEnable()
+    {
+        //cache thy bounds
+        GetBounds();
     }
 
     /// <summary>
@@ -26,5 +40,39 @@ public class CityBlock : Prop
         }
 
         return bounds;
+    }
+
+    /// <summary>
+    /// Returns a position that a pedestrian could spawn on.
+    /// </summary>
+    public Vector2 GetRandomPointOnSidewalk()
+    {
+        Bounds bounds = GetBounds();
+        Vector2 position;
+        do
+        {
+            float randomX = Random.Range(bounds.min.x, bounds.max.x);
+            float randomY = Random.Range(bounds.min.y, bounds.max.y);
+            position = new Vector2(randomX, randomY);
+        }
+        while (!IsPointOnSidewalk(position));
+        return position;
+    }
+
+    /// <summary>
+    /// Returns true when this position is not obstructed by anything inside this city block.
+    /// </summary>
+    public bool IsPointOnSidewalk(Vector2 position)
+    {
+        foreach (Collider2D collider in Colliders)
+        {
+            //inside a collider, so no
+            if (collider.bounds.Contains(position))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

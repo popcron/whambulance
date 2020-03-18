@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
     /// <summary>
     /// The direction that the player should be moving in based on inputs.
     /// </summary>
-    public Vector2 MovementInput
+    public virtual Vector2 MovementInput
     {
         get
         {
@@ -37,6 +37,17 @@ public class Player : MonoBehaviour
             float y = Input.GetAxisRaw("Vertical");
             Vector2 input = new Vector2(x, y);
             return input.normalized;
+        }
+    }
+
+    /// <summary>
+    /// Should this player be punching?
+    /// </summary>
+    public virtual bool Punch
+    {
+        get
+        {
+            return Input.GetButtonDown("Jump");
         }
     }
 
@@ -66,12 +77,23 @@ public class Player : MonoBehaviour
         All.Remove(this);
     }
 
+    private void OnDrawGizmos()
+    {
+        //So we can see and adjust the OverlapCircle gizmo
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position + transform.up, 0.8f);
+
+        //also show the player radius just in case
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, radius);
+    }
+
     private void Update()
     {
         //send inputs to the movement thingy
         Vector2 input = MovementInput;
         Movement.Input = input;
-        if (Input.GetButtonDown("Jump"))
+        if (Punch)
         {
             FindCar();
         }
@@ -158,14 +180,15 @@ public class Player : MonoBehaviour
         return null;
     }
 
-    private void OnDrawGizmos()
+    /// <summary>
+    /// Stealthly destroys all players from the scene.
+    /// </summary>
+    public static void DestroyAll()
     {
-        //So we can see and adjust the OverlapCircle gizmo
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position + transform.up, 0.8f);
-
-        //also show the player radius just in case
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, radius);
+        Player[] players = FindObjectsOfType<Player>();
+        foreach (Player player in players)
+        {
+            Destroy(player.gameObject);
+        }
     }
 }

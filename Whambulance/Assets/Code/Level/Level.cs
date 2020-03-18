@@ -155,10 +155,6 @@ public class Level : MonoBehaviour
         roads.Clear();
         intersections = GetComponentsInChildren<Intersection>();
         cityBlocks = GetComponentsInChildren<CityBlock>();
-        foreach (CityBlock block in cityBlocks)
-        {
-            block.GetBounds();
-        }
 
         //for every intersection, try to find a connecting intersection by "raycasting"
         foreach (Intersection intersection in intersections)

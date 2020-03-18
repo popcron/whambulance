@@ -5,6 +5,21 @@ public class TrafficManager : MonoBehaviour
 {
     private float nextSpawn;
 
+    private void OnEnable()
+    {
+        LevelManager.onCleared += OnCleared;
+    }
+
+    private void OnDisable()
+    {
+        LevelManager.onCleared -= OnCleared;
+    }
+
+    private void OnCleared()
+    {
+        Clear();
+    }
+
     private void Update()
     {
         if (Time.time > nextSpawn)
@@ -46,14 +61,15 @@ public class TrafficManager : MonoBehaviour
         }
 
         //find a road that is offscreen
-        Level level = FindObjectOfType<Level>();
-        if (level)
+        if (Level.All.Count > 0)
         {
+            Level level = Level.All[0];
             List<Road> roadsOffscreen = new List<Road>();
             foreach (Road road in level.Roads)
             {
                 if (!IsOnScreen(road.Start) && !IsOnScreen(road.End) && !IsOnScreen(road.Position))
                 {
+                    //this road is offscreen, good
                     if (!roadsOffscreen.Contains(road))
                     {
                         roadsOffscreen.Add(road);
@@ -103,7 +119,7 @@ public class TrafficManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Removes all vehicles from the level.
+    /// Removes all vehicles from the scene.
     /// </summary>
     public static void Clear()
     {

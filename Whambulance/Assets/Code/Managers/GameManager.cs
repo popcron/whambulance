@@ -110,17 +110,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public static void Play()
     {
-        Unpause();
-        Time.timeScale = 1f;
-        Manager.won = false;
-        Manager.lost = false;
+        Leave();
 
         LevelManager.Load(Settings.levelToLoad);
-        ScoreManager.Clear();
 
         IsPlaying = true;
         SpawnPlayer();
-
         onStartedPlaying?.Invoke();
     }
 
@@ -130,8 +125,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private static Player SpawnPlayer()
     {
-        DestroyPlayer();
-
         Player newPlayer = Instantiate(Settings.playerPrefab);
         newPlayer.name = Settings.playerPrefab.name;
 
@@ -147,33 +140,24 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Stealthly destroys the player from the game.
-    /// </summary>
-    public static void DestroyPlayer()
-    {
-        Player[] players = FindObjectsOfType<Player>();
-        foreach (Player player in players)
-        {
-            Destroy(player.gameObject);
-        }
-    }
-
-    /// <summary>
     /// Makes the game stop playing.
     /// </summary>
     public static void Leave()
     {
         LevelManager.Clear();
         ScoreManager.Clear();
+        Player.DestroyAll();
 
         Time.timeScale = 1f;
         Manager.won = false;
         Manager.lost = false;
-        DestroyPlayer();
         Unpause();
-        IsPlaying = false;
 
-        onStoppedPlaying?.Invoke();
+        if (IsPlaying)
+        {
+            IsPlaying = false;
+            onStoppedPlaying?.Invoke();
+        }
     }
 
     /// <summary>
