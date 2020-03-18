@@ -88,7 +88,7 @@ public class Player : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, radius);
     }
 
-    private void Update()
+    public virtual void Update()
     {
         //send inputs to the movement thingy
         Vector2 input = MovementInput;

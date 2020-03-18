@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class CityBlock : Prop
 {
@@ -56,7 +58,6 @@ public class CityBlock : Prop
             }
 
             //draw circles around waypoints that are connected
-            const float ConnectedDistance = 1f;
             foreach (Waypoint a in waypoints)
             {
                 foreach (Waypoint b in waypoints)
@@ -64,7 +65,7 @@ public class CityBlock : Prop
                     if (a != b)
                     {
                         //very close to each other, thats considered connected
-                        if (Vector2.SqrMagnitude(a.transform.position - b.transform.position) < ConnectedDistance * ConnectedDistance)
+                        if (Vector2.SqrMagnitude(a.transform.position - b.transform.position) < Waypoint.ConnectedDistance * Waypoint.ConnectedDistance)
                         {
                             Gizmos.DrawLine(a.transform.position, b.transform.position);
                         }
@@ -72,6 +73,63 @@ public class CityBlock : Prop
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// Returns the waypoint that is closest to this position.
+    /// </summary>
+    public Waypoint ClosestWaypoint(Vector2 position, float? maxDistance = null)
+    {
+        int index = -1;
+        float closest = float.MaxValue;
+        for (int i = 0; i < waypoints.Length; i++)
+        {
+            float distance = Vector2.SqrMagnitude((Vector2)waypoints[i].transform.position - position);
+            if (closest > distance)
+            {
+                if (maxDistance == null || distance < maxDistance * maxDistance)
+                {
+                    closest = distance;
+                    index = i;
+                }
+            }
+        }
+
+        if (index != -1)
+        {
+            return waypoints[index];
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// Returns all of the waypoints that are connected to this one.
+    /// </summary>
+    public List<Waypoint> GetConnectedWaypoints(Waypoint waypoint)
+    {
+        //find all of the origin waypoints that are grouped up
+        //then find all of the waypoints that are neighbours of these origins
+        List<Waypoint> neighbours = new List<Waypoint>();
+        foreach (Waypoint wp in waypoints)
+        {
+            float distance = Vector2.SqrMagnitude(wp.transform.position - waypoint.transform.position);
+            if (distance < Waypoint.ConnectedDistance * Waypoint.ConnectedDistance)
+            {
+                int index = Array.IndexOf(waypoints, waypoint);
+                if (index > 0)
+                {
+                    neighbours.Add(waypoints[index - 1]);
+                }
+
+                if (index < waypoints.Length - 1)
+                {
+                    neighbours.Add(waypoints[index + 1]);
+                }
+            }
+        }
+
+        return neighbours;
     }
 
     /// <summary>
@@ -98,8 +156,8 @@ public class CityBlock : Prop
         Vector2 position;
         do
         {
-            float randomX = Random.Range(bounds.min.x, bounds.max.x);
-            float randomY = Random.Range(bounds.min.y, bounds.max.y);
+            float randomX = UnityEngine.Random.Range(bounds.min.x, bounds.max.x);
+            float randomY = UnityEngine.Random.Range(bounds.min.y, bounds.max.y);
             position = new Vector2(randomX, randomY);
         }
         while (!IsPointOnSidewalk(position));

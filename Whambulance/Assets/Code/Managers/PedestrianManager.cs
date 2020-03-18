@@ -37,8 +37,7 @@ public class PedestrianManager : MonoBehaviour
             Pedestrian randomPedestrian = GameManager.Settings.pedestrians[Random.Range(0, GameManager.Settings.pedestrians.Count)];
             Pedestrian newPedestrian = Instantiate(randomPedestrian, position, Quaternion.identity);
             newPedestrian.name = randomPedestrian.name;
-
-            Debug.DrawLine(position, position + Vector2.up * 0.1f, Color.cyan, 2f);
+            newPedestrian.CityBlock = randomBlock;
         }
     }
 
