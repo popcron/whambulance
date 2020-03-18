@@ -92,13 +92,6 @@ public class Level : MonoBehaviour
             Gizmos.color = new Color(1f, 1f, 1f, 0.15f);
             Gizmos.DrawLine(road.Start, road.End);
         }
-
-        Gizmos.color = Color.black;
-        foreach (CityBlock block in cityBlocks)
-        {
-            Bounds bounds = block.Bounds;
-            Gizmos.DrawWireCube(bounds.center, bounds.size);
-        }
     }
 
     /// <summary>
@@ -155,10 +148,6 @@ public class Level : MonoBehaviour
         roads.Clear();
         intersections = GetComponentsInChildren<Intersection>();
         cityBlocks = GetComponentsInChildren<CityBlock>();
-        foreach (CityBlock block in cityBlocks)
-        {
-            block.GetBounds();
-        }
 
         //for every intersection, try to find a connecting intersection by "raycasting"
         foreach (Intersection intersection in intersections)

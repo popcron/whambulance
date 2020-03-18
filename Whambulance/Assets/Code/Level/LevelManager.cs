@@ -3,6 +3,19 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
+    public delegate void OnLevelLoaded(Level level);
+    public delegate void OnCleared();
+
+    /// <summary>
+    /// Happens when a level is loaded.
+    /// </summary>
+    public static OnLevelLoaded onLevelLoaded;
+
+    /// <summary>
+    /// Happens when all levels are cleared.
+    /// </summary>
+    public static OnCleared onCleared;
+
     /// <summary>
     /// Loads a level by name and returns a new instance if successfull.
     /// </summary>
@@ -17,6 +30,7 @@ public class LevelManager : MonoBehaviour
             {
                 Level newLevel = Instantiate(level);
                 newLevel.name = level.name;
+                onLevelLoaded?.Invoke(newLevel);
                 return newLevel;
             }
         }
@@ -35,5 +49,7 @@ public class LevelManager : MonoBehaviour
         {
             Destroy(level.gameObject);
         }
+
+        onCleared?.Invoke();
     }
 }

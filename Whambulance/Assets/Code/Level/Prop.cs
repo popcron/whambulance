@@ -2,6 +2,8 @@
 
 public class Prop : MonoBehaviour
 {
+    private Collider2D[] colliders = null;
+
     /// <summary>
     /// Returns true when the player overlaps with any of the colliders of this object.
     /// </summary>
@@ -71,10 +73,16 @@ public class Prop : MonoBehaviour
     /// <summary>
     /// All the colliders that belong to this prop.
     /// </summary>
-    public Collider2D[] Colliders { get; private set; }
-
-    private void Awake()
+    public Collider2D[] Colliders
     {
-        Colliders = GetComponentsInChildren<Collider2D>();
+        get
+        {
+            if (colliders == null)
+            {
+                colliders = GetComponentsInChildren<Collider2D>();
+            }
+
+            return colliders;
+        }
     }
 }
