@@ -22,6 +22,10 @@ public class MainMenu : HUDElement
     {
     }
 
+    public void ClickedAdvancements()
+    {
+    }
+
     public void ClickedQuit()
     {
         GameManager.Quit();
