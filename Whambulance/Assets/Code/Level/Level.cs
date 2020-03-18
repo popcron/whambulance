@@ -92,13 +92,6 @@ public class Level : MonoBehaviour
             Gizmos.color = new Color(1f, 1f, 1f, 0.15f);
             Gizmos.DrawLine(road.Start, road.End);
         }
-
-        Gizmos.color = Color.black;
-        foreach (CityBlock block in cityBlocks)
-        {
-            Bounds bounds = block.Bounds;
-            Gizmos.DrawWireCube(bounds.center, bounds.size);
-        }
     }
 
     /// <summary>

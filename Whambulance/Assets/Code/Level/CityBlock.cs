@@ -3,6 +3,7 @@
 public class CityBlock : Prop
 {
     private Bounds bounds;
+    private Waypoint[] waypoints = { };
 
     /// <summary>
     /// The bounds of this city block.
@@ -21,10 +22,56 @@ public class CityBlock : Prop
         private set => bounds = value;
     }
 
+    /// <summary>
+    /// The pedestrian waypoints.
+    /// </summary>
+    public Waypoint[] Waypoints => waypoints;
+
+    private void Awake()
+    {
+        waypoints = GetComponentsInChildren<Waypoint>();
+    }
+
     private void OnEnable()
     {
         //cache thy bounds
         GetBounds();
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.black;
+        Gizmos.DrawWireCube(Bounds.center, Bounds.size);
+
+        Gizmos.color = Color.white;
+        waypoints = GetComponentsInChildren<Waypoint>();
+        if (waypoints.Length > 2)
+        {
+            //draw lines
+            for (int i = 0; i < waypoints.Length - 1; i++)
+            {
+                Waypoint a = waypoints[i];
+                Waypoint b = waypoints[i + 1];
+                Gizmos.DrawLine(a.transform.position, b.transform.position);
+            }
+
+            //draw circles around waypoints that are connected
+            const float ConnectedDistance = 1f;
+            foreach (Waypoint a in waypoints)
+            {
+                foreach (Waypoint b in waypoints)
+                {
+                    if (a != b)
+                    {
+                        //very close to each other, thats considered connected
+                        if (Vector2.SqrMagnitude(a.transform.position - b.transform.position) < ConnectedDistance * ConnectedDistance)
+                        {
+                            Gizmos.DrawLine(a.transform.position, b.transform.position);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /// <summary>
