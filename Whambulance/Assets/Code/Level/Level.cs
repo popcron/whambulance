@@ -5,6 +5,11 @@ public class Level : MonoBehaviour
 {
     private static double nextUpdate = 0f;
 
+    /// <summary>
+    /// List of all levels loaded into the scene right now.
+    /// </summary>
+    public static List<Level> All { get; set; } = new List<Level>();
+
     [SerializeField]
     private List<Road> roads = new List<Road>();
 
@@ -14,11 +19,34 @@ public class Level : MonoBehaviour
     [SerializeField]
     private CityBlock[] cityBlocks = { };
 
+    /// <summary>
+    /// All of the roads in this level.
+    /// </summary>
     public List<Road> Roads => roads;
+
+    /// <summary>
+    /// All of the intersections in this level.
+    /// </summary>
+    public Intersection[] Intersections => intersections;
+
+    /// <summary>
+    /// All of the city blocks in this level.
+    /// </summary>
+    public CityBlock[] CityBlocks => cityBlocks;
 
     private void Awake()
     {
         BuildRoadLayout();
+    }
+
+    private void OnEnable()
+    {
+        All.Add(this);
+    }
+
+    private void OnDisable()
+    {
+        All.Remove(this);
     }
 
     private void OnDrawGizmos()
@@ -112,7 +140,7 @@ public class Level : MonoBehaviour
     }
 
     /// <summary>
-    /// Asks this level to rebuild the layout for the roads.
+    /// Asks this level to rebuild the layout for the roads. Very expensive.
     /// </summary>
     public void BuildRoadLayout()
     {
