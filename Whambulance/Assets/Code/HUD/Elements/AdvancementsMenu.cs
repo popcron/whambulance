@@ -56,15 +56,11 @@ public class AdvancementsMenu : HUDElement
     {
         Clear();
 
-        int entries = 10;
-        for (int i = 0; i < entries; i++)
+        for (int i = 0; i < GameManager.Settings.advancements.Count; i++)
         {
+            Advancement advancement = GameManager.Settings.advancements[i].advancement;
             RectTransform item = Instantiate(templatePrefab, contentTransform);
             item.anchoredPosition = new Vector2(0f, i * -templatePrefab.sizeDelta.y);
-
-            string advancement = "Bla bla bla";
-            string description = "Ooga booga";
-            int cost = 20000;
 
             //get the kids
             TMP_Text nameText = item.Find("Content/Name").GetComponent<TMP_Text>();
@@ -75,34 +71,35 @@ public class AdvancementsMenu : HUDElement
             TMP_Text costText = item.Find("Content/Buy/Cost").GetComponent<TMP_Text>();
 
             //assign information
-            nameText.text = advancement;
-            descriptionText.text = description;
-            //icon.sprite = null;
+            nameText.text = advancement.displayName;
+            descriptionText.text = advancement.description;
+            icon.sprite = advancement.icon;
 
             //show cost
-            costText.text = cost.ToString("C");
+            costText.text = advancement.cost.ToString("C");
 
             //color the button based on the cost
-            if (HasAdvancement(advancement))
+            if (HasAdvancement(advancement.uniqueId))
             {
                 buyImage.color = alreadyHas;
-                icon.color = Color.gray;
+                icon.color = alreadyHas;
+                nameText.color = alreadyHas;
+                descriptionText.color = alreadyHas;
             }
             else
             {
-                buyImage.color = GameManager.Currency >= cost ? canBuy : tooExpensive;
-                icon.color = Color.white;
+                buyImage.color = GameManager.Currency >= advancement.cost ? canBuy : tooExpensive;
             }
 
             //sub to the button
             buyButton.onClick.RemoveAllListeners();
-            if (GameManager.Currency >= cost && !HasAdvancement(advancement))
+            if (GameManager.Currency >= advancement.cost && !HasAdvancement(advancement.uniqueId))
             {
                 buyButton.interactable = true;
                 buyButton.onClick.AddListener(() =>
                 {
                     //this is called an anonymous method/delegate
-                    UnlockAdvancement(advancement);
+                    UnlockAdvancement(advancement.uniqueId);
                     FillInAdvancements();
                 });
             }
@@ -113,7 +110,7 @@ public class AdvancementsMenu : HUDElement
         }
 
         //resize the scroll view content
-        contentTransform.sizeDelta = new Vector2(contentTransform.sizeDelta.x, entries * templatePrefab.sizeDelta.y);
+        contentTransform.sizeDelta = new Vector2(contentTransform.sizeDelta.x, GameManager.Settings.advancements.Count * templatePrefab.sizeDelta.y);
     }
 
     private void Update()
