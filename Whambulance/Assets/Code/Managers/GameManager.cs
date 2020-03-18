@@ -64,8 +64,14 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public static int Currency
     {
-        get => PlayerPrefs.GetInt("currency", 0);
-        set => PlayerPrefs.SetInt("currency", value);
+        get
+        {
+            return PlayerPrefs.GetInt("currency", 0);
+        }
+        set
+        {
+            PlayerPrefs.SetInt("currency", Mathf.Clamp(value, 0, 999999999));
+        }
     }
 
     /// <summary>
