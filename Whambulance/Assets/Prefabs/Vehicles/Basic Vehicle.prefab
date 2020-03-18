@@ -120,7 +120,7 @@ MonoBehaviour:
   breakSpeed: 16
   steerSpeed: 3
   maxSteerAngle: 60
-  accelerationSpeed: 3
+  accelerationSpeed: 16
   movementSpeed: 2
 --- !u!114 &4911437344630196801
 MonoBehaviour:

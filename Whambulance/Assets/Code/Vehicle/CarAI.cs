@@ -22,7 +22,25 @@ public class CarAI : MonoBehaviour
     private void FixedUpdate()
     {
         //drive forward until an intersection is hit
-        Intersection intersectionAhead = Intersection.Get(vehicle.FrontPosition);
+        Intersection intersectionAhead = Intersection.Get(vehicle.FrontPosition + vehicle.Forward);
+        if (intersectionAhead)
+        {
+            float sqrDistance = Vector2.SqrMagnitude(intersectionAhead.transform.position - transform.position);
+
+            //only if not inside an intersection
+            if (!intersection)
+            {
+                //intersection ahead, slow down a bit
+                vehicle.Gas = Mathf.MoveTowards(vehicle.Gas, 0.3f, Time.fixedDeltaTime);
+            }
+
+            //too far, pretend its null
+            if (sqrDistance > 2f * 2f)
+            {
+                intersectionAhead = null;
+            }
+        }
+
         if (intersection != intersectionAhead)
         {
             intersection = intersectionAhead;
@@ -54,15 +72,14 @@ public class CarAI : MonoBehaviour
             Vector2 velocity = vehicle.Rigidbody.velocity.normalized;
             Vector2 closestPoint = desiredRoad.ClosestPoint(vehicle.FrontPosition + velocity, velocity);
             Vector2 dirToPoint = closestPoint - vehicle.FrontPosition;
-            float angle = -Vector2.SignedAngle(dirToPoint.normalized, velocity);
-            angle *= 0.75f;
+            float angle = Vector2.Dot(dirToPoint.normalized, vehicle.Right);
+            angle *= 90f;
 
-            Debug.DrawRay(vehicle.FrontPosition, vehicle.ForwardDirection, Color.red);
+            Debug.DrawRay(vehicle.FrontPosition, vehicle.Forward, Color.red);
             Debug.DrawRay(vehicle.FrontPosition, velocity, Color.cyan);
-            Debug.DrawLine(vehicle.FrontPosition, closestPoint, Color.black);
+            Debug.DrawRay(vehicle.FrontPosition, dirToPoint, Color.black);
 
-            Vector2 right = new Vector2(vehicle.ForwardDirection.y, vehicle.ForwardDirection.x);
-            Debug.DrawRay(vehicle.FrontPosition, right * angle / vehicle.MaxSteerAngle, Color.yellow);
+            Debug.DrawRay(vehicle.FrontPosition, vehicle.Right * angle / vehicle.MaxSteerAngle, Color.yellow);
 
             vehicle.Steer = angle;
             vehicle.Gas = Mathf.Lerp(vehicle.Gas, 1f, Time.fixedDeltaTime);

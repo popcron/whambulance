@@ -67,7 +67,20 @@ public class Vehicle : MonoBehaviour
     /// <summary>
     /// Returns the forward direction of this vehicle in world space.
     /// </summary>
-    public Vector2 ForwardDirection => transform.TransformDirection(front.normalized);
+    public Vector2 Forward => transform.TransformDirection(front.normalized);
+
+    /// <summary>
+    /// Returns the forward direction of this vehicle in world space.
+    /// </summary>
+    public Vector2 Right
+    {
+        get
+        {
+            Vector2 forward = front.normalized;
+            float angle = Mathf.Atan2(forward.y, forward.x) + 90f * Mathf.Deg2Rad;
+            return transform.TransformDirection(new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)));
+        }
+    }
 
     /// <summary>
     /// The steering amount in degrees.
@@ -123,8 +136,15 @@ public class Vehicle : MonoBehaviour
             speed = Mathf.MoveTowards(speed, Gas, Time.fixedDeltaTime * breakSpeed);
         }
 
-        Rigidbody.velocity = ForwardDirection * Mathf.Lerp(-movementSpeed * 0.5f, movementSpeed, speed);
-        angle += steer * Time.fixedDeltaTime * steerSpeed;
+        // Apply a force that attempts to reach our target velocity
+        Vector2 targetVelocity = Forward * Mathf.Lerp(-movementSpeed * 0.5f, movementSpeed, speed);
+        Vector2 velocityChange = (targetVelocity - Rigidbody.velocity);
+        velocityChange.x = Mathf.Clamp(velocityChange.x, -movementSpeed, movementSpeed);
+        velocityChange.y = Mathf.Clamp(velocityChange.y, -movementSpeed, movementSpeed);
+        Rigidbody.AddForce(velocityChange, ForceMode2D.Impulse);
+
+        float speedMultiplier = Mathf.Clamp01(Rigidbody.velocity.magnitude / movementSpeed * 0.75f);
+        angle += steer * Time.fixedDeltaTime * steerSpeed * speedMultiplier;
         Rigidbody.SetRotation(angle);
     }
 
