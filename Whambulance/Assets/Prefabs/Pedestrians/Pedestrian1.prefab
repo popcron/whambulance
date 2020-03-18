@@ -217,6 +217,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   carriedObjectRoot: {fileID: 7351508285212589555}
   radius: 0.15
+  personalBubbleRadius: 0.6
+  minThinkDuration: 4
+  maxThinkDuration: 6
+  minWalkDuration: 12
+  maxWalkDuration: 16
+  chanceToTalk: 12
 --- !u!114 &8553454928102178897
 MonoBehaviour:
   m_ObjectHideFlags: 0

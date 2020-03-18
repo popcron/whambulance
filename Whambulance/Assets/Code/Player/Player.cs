@@ -52,9 +52,9 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// The rotation that the player should be looking at based on movement input.
+    /// The rotation in degrees that the player should be looking at.
     /// </summary>
-    public float Rotation { get; private set; }
+    public float Rotation { get; protected set; }
 
     /// <summary>
     /// The objective that is being carried if any.
@@ -77,7 +77,7 @@ public class Player : MonoBehaviour
         All.Remove(this);
     }
 
-    private void OnDrawGizmos()
+    public virtual void OnDrawGizmos()
     {
         //So we can see and adjust the OverlapCircle gizmo
         Gizmos.color = Color.red;
