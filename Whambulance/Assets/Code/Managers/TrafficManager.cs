@@ -54,7 +54,10 @@ public class TrafficManager : MonoBehaviour
             {
                 if (!IsOnScreen(road.Start) && !IsOnScreen(road.End) && !IsOnScreen(road.Position))
                 {
-                    roadsOffscreen.Add(road);
+                    if (!roadsOffscreen.Contains(road))
+                    {
+                        roadsOffscreen.Add(road);
+                    }
                 }
             }
 
@@ -63,7 +66,34 @@ public class TrafficManager : MonoBehaviour
                 Road randomRoad = roadsOffscreen[Random.Range(0, roadsOffscreen.Count)];
                 Vehicle randomVehicle = GameManager.Settings.vehicles[Random.Range(0, GameManager.Settings.vehicles.Count)];
 
+                //get random point on road
                 Vector2 positionOnRoad = randomRoad.GetRandomPosition(true);
+                while (true)
+                {
+                    //ensure that nothing is in the way
+                    bool valid = true;
+                    foreach (Vehicle vehicle in Vehicle.All)
+                    {
+                        float distance = Vector2.SqrMagnitude((Vector2)vehicle.transform.position - positionOnRoad);
+                        if (distance < 5f * 5f)
+                        {
+                            //theres another car that is too close
+                            valid = true;
+                            break;
+                        }
+                    }
+
+                    if (valid)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        //postion wasnt changed, so get new position
+                        positionOnRoad = randomRoad.GetRandomPosition(true);
+                    }
+                }
+
                 Vector2 roadDir = randomRoad.Direction;
                 float lookAngle = Mathf.Atan2(roadDir.y, roadDir.x) * Mathf.Rad2Deg;
                 Quaternion lookDirection = Quaternion.Euler(0f, 0f, lookAngle);

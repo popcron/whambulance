@@ -3,13 +3,16 @@ using UnityEngine;
 
 public class CarAI : MonoBehaviour
 {
-    private static Collider2D[] results = new Collider2D[4];
+    private static RaycastHit2D[] results = new RaycastHit2D[4];
 
     [SerializeField]
     private float obstacleCheckRadius = 1f;
 
     [SerializeField]
     private float obstacleCheckDistance = 2f;
+
+    [SerializeField]
+    private float obstacleCheckStart = 0.5f;
 
     private Vehicle vehicle;
     private Level level;
@@ -35,7 +38,15 @@ public class CarAI : MonoBehaviour
     {
         vehicle = GetComponent<Vehicle>();
         Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(vehicle.FrontPosition + vehicle.Forward * obstacleCheckDistance, obstacleCheckRadius);
+
+        Vector2 origin = vehicle.FrontPosition + vehicle.Forward * obstacleCheckStart;
+        Vector2 end = vehicle.FrontPosition + vehicle.Forward * (obstacleCheckStart + obstacleCheckDistance);
+        int circles = Mathf.CeilToInt(obstacleCheckDistance * 8f);
+        for (int i = 0; i < circles; i++)
+        {
+            float t = i / (circles - 1f);
+            Gizmos.DrawWireSphere(Vector2.Lerp(origin, end, t), obstacleCheckRadius);
+        }
     }
 
     private void FixedUpdate()
@@ -143,10 +154,11 @@ public class CarAI : MonoBehaviour
             }
 
             //check if theres an obstacle ahead
-            int hits = Physics2D.OverlapCircleNonAlloc(vehicle.FrontPosition + vehicle.Forward * obstacleCheckDistance, obstacleCheckRadius, results);
+            Vector2 checkOrigin = vehicle.FrontPosition + vehicle.Forward * obstacleCheckStart;
+            int hits = Physics2D.CircleCastNonAlloc(checkOrigin, obstacleCheckRadius, vehicle.Forward, results, obstacleCheckDistance);
             for (int i = 0; i < hits; i++)
             {
-                Collider2D collision = results[i];
+                RaycastHit2D collision = results[i];
                 if (collision.transform.IsChildOf(transform))
                 {
                     //our self, ignore
@@ -154,7 +166,9 @@ public class CarAI : MonoBehaviour
                 }
 
                 //slow down yo
-                gas = 0;
+                float distance = Vector2.Distance(collision.point, checkOrigin);
+                distance = Mathf.Clamp01(1f - distance / obstacleCheckDistance);
+                gas = Mathf.MoveTowards(gas, 0f, distance);
                 break;
             }
 
@@ -167,7 +181,7 @@ public class CarAI : MonoBehaviour
             }
 
             //been standing still for too long!
-            if (standstillTime > 3f)
+            if (standstillTime > 4f)
             {
                 reverseOut = true;
                 standstillTime = 0f;

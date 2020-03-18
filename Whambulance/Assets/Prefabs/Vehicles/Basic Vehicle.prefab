@@ -134,8 +134,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ba7aaae9fd83a746938b838c836c660, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obstacleCheckRadius: 0.5
-  obstacleCheckDistance: 0.5
+  obstacleCheckRadius: 0.4
+  obstacleCheckDistance: 0.8
+  obstacleCheckStart: 0.5
 --- !u!1 &3181353587694504193
 GameObject:
   m_ObjectHideFlags: 0
