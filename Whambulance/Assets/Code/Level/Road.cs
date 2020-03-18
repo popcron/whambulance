@@ -277,9 +277,14 @@ public class Road
     /// <summary>
     /// Returns a random position on this road.
     /// </summary>
-    public Vector2 GetRandomPosition(bool rightHandSide)
+    public Vector2 GetRandomPosition(bool? rightHandSide = null)
     {
         float t = UnityEngine.Random.Range(0f, 1f);
+        if (rightHandSide == null)
+        {
+            rightHandSide = UnityEngine.Random.Range(0f, 1f) > 0.5f;
+        }
+
         Vector2 dir = end.transform.position - start.transform.position;
         Vector2 lookDir = ((StartA - StartB).normalized - dir.normalized).normalized;
         if (Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg > 45f)
@@ -288,7 +293,7 @@ public class Road
             rightHandSide = !rightHandSide;
         }
 
-        if (rightHandSide)
+        if (rightHandSide == true)
         {
             Vector2 right = Vector2.Lerp(StartB, Start, 0.5f);
             return right + dir * t;
