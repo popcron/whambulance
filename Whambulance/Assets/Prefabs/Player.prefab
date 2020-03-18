@@ -230,8 +230,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 3
-  accelerationFactor: 80
-  decelerationFactor: 12
+  accelerationFactor: 0.6
+  decelerationFactor: 0.2
 --- !u!50 &8553454928102178894
 Rigidbody2D:
   serializedVersion: 4

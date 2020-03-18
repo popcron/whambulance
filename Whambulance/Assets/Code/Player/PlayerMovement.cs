@@ -35,10 +35,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //get velocity, lerp it to destination velocity, then assign it back
-        Vector3 velocity = Rigidbody.velocity;
         float acceleration = IsMoving ? accelerationFactor : decelerationFactor;
-        velocity = Vector3.Lerp(velocity, Input.normalized * movementSpeed, Time.fixedDeltaTime * acceleration);
-        Rigidbody.velocity = velocity;
+        Vector2 target = Input.normalized * movementSpeed;
+        Vector2 velocityChange = target - Rigidbody.velocity;
+
+        //apply a force that attempts to reach the target
+        velocityChange.x = Mathf.Clamp(velocityChange.x, -acceleration, acceleration);
+        velocityChange.y = Mathf.Clamp(velocityChange.y, -acceleration, acceleration);
+        Rigidbody.AddForce(velocityChange * Rigidbody.mass, ForceMode2D.Impulse);
     }
 }
