@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class Road : IEquatable<Road>
+public class Road
 {
     public Intersection start;
     public Intersection end;
@@ -246,7 +246,9 @@ public class Road : IEquatable<Road>
         {
             if (Vector2.Angle(laneDirection.Value, direction) < 90f)
             {
-                return Helper.ClosestPoint(position, Vector2.Lerp(StartA, Start, 0.5f), Vector2.Lerp(EndA, End, 0.5f));
+                Vector2 start = Vector2.Lerp(StartA, Start, 0.5f);
+                Vector2 end = Vector2.Lerp(EndA, End, 0.5f);
+                return Helper.ClosestPoint(position, start, end);
             }
         }
 
@@ -255,7 +257,9 @@ public class Road : IEquatable<Road>
         {
             if (Vector2.Angle(laneDirection.Value, direction) < 90f)
             {
-                return Helper.ClosestPoint(position, Vector2.Lerp(StartB, Start, 0.5f), Vector2.Lerp(EndB, End, 0.5f));
+                Vector2 start = Vector2.Lerp(StartB, Start, 0.5f);
+                Vector2 end = Vector2.Lerp(EndB, End, 0.5f);
+                return Helper.ClosestPoint(position, start, end);
             }
         }
 
@@ -301,34 +305,65 @@ public class Road : IEquatable<Road>
         return $"Road {start.name} to {end.name}";
     }
 
-    public override bool Equals(object obj)
-    {
-        return Equals(obj as Road);
-    }
-
-    public bool Equals(Road other)
-    {
-        if (other != null)
-        {
-            if (EqualityComparer<Intersection>.Default.Equals(start, other.start) || EqualityComparer<Intersection>.Default.Equals(start, other.end))
-            {
-                if (EqualityComparer<Intersection>.Default.Equals(end, other.start) || EqualityComparer<Intersection>.Default.Equals(end, other.end))
-                {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
     public static bool operator ==(Road left, Road right)
     {
-        return EqualityComparer<Road>.Default.Equals(left, right);
+        bool leftNull = ReferenceEquals(left, null);
+        if (!leftNull)
+        {
+            leftNull = !left.start || !left.end;
+        }
+
+        bool rightNull = ReferenceEquals(right, null);
+        if (!rightNull)
+        {
+            rightNull = !right.start || !right.end;
+        }
+
+        if (leftNull && rightNull)
+        {
+            return true;
+        }
+        else if (leftNull != rightNull)
+        {
+            return false;
+        }
+        else
+        {
+            //a == b and b == a
+            bool startMatch = left.start == right.start || left.start == right.end;
+            bool endMatch = left.end == right.start || left.end == right.end;
+            return startMatch && endMatch;
+        }
     }
 
     public static bool operator !=(Road left, Road right)
     {
-        return !(left == right);
+        bool leftNull = ReferenceEquals(left, null);
+        if (!leftNull)
+        {
+            leftNull = !left.start || !left.end;
+        }
+
+        bool rightNull = ReferenceEquals(right, null);
+        if (!rightNull)
+        {
+            rightNull = !right.start || !right.end;
+        }
+
+        if (leftNull && rightNull)
+        {
+            return false;
+        }
+        else if (leftNull != rightNull)
+        {
+            return true;
+        }
+        else
+        {
+            //a != b or b != a
+            bool startMatch = left.start == right.start || left.start == right.end;
+            bool endMatch = left.end == right.start || left.end == right.end;
+            return !startMatch || !endMatch;
+        }
     }
 }

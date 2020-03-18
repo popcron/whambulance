@@ -24,6 +24,8 @@ public class Vehicle : MonoBehaviour
     private float movementSpeed = 4f;
 
     private float steer;
+    private float lerpedSteer;
+
     private float angle;
     private float speed;
 
@@ -127,24 +129,31 @@ public class Vehicle : MonoBehaviour
     private void FixedUpdate()
     {
         //apply movement
-        if (speed < Gas)
+        float gas = (Gas + 1) / 2f;
+        if (speed <= gas)
         {
-            speed = Mathf.MoveTowards(speed, Gas, Time.fixedDeltaTime * accelerationSpeed);
+            speed = Mathf.MoveTowards(speed, gas, Time.fixedDeltaTime * accelerationSpeed);
         }
         else
         {
-            speed = Mathf.MoveTowards(speed, Gas, Time.fixedDeltaTime * breakSpeed);
+            speed = Mathf.MoveTowards(speed, gas, Time.fixedDeltaTime * breakSpeed);
         }
 
         // Apply a force that attempts to reach our target velocity
-        Vector2 targetVelocity = Forward * Mathf.Lerp(-movementSpeed * 0.5f, movementSpeed, speed);
+        Vector2 targetVelocity = Forward * Mathf.Lerp(-movementSpeed, movementSpeed, speed);
+        if (speed < 0f)
+        {
+            targetVelocity *= 0.5f;
+        }
+
         Vector2 velocityChange = (targetVelocity - Rigidbody.velocity);
         velocityChange.x = Mathf.Clamp(velocityChange.x, -movementSpeed, movementSpeed);
         velocityChange.y = Mathf.Clamp(velocityChange.y, -movementSpeed, movementSpeed);
         Rigidbody.AddForce(velocityChange, ForceMode2D.Impulse);
 
         float speedMultiplier = Mathf.Clamp01(Rigidbody.velocity.magnitude / movementSpeed * 0.75f);
-        angle += steer * Time.fixedDeltaTime * steerSpeed * speedMultiplier;
+        lerpedSteer = Mathf.Lerp(lerpedSteer, steer, Time.fixedDeltaTime * 4f);
+        angle += lerpedSteer * Time.fixedDeltaTime * steerSpeed * speedMultiplier;
         Rigidbody.SetRotation(angle);
     }
 

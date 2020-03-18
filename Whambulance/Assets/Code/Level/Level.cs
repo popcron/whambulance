@@ -5,13 +5,13 @@ public class Level : MonoBehaviour
 {
     private static double nextUpdate = 0f;
 
-    [SerializeField, HideInInspector]
+    [SerializeField]
     private List<Road> roads = new List<Road>();
 
-    [SerializeField, HideInInspector]
+    [SerializeField]
     private Intersection[] intersections = { };
 
-    [SerializeField, HideInInspector]
+    [SerializeField]
     private CityBlock[] cityBlocks = { };
 
     public List<Road> Roads => roads;
