@@ -10,7 +10,7 @@ public class CarHit : MonoBehaviour
     public float launchSpeed;
     public float spriteGrowth;
     public float decelModifier;
-    [Range(1f, 2.5f)]
+    [Range(0.01f, 2.5f)]
     public float objectMass;
 
 
@@ -35,6 +35,8 @@ public class CarHit : MonoBehaviour
     {
         decelModifier = originalDecel;
         carMoveFrames = 90;
+        didCollide = false;
+
         //finds the direction from the center of the player versus the center of the vehicle hit
         Vector2 launchDirection = -(player.transform.position - transform.position).normalized;
         Vector2 distanceFromCar = player.transform.position - transform.position;
@@ -46,6 +48,8 @@ public class CarHit : MonoBehaviour
 
         //adds an increase in velocity based on the direction
         carBody.velocity += (launchDirection * new Vector2(launchSpeed - Mathf.Abs(distanceFromCar.x), launchSpeed - Mathf.Abs(distanceFromCar.y)) / objectMass);
+
+        StopAllCoroutines();
         StartCoroutine(SlowDownImpact(launchDirection));
     }
 
@@ -64,6 +68,7 @@ public class CarHit : MonoBehaviour
             }
             yield return null;
         }
+
         Debug.Log("DONE SLOWING DOWN");
     }
 

@@ -19,6 +19,9 @@ public class Player : MonoBehaviour
     private Transform carriedObjectRoot;
 
     [SerializeField]
+    private float punchRadius = 0.8f;
+
+    [SerializeField]
     private float radius = 0.3f;
 
     /// <summary>
@@ -81,7 +84,7 @@ public class Player : MonoBehaviour
     {
         //So we can see and adjust the OverlapCircle gizmo
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position + transform.up, 0.8f);
+        Gizmos.DrawWireSphere(transform.position + transform.up, punchRadius);
 
         //also show the player radius just in case
         Gizmos.color = Color.blue;
@@ -133,19 +136,22 @@ public class Player : MonoBehaviour
         }
     }
 
-    //finds the cars within the circle collider's range
-    void FindCar()
+    /// <summary>
+    /// Finds the cars within the circle collider's range.
+    /// </summary>
+    private void FindCar()
     {
         //Collects car's hit info and stores it in array
-        Collider2D[] carsHit = Physics2D.OverlapCircleAll(transform.position + transform.up, 0.8f);
+        Collider2D[] carsHit = Physics2D.OverlapCircleAll(transform.position + transform.up, punchRadius);
         if (carsHit.Length > 0)
         {
             for (int i = 0; i < carsHit.Length; i++)
             {
-                if (carsHit[i].GetComponent<CarHit>())
+                CarHit carHit = carsHit[i].GetComponentInParent<CarHit>();
+                if (carHit)
                 {
                     //Calls the hit car's launch function
-                    carsHit[i].GetComponent<CarHit>().LaunchCar();
+                    carHit.LaunchCar();
                 }
             }
         }
