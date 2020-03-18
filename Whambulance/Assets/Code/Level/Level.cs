@@ -90,16 +90,21 @@ public class Level : MonoBehaviour
     }
 
     /// <summary>
-    /// Gets all of the roads that connected to this intersection.
+    /// Gets all of the roads that are connected to this intersection.
     /// </summary>
     public List<Road> GetConnectedRoads(Intersection intersection)
     {
         List<Road> connected = new List<Road>();
         for (int i = 0; i < roads.Count; i++)
         {
+            //start or end, doesnt matter
             if (roads[i].start == intersection || roads[i].end == intersection)
             {
-                connected.Add(roads[i]);
+                //make the sure the list contains unique roads
+                if (!connected.Contains(roads[i]))
+                {
+                    connected.Add(roads[i]);
+                }
             }
         }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class Road
+public class Road : IEquatable<Road>
 {
     public Intersection start;
     public Intersection end;
@@ -244,7 +244,7 @@ public class Road
         Vector2? laneDirection = GetLaneDirection(this, StartA, EndA);
         if (laneDirection.HasValue)
         {
-            if (Vector2.SignedAngle(laneDirection.Value, direction) < 90f)
+            if (Vector2.Angle(laneDirection.Value, direction) < 90f)
             {
                 return Helper.ClosestPoint(position, Vector2.Lerp(StartA, Start, 0.5f), Vector2.Lerp(EndA, End, 0.5f));
             }
@@ -253,7 +253,7 @@ public class Road
         laneDirection = GetLaneDirection(this, StartB, EndB);
         if (laneDirection.HasValue)
         {
-            if (Vector2.SignedAngle(laneDirection.Value, direction) < 90f)
+            if (Vector2.Angle(laneDirection.Value, direction) < 90f)
             {
                 return Helper.ClosestPoint(position, Vector2.Lerp(StartB, Start, 0.5f), Vector2.Lerp(EndB, End, 0.5f));
             }
@@ -299,5 +299,36 @@ public class Road
     public override string ToString()
     {
         return $"Road {start.name} to {end.name}";
+    }
+
+    public override bool Equals(object obj)
+    {
+        return Equals(obj as Road);
+    }
+
+    public bool Equals(Road other)
+    {
+        if (other != null)
+        {
+            if (EqualityComparer<Intersection>.Default.Equals(start, other.start) || EqualityComparer<Intersection>.Default.Equals(start, other.end))
+            {
+                if (EqualityComparer<Intersection>.Default.Equals(end, other.start) || EqualityComparer<Intersection>.Default.Equals(end, other.end))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public static bool operator ==(Road left, Road right)
+    {
+        return EqualityComparer<Road>.Default.Equals(left, right);
+    }
+
+    public static bool operator !=(Road left, Road right)
+    {
+        return !(left == right);
     }
 }

@@ -48,13 +48,29 @@ public class CarAI : MonoBehaviour
             {
                 //pick a random road to go to now
                 List<Road> connectedRoads = level.GetConnectedRoads(intersectionAhead);
-                if (connectedRoads.Count > 1)
+                if (connectedRoads.Count == 2)
+                {
+                    //pick the other one
+                    if (desiredRoad == connectedRoads[0])
+                    {
+                        desiredRoad = connectedRoads[1];
+                    }
+                    else
+                    {
+                        desiredRoad = connectedRoads[0];
+                    }
+                }
+                else if (connectedRoads.Count > 1)
                 {
                     //pick any but the one were in
-                    Road newRoad = null;
-                    while (newRoad == null || desiredRoad == newRoad)
+                    Road newRoad;
+                    while (true)
                     {
                         newRoad = connectedRoads[Random.Range(0, connectedRoads.Count)];
+                        if (newRoad != desiredRoad)
+                        {
+                            break;
+                        }
                     }
 
                     desiredRoad = newRoad;
@@ -78,7 +94,6 @@ public class CarAI : MonoBehaviour
             Debug.DrawRay(vehicle.FrontPosition, vehicle.Forward, Color.red);
             Debug.DrawRay(vehicle.FrontPosition, velocity, Color.cyan);
             Debug.DrawRay(vehicle.FrontPosition, dirToPoint, Color.black);
-
             Debug.DrawRay(vehicle.FrontPosition, vehicle.Right * angle / vehicle.MaxSteerAngle, Color.yellow);
 
             vehicle.Steer = angle;
