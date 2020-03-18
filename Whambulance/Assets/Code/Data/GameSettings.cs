@@ -11,6 +11,7 @@ public class GameSettings
     public List<Level> levels = new List<Level>();
     public List<Vehicle> vehicles = new List<Vehicle>();
     public List<Pedestrian> pedestrians = new List<Pedestrian>();
+    public List<AdvancementAsset> advancements = new List<AdvancementAsset>();
     public int maxVehicles = 48;
     public float vehicleLifeTime = 16f;
     public int maxPedestrians = 48;
