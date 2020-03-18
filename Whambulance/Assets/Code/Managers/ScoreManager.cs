@@ -51,7 +51,8 @@ public class ScoreManager : MonoBehaviour
 
     private void OnWon()
     {
-        //game was won, so display the bill now
+        //game was won, add to score
+        GameManager.Currency += bill.TotalValue;
     }
 
     /// <summary>
@@ -65,13 +66,13 @@ public class ScoreManager : MonoBehaviour
     /// <summary>
     /// Award the player with this many points, with the name of the type of offence.
     /// <code>
-    /// Example: Road Cone Disruption, 100
+    /// Example: Road Cone Disruption, 100.23
     /// </code>
     /// </summary>
-    public static void AwardPoints(string offenceName, int value)
+    public static void AwardPoints(string offenceName, float value)
     {
         //invalid offence
-        if (value == 0)
+        if (value <= 0f)
         {
             return;
         }

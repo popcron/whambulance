@@ -60,6 +60,21 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// The amount of currency that the player has accumulated. Saved accross sessions.
+    /// </summary>
+    public static float Currency
+    {
+        get
+        {
+            return PlayerPrefs.GetFloat("currency", 0);
+        }
+        set
+        {
+            PlayerPrefs.GetFloat("currency", Mathf.Clamp(value, 0, 999999999));
+        }
+    }
+
+    /// <summary>
     /// Has the player won or lost while playing the game.
     /// </summary>
     public static bool IsConcluded

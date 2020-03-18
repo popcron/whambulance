@@ -9,11 +9,11 @@ public class ScoreBill
     /// <summary>
     /// The total value of this bill.
     /// </summary>
-    public int TotalValue
+    public float TotalValue
     {
         get
         {
-            int value = 0;
+            float value = 0;
             for (int i = 0; i < entries.Count; i++)
             {
                 value += entries[i].value;
@@ -27,7 +27,7 @@ public class ScoreBill
     public class Entry
     {
         public string name;
-        public int value;
+        public float value;
         public int count;
     }
 }
