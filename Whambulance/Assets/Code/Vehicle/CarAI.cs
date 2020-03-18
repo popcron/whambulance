@@ -36,6 +36,12 @@ public class CarAI : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        //only preview this shit if in edit mode
+        if (Application.isPlaying)
+        {
+            return;
+        }
+
         vehicle = GetComponent<Vehicle>();
         Gizmos.color = Color.green;
 
@@ -51,6 +57,7 @@ public class CarAI : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //do a reverse for a bit to fix self
         if (reverseOut && reverseOutTime < 1.4f)
         {
             reverseOutTime += Time.fixedDeltaTime;
