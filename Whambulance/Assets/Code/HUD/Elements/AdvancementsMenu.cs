@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Advancements : HUDElement
+public class AdvancementsMenu : HUDElement
 {
     /// <summary>
     /// Should the advancements menu show?
@@ -101,6 +101,7 @@ public class Advancements : HUDElement
                 buyButton.interactable = true;
                 buyButton.onClick.AddListener(() =>
                 {
+                    //this is called an anonymous method/delegate
                     UnlockAdvancement(advancement);
                     FillInAdvancements();
                 });
