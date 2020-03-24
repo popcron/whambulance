@@ -565,6 +565,7 @@ Transform:
   - {fileID: 1973396428416690618}
   - {fileID: 1282660263773379216}
   - {fileID: 1638437150091964751}
+  - {fileID: 1352159043050213768}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -662,6 +663,7 @@ MonoBehaviour:
   - {fileID: 6105332167673269464}
   - {fileID: 2354835359864139970}
   - {fileID: 2872741405435583261}
+  - {fileID: 4211922927456767794}
 --- !u!1 &5204204738199133406
 GameObject:
   m_ObjectHideFlags: 0
@@ -1135,11 +1137,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5319020935098453660}
     m_Modifications:
-    - target: {fileID: 5666895494978792194, guid: d2332908848045e429f79792bcb24a8f,
-        type: 3}
-      propertyPath: m_Name
-      value: BlockB (2)
-      objectReference: {fileID: 0}
     - target: {fileID: 2169291471894749925, guid: d2332908848045e429f79792bcb24a8f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1195,6 +1192,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90.00001
       objectReference: {fileID: 0}
+    - target: {fileID: 5666895494978792194, guid: d2332908848045e429f79792bcb24a8f,
+        type: 3}
+      propertyPath: m_Name
+      value: BlockB (2)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2332908848045e429f79792bcb24a8f, type: 3}
 --- !u!114 &2872741405435583261 stripped
@@ -1222,11 +1224,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8854486983537506168}
     m_Modifications:
-    - target: {fileID: 3618000289957482048, guid: 21ebf6a7897dca84987455fa87e59623,
-        type: 3}
-      propertyPath: m_Name
-      value: Road cone (2)
-      objectReference: {fileID: 0}
     - target: {fileID: 321962497091886229, guid: 21ebf6a7897dca84987455fa87e59623,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1282,6 +1279,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 10.6710005
       objectReference: {fileID: 0}
+    - target: {fileID: 3618000289957482048, guid: 21ebf6a7897dca84987455fa87e59623,
+        type: 3}
+      propertyPath: m_Name
+      value: Road cone (2)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 21ebf6a7897dca84987455fa87e59623, type: 3}
 --- !u!4 &1035317290221124472 stripped
@@ -1297,11 +1299,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5319020935098453660}
     m_Modifications:
-    - target: {fileID: 5173659231540740216, guid: 05de400106e62cc439f841d20adeb0ee,
-        type: 3}
-      propertyPath: m_Name
-      value: BlockA (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 1143160942660386603, guid: 05de400106e62cc439f841d20adeb0ee,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1372,6 +1369,11 @@ PrefabInstance:
       propertyPath: m_Color.b
       value: 0.25373533
       objectReference: {fileID: 0}
+    - target: {fileID: 5173659231540740216, guid: 05de400106e62cc439f841d20adeb0ee,
+        type: 3}
+      propertyPath: m_Name
+      value: BlockA (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 6759821999600147287, guid: 05de400106e62cc439f841d20adeb0ee,
         type: 3}
       propertyPath: m_Color.r
@@ -1389,6 +1391,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05de400106e62cc439f841d20adeb0ee, type: 3}
+--- !u!4 &110310152568880970 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1143160942660386603, guid: 05de400106e62cc439f841d20adeb0ee,
+    type: 3}
+  m_PrefabInstance: {fileID: 1034337722889912417}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &5647356312252570152 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -4610063101256263095, guid: 05de400106e62cc439f841d20adeb0ee,
@@ -1401,12 +1409,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a48c9410a2ef69648954195ddfe1aed2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &110310152568880970 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1143160942660386603, guid: 05de400106e62cc439f841d20adeb0ee,
-    type: 3}
-  m_PrefabInstance: {fileID: 1034337722889912417}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1141156383927482485
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1414,11 +1416,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5319020935098453660}
     m_Modifications:
-    - target: {fileID: 5666895494978792194, guid: d2332908848045e429f79792bcb24a8f,
-        type: 3}
-      propertyPath: m_Name
-      value: BlockB (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 2169291471894749925, guid: d2332908848045e429f79792bcb24a8f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1474,6 +1471,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90.00001
       objectReference: {fileID: 0}
+    - target: {fileID: 5666895494978792194, guid: d2332908848045e429f79792bcb24a8f,
+        type: 3}
+      propertyPath: m_Name
+      value: BlockB (1)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2332908848045e429f79792bcb24a8f, type: 3}
 --- !u!114 &2354835359864139970 stripped
@@ -1501,11 +1503,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5319020935098453660}
     m_Modifications:
-    - target: {fileID: 5173659231540740216, guid: 05de400106e62cc439f841d20adeb0ee,
-        type: 3}
-      propertyPath: m_Name
-      value: BlockA (3)
-      objectReference: {fileID: 0}
     - target: {fileID: 1143160942660386603, guid: 05de400106e62cc439f841d20adeb0ee,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1576,6 +1573,11 @@ PrefabInstance:
       propertyPath: m_Color.b
       value: 0.25373533
       objectReference: {fileID: 0}
+    - target: {fileID: 5173659231540740216, guid: 05de400106e62cc439f841d20adeb0ee,
+        type: 3}
+      propertyPath: m_Name
+      value: BlockA (3)
+      objectReference: {fileID: 0}
     - target: {fileID: 6759821999600147287, guid: 05de400106e62cc439f841d20adeb0ee,
         type: 3}
       propertyPath: m_Color.r
@@ -1618,11 +1620,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8854486983537506168}
     m_Modifications:
-    - target: {fileID: 3618000289957482048, guid: 21ebf6a7897dca84987455fa87e59623,
-        type: 3}
-      propertyPath: m_Name
-      value: Road cone
-      objectReference: {fileID: 0}
     - target: {fileID: 321962497091886229, guid: 21ebf6a7897dca84987455fa87e59623,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1678,6 +1675,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -11.446
       objectReference: {fileID: 0}
+    - target: {fileID: 3618000289957482048, guid: 21ebf6a7897dca84987455fa87e59623,
+        type: 3}
+      propertyPath: m_Name
+      value: Road cone
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 21ebf6a7897dca84987455fa87e59623, type: 3}
 --- !u!4 &2159474235990971832 stripped
@@ -1693,11 +1695,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5319020935098453660}
     m_Modifications:
-    - target: {fileID: 5173659231540740216, guid: 05de400106e62cc439f841d20adeb0ee,
-        type: 3}
-      propertyPath: m_Name
-      value: BlockA
-      objectReference: {fileID: 0}
     - target: {fileID: 1143160942660386603, guid: 05de400106e62cc439f841d20adeb0ee,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1768,6 +1765,11 @@ PrefabInstance:
       propertyPath: m_Color.b
       value: 0.25373533
       objectReference: {fileID: 0}
+    - target: {fileID: 5173659231540740216, guid: 05de400106e62cc439f841d20adeb0ee,
+        type: 3}
+      propertyPath: m_Name
+      value: BlockA
+      objectReference: {fileID: 0}
     - target: {fileID: 6759821999600147287, guid: 05de400106e62cc439f841d20adeb0ee,
         type: 3}
       propertyPath: m_Color.r
@@ -1803,6 +1805,98 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a48c9410a2ef69648954195ddfe1aed2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &2677457063194269078
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 5319020935098453660}
+    m_Modifications:
+    - target: {fileID: 2259677356437035684, guid: 357875f9d3b886848a4115a6e7e438a6,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029569924607837214, guid: 357875f9d3b886848a4115a6e7e438a6,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -22.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029569924607837214, guid: 357875f9d3b886848a4115a6e7e438a6,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -29.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029569924607837214, guid: 357875f9d3b886848a4115a6e7e438a6,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029569924607837214, guid: 357875f9d3b886848a4115a6e7e438a6,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029569924607837214, guid: 357875f9d3b886848a4115a6e7e438a6,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029569924607837214, guid: 357875f9d3b886848a4115a6e7e438a6,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029569924607837214, guid: 357875f9d3b886848a4115a6e7e438a6,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.0000029504295
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029569924607837214, guid: 357875f9d3b886848a4115a6e7e438a6,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029569924607837214, guid: 357875f9d3b886848a4115a6e7e438a6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029569924607837214, guid: 357875f9d3b886848a4115a6e7e438a6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029569924607837214, guid: 357875f9d3b886848a4115a6e7e438a6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 180.00002
+      objectReference: {fileID: 0}
+    - target: {fileID: 7446117090919173625, guid: 357875f9d3b886848a4115a6e7e438a6,
+        type: 3}
+      propertyPath: m_Name
+      value: Hospital
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 357875f9d3b886848a4115a6e7e438a6, type: 3}
+--- !u!4 &1352159043050213768 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4029569924607837214, guid: 357875f9d3b886848a4115a6e7e438a6,
+    type: 3}
+  m_PrefabInstance: {fileID: 2677457063194269078}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4211922927456767794 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2259677356437035684, guid: 357875f9d3b886848a4115a6e7e438a6,
+    type: 3}
+  m_PrefabInstance: {fileID: 2677457063194269078}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a48c9410a2ef69648954195ddfe1aed2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3542688332274217411
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1810,11 +1904,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5319020935098453660}
     m_Modifications:
-    - target: {fileID: 5666895494978792194, guid: d2332908848045e429f79792bcb24a8f,
-        type: 3}
-      propertyPath: m_Name
-      value: BlockB
-      objectReference: {fileID: 0}
     - target: {fileID: 2169291471894749925, guid: d2332908848045e429f79792bcb24a8f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1870,8 +1959,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5666895494978792194, guid: d2332908848045e429f79792bcb24a8f,
+        type: 3}
+      propertyPath: m_Name
+      value: BlockB
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2332908848045e429f79792bcb24a8f, type: 3}
+--- !u!4 &3400489697597854502 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2169291471894749925, guid: d2332908848045e429f79792bcb24a8f,
+    type: 3}
+  m_PrefabInstance: {fileID: 3542688332274217411}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2184832560179296628 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -5802820053626681161, guid: d2332908848045e429f79792bcb24a8f,
@@ -1884,12 +1984,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a48c9410a2ef69648954195ddfe1aed2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &3400489697597854502 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2169291471894749925, guid: d2332908848045e429f79792bcb24a8f,
-    type: 3}
-  m_PrefabInstance: {fileID: 3542688332274217411}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4391884385268486489
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1897,11 +1991,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5319020935098453660}
     m_Modifications:
-    - target: {fileID: 5173659231540740216, guid: 05de400106e62cc439f841d20adeb0ee,
-        type: 3}
-      propertyPath: m_Name
-      value: BlockA (2)
-      objectReference: {fileID: 0}
     - target: {fileID: 1143160942660386603, guid: 05de400106e62cc439f841d20adeb0ee,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1972,6 +2061,11 @@ PrefabInstance:
       propertyPath: m_Color.b
       value: 0.25373533
       objectReference: {fileID: 0}
+    - target: {fileID: 5173659231540740216, guid: 05de400106e62cc439f841d20adeb0ee,
+        type: 3}
+      propertyPath: m_Name
+      value: BlockA (2)
+      objectReference: {fileID: 0}
     - target: {fileID: 6759821999600147287, guid: 05de400106e62cc439f841d20adeb0ee,
         type: 3}
       propertyPath: m_Color.r
@@ -1989,12 +2083,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05de400106e62cc439f841d20adeb0ee, type: 3}
---- !u!4 &3687965711249714802 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1143160942660386603, guid: 05de400106e62cc439f841d20adeb0ee,
-    type: 3}
-  m_PrefabInstance: {fileID: 4391884385268486489}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &9004630368766085904 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -4610063101256263095, guid: 05de400106e62cc439f841d20adeb0ee,
@@ -2007,6 +2095,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a48c9410a2ef69648954195ddfe1aed2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &3687965711249714802 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1143160942660386603, guid: 05de400106e62cc439f841d20adeb0ee,
+    type: 3}
+  m_PrefabInstance: {fileID: 4391884385268486489}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4464272552988897408
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2014,11 +2108,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8854486983537506168}
     m_Modifications:
-    - target: {fileID: 3618000289957482048, guid: 21ebf6a7897dca84987455fa87e59623,
-        type: 3}
-      propertyPath: m_Name
-      value: Road cone (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 321962497091886229, guid: 21ebf6a7897dca84987455fa87e59623,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2074,6 +2163,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3618000289957482048, guid: 21ebf6a7897dca84987455fa87e59623,
+        type: 3}
+      propertyPath: m_Name
+      value: Road cone (1)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 21ebf6a7897dca84987455fa87e59623, type: 3}
 --- !u!4 &4144330992964152341 stripped
@@ -2089,11 +2183,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8854486983537506168}
     m_Modifications:
-    - target: {fileID: 3618000289957482048, guid: 21ebf6a7897dca84987455fa87e59623,
-        type: 3}
-      propertyPath: m_Name
-      value: Road cone (4)
-      objectReference: {fileID: 0}
     - target: {fileID: 321962497091886229, guid: 21ebf6a7897dca84987455fa87e59623,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2148,6 +2237,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3618000289957482048, guid: 21ebf6a7897dca84987455fa87e59623,
+        type: 3}
+      propertyPath: m_Name
+      value: Road cone (4)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 21ebf6a7897dca84987455fa87e59623, type: 3}
@@ -2226,6 +2320,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffb8077c9217321449a49561c579dbdf, type: 3}
+--- !u!4 &4128039158334615932 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7362563463100040952, guid: ffb8077c9217321449a49561c579dbdf,
+    type: 3}
+  m_PrefabInstance: {fileID: 6873805609028220804}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1295252546823827398 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -3558687458811160510, guid: ffb8077c9217321449a49561c579dbdf,
@@ -2238,12 +2338,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a48c9410a2ef69648954195ddfe1aed2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &4128039158334615932 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7362563463100040952, guid: ffb8077c9217321449a49561c579dbdf,
-    type: 3}
-  m_PrefabInstance: {fileID: 6873805609028220804}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6949561844969425107
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2251,11 +2345,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8854486983537506168}
     m_Modifications:
-    - target: {fileID: 3618000289957482048, guid: 21ebf6a7897dca84987455fa87e59623,
-        type: 3}
-      propertyPath: m_Name
-      value: Road cone (3)
-      objectReference: {fileID: 0}
     - target: {fileID: 321962497091886229, guid: 21ebf6a7897dca84987455fa87e59623,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2311,6 +2400,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0.46600002
       objectReference: {fileID: 0}
+    - target: {fileID: 3618000289957482048, guid: 21ebf6a7897dca84987455fa87e59623,
+        type: 3}
+      propertyPath: m_Name
+      value: Road cone (3)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 21ebf6a7897dca84987455fa87e59623, type: 3}
 --- !u!4 &7207477399639430214 stripped
@@ -2326,11 +2420,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5319020935098453660}
     m_Modifications:
-    - target: {fileID: 3618000289957482048, guid: 48fd2c3e669145b49ab2fb4eb3a4b41e,
-        type: 3}
-      propertyPath: m_Name
-      value: Some statue
-      objectReference: {fileID: 0}
     - target: {fileID: 321962497091886229, guid: 48fd2c3e669145b49ab2fb4eb3a4b41e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2385,6 +2474,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3618000289957482048, guid: 48fd2c3e669145b49ab2fb4eb3a4b41e,
+        type: 3}
+      propertyPath: m_Name
+      value: Some statue
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 48fd2c3e669145b49ab2fb4eb3a4b41e, type: 3}
@@ -2463,6 +2557,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8aa601f7dcc37d142b1e3f7cb561baa3, type: 3}
+--- !u!4 &328387547354765366 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7963851211346906208, guid: 8aa601f7dcc37d142b1e3f7cb561baa3,
+    type: 3}
+  m_PrefabInstance: {fileID: 7641450539319530582}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3188194864614033036 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5059051538166633178, guid: 8aa601f7dcc37d142b1e3f7cb561baa3,
@@ -2475,9 +2575,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a48c9410a2ef69648954195ddfe1aed2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &328387547354765366 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7963851211346906208, guid: 8aa601f7dcc37d142b1e3f7cb561baa3,
-    type: 3}
-  m_PrefabInstance: {fileID: 7641450539319530582}
-  m_PrefabAsset: {fileID: 0}
