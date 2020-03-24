@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Game Settings
   m_EditorClassIdentifier: 
   settings:
+    tips: {fileID: 11400000, guid: 0ec47c56688b8654099bd4f83f074651, type: 2}
     levelToLoad: TestLevel
     playerPrefab: {fileID: 8553454928102178898, guid: df1f4e9d32dfa1f4dad2451f76dcd43c,
       type: 3}

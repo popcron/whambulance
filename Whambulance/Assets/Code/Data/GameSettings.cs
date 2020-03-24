@@ -5,6 +5,7 @@ using UnityEngine;
 [Serializable]
 public class GameSettings
 {
+    public TipsAsset tips;
     public string levelToLoad = "TestLevel";
     public Player playerPrefab;
     public float maxRoadAngle = 14f;

@@ -13,6 +13,15 @@ public class MainMenu : HUDElement
         }
     }
 
+    [SerializeField]
+    private TMPro.TMP_Text tip;
+
+    private void OnEnable()
+    {
+        Tips tips = GameManager.Settings.tips.tips;
+        tip.text = tips.tips[Random.Range(0, tips.tips.Length)];
+    }
+
     public void ClickedPlay()
     {
         GameManager.Play();
@@ -20,6 +29,7 @@ public class MainMenu : HUDElement
 
     public void ClickedSettings()
     {
+
     }
 
     public void ClickedAdvancements()
