@@ -23,6 +23,8 @@ MonoBehaviour:
     - {fileID: -2528275122131165190, guid: 313b3c7de429da3469c6950eaf3a4613, type: 3}
     vehicles:
     - {fileID: 7860498384184217907, guid: 97fe88d470fd9394b9a3ffdd334c1b50, type: 3}
+    enemyUnits:
+    - {fileID: 7758334764196151990, guid: ce7dad18c9607b043bb64e3b605a4ee2, type: 3}
     pedestrians:
     - {fileID: 8712031752904700130, guid: a6fd16b3df63d0a41b6737f13d07496a, type: 3}
     advancements:
@@ -38,3 +40,57 @@ MonoBehaviour:
     maxVehicles: 80
     vehicleLifeTime: 18
     maxPedestrians: 100
+    maxEnemiesOverTime:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 6.087274
+        outSlope: 6.087274
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.09527882
+      - serializedVersion: 3
+        time: 0.07187496
+        value: 0.26372203
+        inSlope: 3.0482514
+        outSlope: 0.5915687
+        tangentMode: 1
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.40138882
+      - serializedVersion: 3
+        time: 0.4503025
+        value: 0.5989709
+        inSlope: 0.46963912
+        outSlope: Infinity
+        tangentMode: 97
+        weightedMode: 0
+        inWeight: 0.3705114
+        outWeight: 1
+      - serializedVersion: 3
+        time: 0.49887657
+        value: 1.0049372
+        inSlope: -0.897428
+        outSlope: -0.897428
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.32824197
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: -0.80291855
+        outSlope: -0.80291855
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.32270724
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    maxEnemiesAlive: 60
+    maxRescueTime: 60
+    maxDeliveryTime: 60

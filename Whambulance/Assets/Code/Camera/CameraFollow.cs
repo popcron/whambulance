@@ -1,40 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    Transform player;
-    Vector3 offset;
     private Vector3 velocity = Vector3.zero;
 
     [Range(0.01f, 0.99f)]
     public float smoothing;
 
-    private bool scriptBegun;
-
-    //Function called when the player's singleton is created
-    public void BeginCameraScript()
+    private void FixedUpdate()
     {
-        scriptBegun = true;
-        if (Player.Instance != null)
+        if (Player.Instance)
         {
-            player = Player.Instance.transform;
-            transform.position = new Vector3(player.position.x, player.position.y, transform.position.z);
-            offset = transform.position - player.position;
-        }
-        else
-        {
-            Debug.LogError("THE PLAYER INSTANCE HAS NOT BEEN CREATED");
-        }
-    }
+            Vector3 newCamPos = Player.Instance.transform.position;
+            newCamPos.z = transform.position.z;
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        if (scriptBegun)
-        {
-            Vector3 newCamPos = (player.position + offset);
+            //go towards new cam pos
             transform.position = Vector3.SmoothDamp(transform.position, newCamPos, ref velocity, smoothing);
         }
     }

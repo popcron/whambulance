@@ -121,7 +121,7 @@ public class Enemy : MonoBehaviour
         if (canSee)
         {
             //figure out whether or not the objects in the radius are the player or not
-            if (go.gameObject.tag == "Player")
+            if (go && Player.Instance && go.gameObject == Player.Instance.gameObject)
             {
                 Debug.Log("PLAYER IN SIGHT");
                 return true;

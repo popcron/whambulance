@@ -5,6 +5,10 @@ public class Player : MonoBehaviour
 {
     public static List<Player> All { get; set; } = new List<Player>();
 
+    public delegate void OnPickedUpObjective(Player player);
+
+    public static OnPickedUpObjective onPickedUpObjective;
+
     /// <summary>
     /// The current player in existence.
     /// </summary>
@@ -71,7 +75,6 @@ public class Player : MonoBehaviour
 
     private void OnEnable()
     {
-        Instance = this;
         All.Add(this);
     }
 
@@ -108,6 +111,11 @@ public class Player : MonoBehaviour
         }
 
         transform.eulerAngles = new Vector3(0f, 0f, Rotation);
+
+        if (GetType() == typeof(Player))
+        {
+            Instance = this;
+        }
     }
 
     /// <summary>
@@ -115,13 +123,17 @@ public class Player : MonoBehaviour
     /// </summary>
     public void Carry(Objective objective)
     {
-        CarryingObjective = objective;
-        CarryingObjective.BeganCarrying(this);
+        if (CarryingObjective != objective)
+        {
+            CarryingObjective = objective;
+            CarryingObjective.BeganCarrying(this);
 
-        //parent this to the back transform
-        CarryingObjective.transform.SetParent(carriedObjectRoot);
-        CarryingObjective.transform.localPosition = Vector3.zero;
-        CarryingObjective.transform.localEulerAngles = Vector3.zero;
+            //parent this to the back transform
+            CarryingObjective.transform.SetParent(carriedObjectRoot);
+            CarryingObjective.transform.localPosition = Vector3.zero;
+            CarryingObjective.transform.localEulerAngles = Vector3.zero;
+            onPickedUpObjective?.Invoke(this);
+        }
     }
 
     /// <summary>
