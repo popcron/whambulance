@@ -20,24 +20,68 @@ public class PedestrianManager : MonoBehaviour
         SpawnAllPedestrians(level);
     }
 
+    private void Update()
+    {
+        if (Level.All.Count > 0)
+        {
+            Level level = Level.All[0];
+            if (level)
+            {
+                float maxPerBlock = GameManager.Settings.maxPedestrians / (float)level.CityBlocks.Length;
+                for (int i = 0; i < level.CityBlocks.Length; i++)
+                {
+                    CityBlock block = level.CityBlocks[i];
+                    int count = PedestriansInCityBlock(block);
+                    if (count < maxPerBlock)
+                    {
+                        //spawn a new one to replace it
+                        Spawn(block);
+                    }
+                }
+            }
+        }
+    }
+
+    private int PedestriansInCityBlock(CityBlock block)
+    {
+        int c = 0;
+        for (int i = 0; i < Player.All.Count; i++)
+        {
+            if (Player.All[i] is Pedestrian ped)
+            {
+                if (ped.CityBlock == block)
+                {
+                    c++;
+                }
+            }
+        }
+
+        return c;
+    }
+
     private void OnCleared()
     {
         Clear();
+    }
+
+    private void Spawn(CityBlock block)
+    {
+        //find a random point in this city block
+        Vector2 position = block.GetRandomPointOnSidewalk();
+
+        //pick a random pedestrian and spawn them
+        Pedestrian randomPedestrian = GameManager.Settings.pedestrians[Random.Range(0, GameManager.Settings.pedestrians.Count)];
+        Pedestrian newPedestrian = Instantiate(randomPedestrian, position, Quaternion.identity);
+        newPedestrian.name = randomPedestrian.name;
+        newPedestrian.CityBlock = block;
     }
 
     private void SpawnAllPedestrians(Level level)
     {
         for (int i = 0; i < GameManager.Settings.maxPedestrians; i++)
         {
-            //find a random point in this city block
             CityBlock randomBlock = level.CityBlocks[Random.Range(0, level.CityBlocks.Length)];
-            Vector2 position = randomBlock.GetRandomPointOnSidewalk();
-
-            //pick a random pedestrian and spawn them
-            Pedestrian randomPedestrian = GameManager.Settings.pedestrians[Random.Range(0, GameManager.Settings.pedestrians.Count)];
-            Pedestrian newPedestrian = Instantiate(randomPedestrian, position, Quaternion.identity);
-            newPedestrian.name = randomPedestrian.name;
-            newPedestrian.CityBlock = randomBlock;
+            Spawn(randomBlock);
         }
     }
 
