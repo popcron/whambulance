@@ -22,6 +22,8 @@ public class CarAI : MonoBehaviour
     private bool reverseOut;
     private float reverseOutTime;
     private bool reverseLeft;
+    private Intersection intersectionAhead;
+    private float nextIntersectionCheck;
 
     private void Awake()
     {
@@ -66,9 +68,13 @@ public class CarAI : MonoBehaviour
         }
 
         float gas = 1f;
+        if (Time.time > nextIntersectionCheck)
+        {
+            nextIntersectionCheck = Time.time + 0.25f;
+            intersectionAhead = Intersection.Get(vehicle.FrontPosition + vehicle.Forward * 2f);
+        }
 
         //drive forward until an intersection is hit
-        Intersection intersectionAhead = Intersection.Get(vehicle.FrontPosition + vehicle.Forward * 2f);
         if (intersectionAhead)
         {
             float sqrDistance = Vector2.SqrMagnitude(intersectionAhead.transform.position - transform.position);
