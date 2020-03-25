@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class GPS : HUDElement
@@ -40,6 +41,7 @@ public class GPS : HUDElement
 
     private Level level;
     private Camera cam;
+    private List<Outline> outlines = new List<Outline>();
 
     private void OnEnable()
     {
@@ -61,6 +63,8 @@ public class GPS : HUDElement
     /// </summary>
     private void BuildGPSMap(Level level)
     {
+        outlines.Clear();
+
         //build the roads
         for (int i = 0; i < level.Roads.Count; i++)
         {
@@ -84,18 +88,67 @@ public class GPS : HUDElement
         {
             CityBlock block = level.CityBlocks[i];
             SpriteRenderer[] spriteRenderers = block.GetComponentsInChildren<SpriteRenderer>();
-            for (int c = 0; c < spriteRenderers.Length; c++)
-            {
-                SpriteRenderer renderer = spriteRenderers[c];
 
-                Image colliderObject = new GameObject(renderer.name, typeof(RectTransform)).AddComponent<Image>();
-                colliderObject.rectTransform.SetParent(view);
-                colliderObject.rectTransform.anchoredPosition3D = renderer.transform.position;
-                colliderObject.rectTransform.localEulerAngles = new Vector3(0f, 0f, renderer.transform.eulerAngles.z);
-                colliderObject.rectTransform.sizeDelta = renderer.transform.lossyScale;
-                colliderObject.rectTransform.localScale = Vector3.one;
-                colliderObject.sprite = renderer.sprite;
-                colliderObject.color = renderer.color * obstacleColor;
+            //get the highest sorting order for later
+            int maxSortingOrder = int.MinValue;
+            int minSortingOrder = int.MaxValue;
+            for (int r = 0; r < spriteRenderers.Length; r++)
+            {
+                maxSortingOrder = Mathf.Max(maxSortingOrder, spriteRenderers[r].sortingOrder);
+                minSortingOrder = Mathf.Min(minSortingOrder, spriteRenderers[r].sortingOrder);
+            }
+
+            //create the renderers
+            Image[] images = new Image[spriteRenderers.Length];
+            for (int r = 0; r < spriteRenderers.Length; r++)
+            {
+                SpriteRenderer renderer = spriteRenderers[r];
+
+                Image rendererObject = new GameObject(renderer.name, typeof(RectTransform)).AddComponent<Image>();
+                rendererObject.rectTransform.SetParent(view);
+                rendererObject.rectTransform.anchoredPosition3D = renderer.transform.position;
+                rendererObject.rectTransform.localEulerAngles = new Vector3(0f, 0f, renderer.transform.eulerAngles.z);
+                rendererObject.rectTransform.sizeDelta = renderer.transform.lossyScale;
+                rendererObject.rectTransform.localScale = Vector3.one;
+                rendererObject.sprite = renderer.sprite;
+
+                rendererObject.color = renderer.color * obstacleColor;
+
+                if (renderer.GetComponent<Collider2D>())
+                {
+                    //darken color if solid
+                    rendererObject.color *= new Color(1f, 1f, 1f, 1f);
+
+                    //also give outline
+                    Outline outline = rendererObject.gameObject.AddComponent<Outline>();
+                    outline.effectDistance = new Vector2(0.25f, 0.25f);
+                    outline.effectColor = new Color(0f, 0f, 0f, 0.8f);
+                    outlines.Add(outline);
+                }
+                else
+                {
+                    //if its a city block, ignoreth
+                    if (r > 0)
+                    {
+                        //not solid, so make it almost invisible
+                        rendererObject.color *= new Color(1f, 1f, 1f, 0.3f);
+                    }
+                }
+
+                rendererObject.transform.SetSiblingIndex(renderer.sortingOrder);
+                images[r] = rendererObject;
+            }
+
+            //resort the renderers
+            for (int o = minSortingOrder; o <= maxSortingOrder; o++)
+            {
+                for (int r = 0; r < spriteRenderers.Length; r++)
+                {
+                    if (spriteRenderers[r].sortingOrder == o)
+                    {
+                        images[r].transform.SetAsLastSibling();
+                    }
+                }
             }
         }
     }
@@ -164,6 +217,14 @@ public class GPS : HUDElement
         else
         {
             playerMarker.gameObject.SetActive(false);
+        }
+
+        //size the outlines properly
+        int total = maxZoomLevel - minZoomLevel;
+        float size = (total + minZoomLevel) - (zoomLevel - minZoomLevel);
+        for (int i = 0; i < outlines.Count; i++)
+        {
+            outlines[i].effectDistance = Vector2.one * 0.08f * size;
         }
     }
 }

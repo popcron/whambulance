@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8565037321281963149}
   - component: {fileID: 7041317507817730147}
   - component: {fileID: 3803618749571065124}
-  - component: {fileID: 5860029106677812575}
   m_Layer: 5
   m_Name: Box
   m_TagString: Untagged
@@ -90,18 +89,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 0
---- !u!225 &5860029106677812575
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 275243229489272528}
-  m_Enabled: 1
-  m_Alpha: 0.75
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!1 &3897835549437234933
 GameObject:
   m_ObjectHideFlags: 0
@@ -113,7 +100,6 @@ GameObject:
   - component: {fileID: 573113492868625993}
   - component: {fileID: 1085217329877000871}
   - component: {fileID: 6445355175251887645}
-  - component: {fileID: 6273959816062079759}
   - component: {fileID: -7443862929772007246}
   m_Layer: 5
   m_Name: GPS
@@ -185,23 +171,6 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
---- !u!114 &6273959816062079759
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3897835549437234933}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!114 &-7443862929772007246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,9 +188,9 @@ MonoBehaviour:
   roadColor: {r: 0.1981132, g: 0.1981132, b: 0.1981132, a: 1}
   obstacleColor: {r: 1, g: 1, b: 1, a: 0.72156864}
   roadWidth: 3
-  zoomLevel: 4
-  minZoomLevel: 3
-  maxZoomLevel: 6
+  zoomLevel: 5
+  minZoomLevel: 4
+  maxZoomLevel: 7
 --- !u!1 &7040325386818320608
 GameObject:
   m_ObjectHideFlags: 0
