@@ -31,6 +31,11 @@ public class Pathfinding
     {
         Intersection start = Intersection.GetClosest(startPosition);
         Intersection destination = Intersection.GetClosest(destinationPosition);
+        if (start == destination)
+        {
+            return new List<Vector2>() { startPosition, destinationPosition };
+        }
+
         List<Intersection> path = new List<Intersection>();
         path.Add(start);
         Intersection current = start;
@@ -64,23 +69,32 @@ public class Pathfinding
 
         List<Vector2> list = new List<Vector2>();
         list.Add(startPosition);
-        for (int i = 0; i < path.Count; i++)
+
+        //start is too close to closest point on first road
+        if (path.Count >= 2)
         {
-            //if start is inside the first two points
-            //the skip first point
-            if (path.Count >= 2)
+            Road road = level.GetRoad(path[0], path[1]);
+            Vector2 closest = road.ClosestPoint(startPosition);
+            float sqrDistance = Vector2.SqrMagnitude(closest - startPosition);
+            if (road != null && sqrDistance < 1f * 1f)
             {
-                Road road = level.GetRoad(path[0], path[1]);
-                if (road != null && road.Contains(startPosition))
+                path.RemoveAt(0);
+            }
+            else
+            {
+                if (Vector2.SqrMagnitude(closest - (Vector2)path[0].transform.position) > 2f * 2f)
                 {
-                    continue;
+                    list.Add(closest);
                 }
             }
+        }
 
+        for (int i = 0; i < path.Count; i++)
+        {
             list.Add(path[i].transform.position);
         }
-        list.Add(destinationPosition);
 
+        list.Add(destinationPosition);
         return list;
     }
 }

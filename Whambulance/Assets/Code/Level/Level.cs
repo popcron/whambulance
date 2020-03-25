@@ -162,11 +162,17 @@ public class Level : MonoBehaviour
         {
             if (roads[i].end == intersection)
             {
-                adj.Add(roads[i].start);
+                if (!adj.Contains(roads[i].start))
+                {
+                    adj.Add(roads[i].start);
+                }
             }
             else if (roads[i].start == intersection)
             {
-                adj.Add(roads[i].end);
+                if (!adj.Contains(roads[i].end))
+                {
+                    adj.Add(roads[i].end);
+                }
             }
         }
 
