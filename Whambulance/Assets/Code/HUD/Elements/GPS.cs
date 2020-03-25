@@ -18,6 +18,9 @@ public class GPS : HUDElement
     private RectTransform view;
 
     [SerializeField]
+    private RectTransform playerMarker;
+
+    [SerializeField]
     private float roadWidth = 4f;
 
     [SerializeField]
@@ -131,6 +134,19 @@ public class GPS : HUDElement
         }
 
         //make sure the view follows the camera position, not the player
-        view.anchoredPosition3D = new Vector3(cam.transform.position.x, cam.transform.position.y, 0f);
+        view.anchoredPosition3D = new Vector3(cam.transform.position.x, cam.transform.position.y, 0f) * -zoomLevel;
+
+        //position the player based on the discrepancy between cam and player
+        if (Player.Instance)
+        {
+            Vector2 disc = (cam.transform.position - Player.Instance.transform.position) * -zoomLevel;
+            playerMarker.anchoredPosition = disc;
+            playerMarker.gameObject.SetActive(true);
+
+        }
+        else
+        {
+            playerMarker.gameObject.SetActive(false);
+        }
     }
 }
