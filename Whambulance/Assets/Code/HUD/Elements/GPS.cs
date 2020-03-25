@@ -19,13 +19,22 @@ public class GPS : HUDElement
     private RectTransform view;
 
     [SerializeField]
+    private RectTransform path;
+
+    [SerializeField]
     private RectTransform playerMarker;
+
+    [SerializeField]
+    private Color pathColor = new Color(0.9f, 0.8f, 0.1f, 1f);
 
     [SerializeField]
     private Color roadColor = new Color(0.3f, 0.3f, 0.3f, 1f);
 
     [SerializeField]
     private Color obstacleColor = new Color(0.7f, 0.7f, 0.7f, 1f);
+
+    [SerializeField]
+    private float pathWidth = 1f;
 
     [SerializeField]
     private float roadWidth = 4f;
@@ -42,12 +51,45 @@ public class GPS : HUDElement
     private Level level;
     private Camera cam;
     private List<Outline> outlines = new List<Outline>();
+    private Vector2 start;
+    private Vector2 target;
 
     private void OnEnable()
     {
         cam = Camera.main;
         level = null;
         ClearGPS();
+    }
+
+    private void ClearPath()
+    {
+        foreach (Transform child in path)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
+
+    private void BuildPath(Vector2 start, Vector2 destination)
+    {
+        List<Vector2> path = Pathfinding.GetPath(level, start, destination);
+        for (int p = 0; p < path.Count - 1; p++)
+        {
+            string roadName = $"{p} to {p + 1}";
+            Vector2 position = Vector2.Lerp(path[p], path[p + 1], 0.5f);
+            float distance = Vector2.Distance(path[p + 1], path[p]);
+            Vector2 direction = (path[p + 1] - path[p]) / distance;
+
+            Image roadObject = new GameObject(roadName, typeof(RectTransform)).AddComponent<Image>();
+            roadObject.rectTransform.SetParent(this.path);
+            roadObject.rectTransform.anchoredPosition3D = position;
+            roadObject.color = pathColor;
+
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            roadObject.rectTransform.localEulerAngles = new Vector3(0f, 0f, angle);
+            roadObject.rectTransform.sizeDelta = new Vector2(distance, pathWidth);
+            roadObject.rectTransform.localScale = Vector3.one;
+        }
     }
 
     private void ClearGPS()
@@ -249,6 +291,8 @@ public class GPS : HUDElement
         //make sure the view follows the camera position, not the player
         view.localScale = Vector3.one * zoomLevel;
         view.anchoredPosition3D = new Vector3(cam.transform.position.x, cam.transform.position.y, 0f) * -zoomLevel;
+        path.localScale = view.localScale;
+        path.anchoredPosition3D = view.anchoredPosition3D;
 
         //position the player based on the discrepancy between cam and player
         if (Player.Instance)
@@ -270,6 +314,28 @@ public class GPS : HUDElement
         for (int i = 0; i < outlines.Count; i++)
         {
             outlines[i].effectDistance = Vector2.one * 0.08f * size;
+        }
+
+        //check the navigation path
+        if (Player.Instance)
+        {
+            const float TooFar = 0.25f;
+            Vector2 playerPosition = Player.Instance.transform.position;
+            Vector2 actualTarget = GetTarget();
+            if ((start - playerPosition).sqrMagnitude > TooFar * TooFar || (target - actualTarget).sqrMagnitude > TooFar * TooFar)
+            {
+                start = playerPosition;
+                target = actualTarget;
+
+                //either player or target positions have changed too much!
+                //rebuild the path
+                ClearPath();
+                BuildPath(playerPosition, actualTarget);
+            }
+        }
+        else
+        {
+            ClearPath();
         }
     }
 }

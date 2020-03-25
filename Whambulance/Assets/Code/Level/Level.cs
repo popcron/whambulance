@@ -133,6 +133,27 @@ public class Level : MonoBehaviour
     }
 
     /// <summary>
+    /// Returns a list of all intersections that are connected to this one.
+    /// </summary>
+    public List<Intersection> GetConnectedIntersections(Intersection intersection)
+    {
+        List<Intersection> adj = new List<Intersection>();
+        for (int i = 0; i < roads.Count; i++)
+        {
+            if (roads[i].end == intersection)
+            {
+                adj.Add(roads[i].start);
+            }
+            else if (roads[i].start == intersection)
+            {
+                adj.Add(roads[i].end);
+            }
+        }
+
+        return adj;
+    }
+
+    /// <summary>
     /// Asks this level to rebuild the layout for the roads. Very expensive.
     /// </summary>
     public void BuildRoadLayout()
