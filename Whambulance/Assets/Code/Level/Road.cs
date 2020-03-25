@@ -129,6 +129,11 @@ public class Road
     }
 
     /// <summary>
+    /// The length of the road.
+    /// </summary>
+    public float Length => Vector2.Distance(start.transform.position, end.transform.position);
+
+    /// <summary>
     /// Normalized direction of this road.
     /// </summary>
     public Vector2 Direction
