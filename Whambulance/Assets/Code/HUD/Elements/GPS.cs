@@ -55,6 +55,7 @@ public class GPS : HUDElement
     /// </summary>
     private void BuildGPSMap(Level level)
     {
+        //build the roads
         for (int i = 0; i < level.Roads.Count; i++)
         {
             Road road = level.Roads[i];
@@ -69,6 +70,24 @@ public class GPS : HUDElement
             roadObject.rectTransform.localEulerAngles = new Vector3(0f, 0f, angle);
             roadObject.rectTransform.sizeDelta = new Vector2(distance, roadWidth);
             roadObject.rectTransform.localScale = Vector3.one;
+        }
+
+        //now build the physical obstacles
+        for (int i = 0; i < level.CityBlocks.Length; i++)
+        {
+            CityBlock block = level.CityBlocks[i];
+            for (int c = 0; c < block.Colliders.Length; c++)
+            {
+                Collider2D collider = block.Colliders[c];
+                Bounds bounds = collider.bounds;
+
+                Image roadObject = new GameObject(collider.name, typeof(RectTransform)).AddComponent<Image>();
+                roadObject.rectTransform.SetParent(view);
+                roadObject.rectTransform.anchoredPosition3D = bounds.center;
+                roadObject.rectTransform.localEulerAngles = new Vector3(0f, 0f, collider.transform.eulerAngles.z);
+                roadObject.rectTransform.sizeDelta = bounds.size;
+                roadObject.rectTransform.localScale = Vector3.one;
+            }
         }
 
         //zoom the view
