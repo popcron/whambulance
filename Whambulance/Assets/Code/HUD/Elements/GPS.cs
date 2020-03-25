@@ -171,6 +171,51 @@ public class GPS : HUDElement
         }
     }
 
+    /// <summary>
+    /// Returns the target position of where the player should be going to.
+    /// </summary>
+    private Vector2 GetTarget()
+    {
+        if (!Player.Instance)
+        {
+            return default;
+        }
+        else
+        {
+            if (Player.Instance.CarryingObjective)
+            {
+                if (Destination.All.Count > 0)
+                {
+                    //get average destination position
+                    Vector2 avg = default;
+                    for (int i = 0; i < Destination.All.Count; i++)
+                    {
+                        avg += (Vector2)Destination.All[i].transform.position;
+                    }
+
+                    avg /= Destination.All.Count;
+                    return avg;
+                }
+                else
+                {
+                    return default;
+                }
+            }
+            else
+            {
+                if (Objective.All.Count > 0)
+                {
+                    //get the first objective position
+                    return Objective.All[0].transform.position;
+                }
+                else
+                {
+                    return default;
+                }
+            }
+        }
+    }
+
     private void Update()
     {
         Level current = null;
