@@ -95,6 +95,26 @@ public class Level : MonoBehaviour
     }
 
     /// <summary>
+    /// Returns an intersection that has these two intersections.
+    /// </summary>
+    public Road GetRoad(Intersection a, Intersection b)
+    {
+        for (int i = 0; i < roads.Count; i++)
+        {
+            if (roads[i].start == a && roads[i].end == b)
+            {
+                return roads[i];
+            }
+            else if (roads[i].end == a && roads[i].start == b)
+            {
+                return roads[i];
+            }
+        }
+
+        return null;
+    }
+
+    /// <summary>
     /// Returns a road that has this position in it.
     /// </summary>
     public Road GetRoad(Vector2 position)

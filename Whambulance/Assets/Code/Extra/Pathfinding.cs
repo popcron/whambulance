@@ -41,8 +41,8 @@ public class Pathfinding
 
             //remove neighbors that are already added to path
             IEnumerable<Intersection> neighbors = from neighbor in allNeighbors
-                                          where !path.Contains(neighbor)
-                                          select neighbor;
+                                                  where !path.Contains(neighbor)
+                                                  select neighbor;
 
             //stop if no neighbors or destination reached
             if (neighbors.Count() == 0)
@@ -66,6 +66,17 @@ public class Pathfinding
         list.Add(startPosition);
         for (int i = 0; i < path.Count; i++)
         {
+            //if start is inside the first two points
+            //the skip first point
+            if (path.Count >= 2)
+            {
+                Road road = level.GetRoad(path[0], path[1]);
+                if (road != null && road.Contains(startPosition))
+                {
+                    continue;
+                }
+            }
+
             list.Add(path[i].transform.position);
         }
         list.Add(destinationPosition);
