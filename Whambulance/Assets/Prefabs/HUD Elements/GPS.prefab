@@ -187,10 +187,10 @@ MonoBehaviour:
   view: {fileID: 5926963752973664890}
   path: {fileID: 3003120016481637812}
   playerMarker: {fileID: 2000017512344644404}
-  pathColor: {r: 0.8113208, g: 0.6170041, b: 0, a: 0.68235296}
+  pathColor: {r: 1, g: 0.808957, b: 0, a: 1}
   roadColor: {r: 0.1981132, g: 0.1981132, b: 0.1981132, a: 1}
   obstacleColor: {r: 1, g: 1, b: 1, a: 0.72156864}
-  pathWidth: 0.5
+  pathWidth: 1
   roadWidth: 3
   zoomLevel: 5
   minZoomLevel: 4
