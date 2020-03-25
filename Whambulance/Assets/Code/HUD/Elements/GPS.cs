@@ -21,6 +21,12 @@ public class GPS : HUDElement
     private RectTransform playerMarker;
 
     [SerializeField]
+    private Color roadColor = new Color(0.3f, 0.3f, 0.3f, 1f);
+
+    [SerializeField]
+    private Color obstacleColor = new Color(0.7f, 0.7f, 0.7f, 1f);
+
+    [SerializeField]
     private float roadWidth = 4f;
 
     [SerializeField]
@@ -63,6 +69,7 @@ public class GPS : HUDElement
             Image roadObject = new GameObject(road.ToString(), typeof(RectTransform)).AddComponent<Image>();
             roadObject.rectTransform.SetParent(view);
             roadObject.rectTransform.anchoredPosition3D = road.Position;
+            roadObject.color = roadColor;
 
             Vector2 direction = road.Direction;
             float distance = road.Length + roadWidth;
@@ -76,22 +83,21 @@ public class GPS : HUDElement
         for (int i = 0; i < level.CityBlocks.Length; i++)
         {
             CityBlock block = level.CityBlocks[i];
-            for (int c = 0; c < block.Colliders.Length; c++)
+            SpriteRenderer[] spriteRenderers = block.GetComponentsInChildren<SpriteRenderer>();
+            for (int c = 0; c < spriteRenderers.Length; c++)
             {
-                Collider2D collider = block.Colliders[c];
-                Bounds bounds = collider.bounds;
+                SpriteRenderer renderer = spriteRenderers[c];
 
-                Image roadObject = new GameObject(collider.name, typeof(RectTransform)).AddComponent<Image>();
-                roadObject.rectTransform.SetParent(view);
-                roadObject.rectTransform.anchoredPosition3D = bounds.center;
-                roadObject.rectTransform.localEulerAngles = new Vector3(0f, 0f, collider.transform.eulerAngles.z);
-                roadObject.rectTransform.sizeDelta = bounds.size;
-                roadObject.rectTransform.localScale = Vector3.one;
+                Image colliderObject = new GameObject(renderer.name, typeof(RectTransform)).AddComponent<Image>();
+                colliderObject.rectTransform.SetParent(view);
+                colliderObject.rectTransform.anchoredPosition3D = renderer.transform.position;
+                colliderObject.rectTransform.localEulerAngles = new Vector3(0f, 0f, renderer.transform.eulerAngles.z);
+                colliderObject.rectTransform.sizeDelta = renderer.transform.lossyScale;
+                colliderObject.rectTransform.localScale = Vector3.one;
+                colliderObject.sprite = renderer.sprite;
+                colliderObject.color = renderer.color * obstacleColor;
             }
         }
-
-        //zoom the view
-        view.localScale = Vector3.one * zoomLevel;
     }
 
     private int GetMouseScroll()
@@ -126,17 +132,7 @@ public class GPS : HUDElement
 #endif
 
         //adjust zoom level
-        int scroll = GetMouseScroll();
-        if (scroll != 0)
-        {
-            int lastZoomLevel = zoomLevel;
-            zoomLevel = Mathf.Clamp(zoomLevel + scroll, minZoomLevel, maxZoomLevel);
-            if (zoomLevel != lastZoomLevel)
-            {
-                //zoom level has changed, so just rebuild
-                rebuild = true;
-            }
-        }
+        zoomLevel = Mathf.Clamp(zoomLevel + GetMouseScroll(), minZoomLevel, maxZoomLevel);
 
         //level has changed, so rebuild
         if (current != level)
@@ -153,6 +149,7 @@ public class GPS : HUDElement
         }
 
         //make sure the view follows the camera position, not the player
+        view.localScale = Vector3.one * zoomLevel;
         view.anchoredPosition3D = new Vector3(cam.transform.position.x, cam.transform.position.y, 0f) * -zoomLevel;
 
         //position the player based on the discrepancy between cam and player
@@ -161,6 +158,7 @@ public class GPS : HUDElement
             Vector2 disc = (cam.transform.position - Player.Instance.transform.position) * -zoomLevel;
             playerMarker.anchoredPosition = disc;
             playerMarker.gameObject.SetActive(true);
+            playerMarker.localScale = Vector3.one * zoomLevel * 0.15f;
 
         }
         else
