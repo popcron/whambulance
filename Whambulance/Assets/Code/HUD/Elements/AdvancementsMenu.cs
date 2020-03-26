@@ -128,7 +128,7 @@ public class AdvancementsMenu : HUDElement
         //r = rich
         if (Input.GetKeyDown(KeyCode.R))
         {
-            GameManager.Currency = int.MaxValue;
+            GameManager.Currency = int.MaxValue - 1;
             FillInAdvancements();
         }
 

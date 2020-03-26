@@ -235,6 +235,12 @@ public class Player : MonoBehaviour
                     hit = true;
                 }
 
+                AwardIfGotPunched punched = collidersHit[i].GetComponentInParent<AwardIfGotPunched>();
+                if (punched)
+                {
+                    punched.GotPunched();
+                }
+
                 //punch rb
                 Rigidbody2D rb = collidersHit[i].attachedRigidbody;
                 if (rb)

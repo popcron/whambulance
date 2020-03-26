@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
         }
         set
         {
-            PlayerPrefs.GetFloat("currency", Mathf.Clamp(value, 0, 999999999));
+            PlayerPrefs.SetFloat("currency", Mathf.Clamp(value, 0, 999999999));
         }
     }
 
@@ -243,6 +243,9 @@ public class GameManager : MonoBehaviour
 
             Time.timeScale = 0.5f;
             onWon?.Invoke();
+
+            //add scrore from bill to game
+            Currency += ScoreManager.Bill.TotalValue;
         }
     }
 

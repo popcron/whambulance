@@ -17,4 +17,4 @@ MonoBehaviour:
     displayName: Calculator
     description: The hospital can now calculate properly.
     icon: {fileID: 21300000, guid: 0b2a2cf70dd896b42bdb90b19cf99fec, type: 3}
-    cost: 50
+    cost: 421999

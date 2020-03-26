@@ -45,6 +45,8 @@ GameObject:
   - component: {fileID: 2739004785816230651}
   - component: {fileID: 7860498384184217907}
   - component: {fileID: 4911437344630196801}
+  - component: {fileID: 4408456332761619036}
+  - component: {fileID: -3432187198576455064}
   m_Layer: 8
   m_Name: Basic Vehicle
   m_TagString: Untagged
@@ -137,6 +139,34 @@ MonoBehaviour:
   obstacleCheckRadius: 0.4
   obstacleCheckDistance: 0.8
   obstacleCheckStart: 0.5
+--- !u!114 &4408456332761619036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2739004785816230650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60988006c67943e40b23565d84f48556, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offenceName: Vehicular assault
+  value: 1000
+--- !u!114 &-3432187198576455064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2739004785816230650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3aa3f93a5449f5b4ebc734be4b7e0c40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offenceName: Touching cars
+  value: 50
 --- !u!1 &3181353587694504193
 GameObject:
   m_ObjectHideFlags: 0
