@@ -1,7 +1,13 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Health : MonoBehaviour
 {
+    /// <summary>
+    /// List of all health components in the scene.
+    /// </summary>
+    public static List<Health> All { get; set; } = new List<Health>();
+
     public delegate void OnDied(Health health);
     public delegate void OnDamaged(Health health, int damage);
     public delegate void OnHealed(Health health, int heal);
@@ -30,6 +36,16 @@ public class Health : MonoBehaviour
     /// The maximum health.
     /// </summary>
     public int MaxHP => maxHealth;
+
+    private void OnEnable()
+    {
+        All.Add(this);
+    }
+
+    private void OnDestroy()
+    {
+        All.Remove(this);
+    }
 
     /// <summary>
     /// Silently sets the health and max.
