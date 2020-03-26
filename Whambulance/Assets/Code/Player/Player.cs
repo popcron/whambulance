@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -84,12 +85,23 @@ public class Player : MonoBehaviour
 
     private void OnEnable()
     {
+        Health.onDied += OnDied;
         All.Add(this);
     }
 
     private void OnDisable()
     {
+        Health.onDied -= OnDied;
         All.Remove(this);
+    }
+
+    private void OnDied(Health health)
+    {
+        if (health == Health && this == Instance)
+        {
+            //the player has died, game over
+            GameManager.Lose();
+        }
     }
 
     public virtual void OnDrawGizmos()
@@ -105,6 +117,11 @@ public class Player : MonoBehaviour
 
     public virtual void Update()
     {
+        if (Health && Health.IsDead)
+        {
+            return;
+        }
+
         //send inputs to the movement thingy
         Vector2 input = MovementInput;
         Movement.Input = input;
