@@ -276,5 +276,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   team: good
-  health: 12
-  maxHealth: 12
+  health: 4
+  maxHealth: 4
