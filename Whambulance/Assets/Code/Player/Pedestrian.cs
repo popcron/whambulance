@@ -101,7 +101,7 @@ public class Pedestrian : Player
         base.Update();
 
         //check if on screen
-        if (nextScreenCheck > Time.time)
+        if (Time.time > nextScreenCheck)
         {
             nextScreenCheck = Time.time + 0.5f;
             Vector2 vp = Camera.main.WorldToViewportPoint(transform.position);
