@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Analytics;
 
 public class GameManager : MonoBehaviour
 {
@@ -90,6 +92,24 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public static float RescuingTime => Manager.rescueTime;
+    public static float DeliveryTime => Manager.deliveryTime;
+    public static float TotalTime => Manager.rescueTime + Manager.deliveryTime;
+    public static bool IsDelivering
+    {
+        get
+        {
+            if (Player.Instance)
+            {
+                return Player.Instance.CarryingObjective;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+
     /// <summary>
     /// Is the game considered to be in the play state?
     /// </summary>
@@ -119,6 +139,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private bool lost;
+
+    private float rescueTime;
+    private float deliveryTime;
 
     /// <summary>
     /// Starts the game, thats about it.
@@ -192,6 +215,8 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         Manager.won = false;
         Manager.lost = false;
+        Manager.rescueTime = 0f;
+        Manager.deliveryTime = 0f;
         Unpause();
 
         if (IsPlaying)
@@ -234,7 +259,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Makes the player win no matter what.
     /// </summary>
-    public static void Win()
+    public static void Win(string reason)
     {
         if (IsPlaying && !Manager.won)
         {
@@ -243,13 +268,19 @@ public class GameManager : MonoBehaviour
 
             Time.timeScale = 0.5f;
             onWon?.Invoke();
+
+            Analytics.CustomEvent("won", new Dictionary<string, object>
+            {
+                { "time", TotalTime },
+                { "reason", reason }
+            });
         }
     }
 
     /// <summary>
     /// Makes the player lose no matter what.
     /// </summary>
-    public static void Lose()
+    public static void Lose(string reason)
     {
         if (IsPlaying && !Manager.lost)
         {
@@ -258,6 +289,39 @@ public class GameManager : MonoBehaviour
 
             Time.timeScale = 0.5f;
             onLost?.Invoke();
+
+            Analytics.CustomEvent("lost", new Dictionary<string, object>
+            {
+                { "time", TotalTime },
+                { "reason", reason }
+            });
+        }
+    }
+
+    private void Update()
+    {
+        if (IsPlaying && !IsConcluded)
+        {
+            if (IsDelivering)
+            {
+                deliveryTime += Time.deltaTime;
+
+                //limit reached, die
+                if (deliveryTime > Settings.maxDeliveryTime)
+                {
+                    Lose("Ran out of delivery time.");
+                }
+            }
+            else
+            {
+                rescueTime += Time.deltaTime;
+
+                //limit reached, die
+                if (rescueTime > Settings.maxRescueTime)
+                {
+                    Lose("Ran out of rescue time.");
+                }
+            }
         }
     }
 }

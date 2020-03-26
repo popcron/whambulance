@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Analytics;
 
 public class Player : MonoBehaviour
 {
@@ -86,24 +87,60 @@ public class Player : MonoBehaviour
     private void OnEnable()
     {
         Health.onDied += OnDied;
+        Health.onDamaged += OnDamage;
         All.Add(this);
     }
 
     private void OnDisable()
     {
         Health.onDied -= OnDied;
+        Health.onDamaged -= OnDamage;
         All.Remove(this);
+    }
+
+    private void OnDamage(Health health, int damage)
+    {
+        if (health == Health)
+        {
+            if (this == Instance)
+            {
+                //own player was hit, report!
+            }
+        }
     }
 
     private void OnDied(Health health)
     {
         if (health == Health && this == Instance)
         {
-            //the player has died, game over
-            GameManager.Lose();
+            if (this == Instance)
+            {
+                Analytics.CustomEvent("playerDeath", new Dictionary<string, object>
+                {
+                    { "time", GameManager.TotalTime },
+                    { "isDelivering", GameManager.IsDelivering },
+                    { "cause", health.LastDamageTeam }
+                });
 
-            //destroy self
-            Destroy(gameObject);
+                //the player has died, game over
+                GameManager.Lose("Player has died.");
+
+                //destroy self
+                Destroy(gameObject);
+            }
+            else
+            {
+                if (GetType() == typeof(Pedestrian) && health.LastDamageTeam != "police")
+                {
+                    //ped died, rip
+                    Analytics.CustomEvent("pedestrianDeath", new Dictionary<string, object>
+                    {
+                        { "time", GameManager.TotalTime },
+                        { "isDelivering", GameManager.IsDelivering },
+                        { "cause", health.LastDamageTeam }
+                    });
+                }
+            }
         }
     }
 
@@ -175,6 +212,13 @@ public class Player : MonoBehaviour
             CarryingObjective.transform.localPosition = Vector3.zero;
             CarryingObjective.transform.localEulerAngles = Vector3.zero;
             onPickedUpObjective?.Invoke(this);
+
+            //so now its the delivery stage
+            Analytics.CustomEvent("delivering", new Dictionary<string, object>
+            {
+                { "playerHealth", Health.HP },
+                { "timeToRescue", GameManager.RescuingTime }
+            });
         }
     }
 
