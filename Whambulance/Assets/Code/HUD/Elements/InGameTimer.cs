@@ -61,9 +61,18 @@ public class InGameTimer : HUDElement
 
     private void CalculateTimeLeft()
     {
-        float timePassed = maxRescueTime - GameManager.RescuingTime;
-        radialDecimal = timePassed / maxRescueTime;
-        circleTimerImage.fillAmount = radialDecimal;
+        if (GameManager.IsDelivering)
+        {
+            float deliveryTimePassed = maxDeliveryTime - GameManager.DeliveryTime;
+            radialDecimal = deliveryTimePassed / maxDeliveryTime;
+            circleTimerImage.fillAmount = radialDecimal;
+        }
+        else
+        {
+            float timePassed = maxRescueTime - GameManager.RescuingTime;
+            radialDecimal = timePassed / maxRescueTime;
+            circleTimerImage.fillAmount = radialDecimal;
+        }
     }
 
     private void UpdateTimerColor()
