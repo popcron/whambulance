@@ -34,11 +34,13 @@ public class Destination : Prop
             if (IsPlayerInside(area))
             {
                 //only if player is carrying an objective
-                if (Player.Instance.CarryingObjective)
+                Objective obj = Player.Instance.CarryingObjective;
+                if (obj)
                 {
                     //drop the patient and win the game
                     Player.Instance.Drop();
                     GameManager.Win();
+                    Destroy(obj.gameObject);
                 }
             }
         }

@@ -8,10 +8,10 @@ public class GameSettings
     public TipsAsset tips;
     public string levelToLoad = "TestLevel";
     public Player playerPrefab;
-    public float maxRoadAngle = 14f;
     public float sideWalkSize = 0.5f;
     public List<Level> levels = new List<Level>();
     public List<Vehicle> vehicles = new List<Vehicle>();
+    public List<Objective> patients = new List<Objective>();
     public List<GameObject> enemyUnits = new List<GameObject>();
     public List<Pedestrian> pedestrians = new List<Pedestrian>();
     public List<AdvancementAsset> advancements = new List<AdvancementAsset>();

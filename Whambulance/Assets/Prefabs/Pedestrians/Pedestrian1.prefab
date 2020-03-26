@@ -75,6 +75,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -98,7 +99,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 8
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 271ed0d3e7ed7ea46a4c46428b0a76b5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -216,7 +217,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carriedObjectRoot: {fileID: 7351508285212589555}
+  punchRadius: 0.8
   radius: 0.15
+  health: 0
   personalBubbleRadius: 0.6
   minThinkDuration: 4
   maxThinkDuration: 6

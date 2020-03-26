@@ -5,6 +5,12 @@ public class Intersection : MonoBehaviour
 {
     public static List<Intersection> All { get; set; } = new List<Intersection>();
 
+    public float angleLeniency = 22.5f;
+    public bool blockLeft = false;
+    public bool blockRight = false;
+    public bool blockUp = false;
+    public bool blockDown = false;
+
     public Vector2[] Corners => new Vector2[] { UpLeft, UpRight, DownLeft, DownRight };
 
     /// <summary>
@@ -36,6 +42,31 @@ public class Intersection : MonoBehaviour
     private void OnDisable()
     {
         All.Remove(this);
+    }
+
+    /// <summary>
+    /// Is this direction blocked for this intersection?
+    /// </summary>
+    public bool IsDirectionBlocked(Vector2 direction)
+    {
+        if (direction == Vector2.right)
+        {
+            return blockRight;
+        }
+        else if (direction == Vector2.left)
+        {
+            return blockLeft;
+        }
+        else if (direction == Vector2.up)
+        {
+            return blockUp;
+        }
+        else if (direction == Vector2.down)
+        {
+            return blockDown;
+        }
+
+        return false;
     }
 
     private Vector2 TransformPoint(float x, float y)

@@ -42,6 +42,11 @@ public class CityBlock : Prop
 
     private void OnDrawGizmos()
     {
+        if (Application.isPlaying)
+        {
+            Bounds = GetBounds();
+        }
+
         Gizmos.color = Color.black;
         Gizmos.DrawWireCube(Bounds.center, Bounds.size);
 

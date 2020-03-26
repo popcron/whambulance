@@ -131,6 +131,7 @@ public class GameManager : MonoBehaviour
 
         IsPlaying = true;
         SpawnPlayer();
+        SpawnPatients(1);
         onStartedPlaying?.Invoke();
     }
 
@@ -144,14 +145,39 @@ public class GameManager : MonoBehaviour
         newPlayer.name = Settings.playerPrefab.name;
 
         //find a random spawnpoint, and put the player there
-        Spawnpoint[] spawnpoints = FindObjectsOfType<Spawnpoint>();
-        if (spawnpoints.Length > 0)
+        Spawnpoint randomSpawnpoint = Spawnpoint.GetRandomSpawnpoint(true);
+        if (randomSpawnpoint)
         {
-            Spawnpoint randomSpawnpoint = spawnpoints[Random.Range(0, spawnpoints.Length)];
             newPlayer.transform.position = randomSpawnpoint.transform.position;
         }
 
         return newPlayer;
+    }
+
+    /// <summary>
+    /// Spawns an objective into the currently loaded level.
+    /// </summary>
+    private static void SpawnPatients(int patientsToSpawn)
+    {
+        for (int i = 0; i < patientsToSpawn; i++)
+        {
+            Objective prefab = Settings.patients[Random.Range(0, Settings.patients.Count)];
+            Objective objective = Instantiate(prefab);
+            objective.name = prefab.name;
+
+            //find a level to parent to
+            if (Level.All.Count > 0)
+            {
+                objective.transform.SetParent(Level.All[0].transform);
+            }
+
+            //find a spawnpoint
+            Spawnpoint randomSpawnpoint = Spawnpoint.GetRandomSpawnpoint(false);
+            if (randomSpawnpoint)
+            {
+                objective.transform.position = randomSpawnpoint.transform.position;
+            }
+        }
     }
 
     /// <summary>
