@@ -1,5 +1,4 @@
-﻿using System;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +16,9 @@ public class PlayerHealthUI : HUDElement
     }
 
     [SerializeField]
+    private Vector2 offset = new Vector2(0f, 1f);
+
+    [SerializeField]
     private Image healthBar;
 
     [SerializeField]
@@ -28,7 +30,7 @@ public class PlayerHealthUI : HUDElement
     [SerializeField]
     private float damageFlashDuration = 0.4f;
 
-    private float flashTime;
+    private float damagedTime;
 
     private void OnEnable()
     {
@@ -45,22 +47,33 @@ public class PlayerHealthUI : HUDElement
         //our player took damage, flash for this much
         if (Player.Instance && health == Player.Instance.Health)
         {
-            flashTime = damageFlashDuration;
+            damagedTime = damageFlashDuration;
         }
     }
 
     private void Update()
     {
-        flashTime -= Time.deltaTime;
+        damagedTime -= Time.deltaTime;
         Player player = Player.Instance;
         if (player)
         {
+            //position onto player
+            Vector2 shake = default;
+            if (damagedTime > 0)
+            {
+                float t = damagedTime / damageFlashDuration * 0.5f;
+                shake.x = (Mathf.PerlinNoise(Time.time * 40f, 0.3f) - 0.5f) * t;
+                shake.y = (Mathf.PerlinNoise(0.6f, Time.time * 40f) - 0.5f) * t;
+            }
+
+            transform.position = player.transform.position + (Vector3)(offset + shake);
+
             //get % of hp
             float fillAmount = player.Health.HP / (float)player.Health.MaxHP;
             fillAmount = Mathf.Clamp01(fillAmount);
 
             Color color = default;
-            if (flashTime > 0)
+            if (damagedTime > 0)
             {
                 bool flash = Mathf.RoundToInt(Time.time * 20f) % 2 == 0;
                 color = flash ? Color.white : Color.black;
