@@ -32,6 +32,7 @@ public class Enemy : MonoBehaviour
 
     private bool canSee;
     private bool fired;
+    private Health health;
     private List<GameObject> objectsInRange;
     GameObject go;
 
@@ -40,11 +41,11 @@ public class Enemy : MonoBehaviour
     public GameObject projectilePrefab;
     public float moveSpeed = 1.2f;
     public LayerMask playerMask;
-    public int health;
 
     // Start is called before the first frame update
     void Start()
     {
+        health = GetComponent<Health>();
         rb = GetComponent<Rigidbody2D>();
         player = Player.Instance.transform;
 
@@ -179,7 +180,8 @@ public class Enemy : MonoBehaviour
 
     bool IsAlive()
     {
-        if (health > 0)
+        //this was health > 0
+        if (!health.IsDead)
         {
             return true;
         }
@@ -201,15 +203,18 @@ public class Enemy : MonoBehaviour
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, avoidanceRadius);
 
-        if (!IsPlayerInView())
+        if (player)
         {
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(transform.position, player.position);
-        }
-        else
-        {
-            Gizmos.color = Color.cyan;
-            Gizmos.DrawLine(transform.position, player.position);
+            if (!IsPlayerInView())
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawLine(transform.position, player.position);
+            }
+            else
+            {
+                Gizmos.color = Color.cyan;
+                Gizmos.DrawLine(transform.position, player.position);
+            }
         }
     }
 }
