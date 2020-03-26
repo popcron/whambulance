@@ -44,13 +44,17 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.layer != 10)
+        //if theres a health component, hurt it
+        Health health = other.gameObject.GetComponentInParent<Health>();
+        if (health)
         {
-            if (other.gameObject.tag == "Player")
-            {
-                other.gameObject.GetComponentInParent<Damage>().PlayerTakeDamage(projectileDamage);
-            }
-            Destroy(this.gameObject);
+            health.Damage(projectileDamage, "enemy");
+        }
+
+        int layer = LayerMask.NameToLayer("Police");
+        if (other.gameObject.layer != layer)
+        {
+            Destroy(gameObject);
         }
     }
 }

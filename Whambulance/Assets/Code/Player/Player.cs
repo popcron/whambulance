@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -26,6 +27,9 @@ public class Player : MonoBehaviour
     private float punchRadius = 0.8f;
 
     [SerializeField]
+    private int punchDamage = 1;
+
+    [SerializeField]
     private float radius = 0.3f;
 
     /// <summary>
@@ -33,7 +37,10 @@ public class Player : MonoBehaviour
     /// </summary>
     public PlayerMovement Movement { get; private set; }
 
-    public int health;
+    /// <summary>
+    /// The health component on this player.
+    /// </summary>
+    public Health Health { get; private set; }
 
     /// <summary>
     /// The direction that the player should be moving in based on inputs.
@@ -73,16 +80,31 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         Movement = GetComponent<PlayerMovement>();
+        Health = GetComponent<Health>();
     }
 
     private void OnEnable()
     {
+        Health.onDied += OnDied;
         All.Add(this);
     }
 
     private void OnDisable()
     {
+        Health.onDied -= OnDied;
         All.Remove(this);
+    }
+
+    private void OnDied(Health health)
+    {
+        if (health == Health && this == Instance)
+        {
+            //the player has died, game over
+            GameManager.Lose();
+
+            //destroy self
+            Destroy(gameObject);
+        }
     }
 
     public virtual void OnDrawGizmos()
@@ -98,6 +120,11 @@ public class Player : MonoBehaviour
 
     public virtual void Update()
     {
+        if (Health && Health.IsDead)
+        {
+            return;
+        }
+
         //send inputs to the movement thingy
         Vector2 input = MovementInput;
         Movement.Input = input;
@@ -114,9 +141,22 @@ public class Player : MonoBehaviour
 
         transform.eulerAngles = new Vector3(0f, 0f, Rotation);
 
+        //the true player!
         if (GetType() == typeof(Player))
         {
             Instance = this;
+
+#if UNITY_EDITOR
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                Health.Damage(1, "");
+            }
+
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                Health.Heal(1);
+            }
+#endif
         }
     }
 
@@ -156,12 +196,18 @@ public class Player : MonoBehaviour
     private void FindCar()
     {
         //Collects car's hit info and stores it in array
-        Collider2D[] carsHit = Physics2D.OverlapCircleAll(transform.position + transform.up, punchRadius);
-        if (carsHit.Length > 0)
+        Collider2D[] collidersHit = Physics2D.OverlapCircleAll(transform.position + transform.up, punchRadius);
+        if (collidersHit.Length > 0)
         {
-            for (int i = 0; i < carsHit.Length; i++)
+            for (int i = 0; i < collidersHit.Length; i++)
             {
-                CarHit carHit = carsHit[i].GetComponentInParent<CarHit>();
+                Health healthHit = collidersHit[i].GetComponentInParent<Health>();
+                if (healthHit)
+                {
+                    healthHit.Damage(punchDamage, "player");
+                }
+
+                CarHit carHit = collidersHit[i].GetComponentInParent<CarHit>();
                 if (carHit)
                 {
                     //Calls the hit car's launch function
