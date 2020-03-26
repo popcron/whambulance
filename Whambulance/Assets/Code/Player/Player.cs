@@ -26,6 +26,9 @@ public class Player : MonoBehaviour
     private float punchRadius = 0.8f;
 
     [SerializeField]
+    private int punchDamage = 1;
+
+    [SerializeField]
     private float radius = 0.3f;
 
     /// <summary>
@@ -156,12 +159,18 @@ public class Player : MonoBehaviour
     private void FindCar()
     {
         //Collects car's hit info and stores it in array
-        Collider2D[] carsHit = Physics2D.OverlapCircleAll(transform.position + transform.up, punchRadius);
-        if (carsHit.Length > 0)
+        Collider2D[] collidersHit = Physics2D.OverlapCircleAll(transform.position + transform.up, punchRadius);
+        if (collidersHit.Length > 0)
         {
-            for (int i = 0; i < carsHit.Length; i++)
+            for (int i = 0; i < collidersHit.Length; i++)
             {
-                CarHit carHit = carsHit[i].GetComponentInParent<CarHit>();
+                Health healthHit = collidersHit[i].GetComponentInParent<Health>();
+                if (healthHit)
+                {
+                    healthHit.Damage(punchDamage, "player");
+                }
+
+                CarHit carHit = collidersHit[i].GetComponentInParent<CarHit>();
                 if (carHit)
                 {
                     //Calls the hit car's launch function
