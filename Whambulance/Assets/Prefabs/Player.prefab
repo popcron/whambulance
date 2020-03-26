@@ -218,8 +218,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carriedObjectRoot: {fileID: 7351508285212589555}
+  punchHitEffect: {fileID: 3150045495023039728, guid: 7f30e296248587c479b0fa1a21267142,
+    type: 3}
   punchRadius: 0.8
   punchDamage: 1
+  punchStrength: 3
   radius: 0.15
 --- !u!114 &8553454928102178897
 MonoBehaviour:

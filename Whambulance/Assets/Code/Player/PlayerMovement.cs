@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float decelerationFactor = 16f;
 
+    private float stunTimer;
+
     /// <summary>
     /// The input that this player should move with.
     /// </summary>
@@ -26,6 +28,11 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     public Rigidbody2D Rigidbody { get; private set; }
 
+    public void Stun(float stunDuration)
+    {
+        stunTimer = Mathf.Max(stunTimer, stunDuration);
+    }
+
     private void Awake()
     {
         Rigidbody = GetComponent<Rigidbody2D>();
@@ -33,8 +40,18 @@ public class PlayerMovement : MonoBehaviour
         Rigidbody.freezeRotation = true;
     }
 
+    private void Update()
+    {
+        stunTimer -= Time.deltaTime;
+    }
+
     private void FixedUpdate()
     {
+        if (stunTimer > 0f)
+        {
+            return;
+        }
+
         float acceleration = IsMoving ? accelerationFactor : decelerationFactor;
         Vector2 target = Input.normalized * movementSpeed;
         Vector2 velocityChange = target - Rigidbody.velocity;

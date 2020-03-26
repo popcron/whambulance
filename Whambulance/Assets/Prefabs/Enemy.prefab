@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5021669710712465405}
   - component: {fileID: 3389232005873287768}
   - component: {fileID: 2195841352891126444}
+  - component: {fileID: 5769265716262176083}
   m_Layer: 10
   m_Name: Enemy
   m_TagString: Untagged
@@ -168,6 +169,20 @@ MonoBehaviour:
   team: police
   health: 12
   maxHealth: 12
+--- !u!114 &5769265716262176083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7758334764196151990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab9f2e21d1ca7cb488e05196eb1da42a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offenceName: Assaulting police
+  value: 8000
 --- !u!1 &8098056108337857624
 GameObject:
   m_ObjectHideFlags: 0

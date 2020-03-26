@@ -33,6 +33,7 @@ public class CarHit : MonoBehaviour
 
     public void LaunchCar()
     {
+        return;
         decelModifier = originalDecel;
         carMoveFrames = 90;
         didCollide = false;
@@ -47,7 +48,8 @@ public class CarHit : MonoBehaviour
         }
 
         //adds an increase in velocity based on the direction
-        carBody.velocity += (launchDirection * new Vector2(launchSpeed - Mathf.Abs(distanceFromCar.x), launchSpeed - Mathf.Abs(distanceFromCar.y)) / objectMass);
+        Vector2 force = launchDirection * new Vector2(launchSpeed - Mathf.Abs(distanceFromCar.x), launchSpeed - Mathf.Abs(distanceFromCar.y));
+        carBody.velocity += force;
 
         StopAllCoroutines();
         StartCoroutine(SlowDownImpact(launchDirection));

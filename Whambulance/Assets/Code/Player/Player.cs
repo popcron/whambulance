@@ -25,10 +25,16 @@ public class Player : MonoBehaviour
     private Transform carriedObjectRoot;
 
     [SerializeField]
+    private GameObject punchHitEffect;
+
+    [SerializeField]
     private float punchRadius = 0.8f;
 
     [SerializeField]
     private int punchDamage = 1;
+
+    [SerializeField]
+    private float punchStrength = 100f;
 
     [SerializeField]
     private float radius = 0.3f;
@@ -234,6 +240,12 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void CreatePunchEffect(Vector2 position)
+    {
+        GameObject instance = Instantiate(punchHitEffect, position, Quaternion.identity);
+        Destroy(instance, 0.07f);
+    }
+
     /// <summary>
     /// Finds the cars within the circle collider's range.
     /// </summary>
@@ -245,10 +257,40 @@ public class Player : MonoBehaviour
         {
             for (int i = 0; i < collidersHit.Length; i++)
             {
+                if (collidersHit[i].transform.IsChildOf(transform) || collidersHit[i].isTrigger)
+                {
+                    continue;
+                }
+
+                bool hit = false;
+
+                //damage stuff
                 Health healthHit = collidersHit[i].GetComponentInParent<Health>();
                 if (healthHit)
                 {
                     healthHit.Damage(punchDamage, "player");
+                    hit = true;
+                }
+
+                Player player = collidersHit[i].GetComponentInParent<Player>();
+                if (player)
+                {
+                    player.Movement.Stun(0.15f);
+                    hit = true;
+                }
+
+                AwardIfGotPunched punched = collidersHit[i].GetComponentInParent<AwardIfGotPunched>();
+                if (punched)
+                {
+                    punched.GotPunched();
+                }
+
+                //punch rb
+                Rigidbody2D rb = collidersHit[i].attachedRigidbody;
+                if (rb)
+                {
+                    PunchRigidbody(rb);
+                    hit = true;
                 }
 
                 CarHit carHit = collidersHit[i].GetComponentInParent<CarHit>();
@@ -256,9 +298,29 @@ public class Player : MonoBehaviour
                 {
                     //Calls the hit car's launch function
                     carHit.LaunchCar();
+                    hit = true;
+                }
+
+                if (hit)
+                {
+                    CreatePunchEffect(collidersHit[i].transform.position);
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// Sends this rigidbody flying.
+    /// </summary>
+    private void PunchRigidbody(Rigidbody2D rb)
+    {
+        //finds the direction from the center of the player versus the center of the vehicle hit
+        Vector2 launchDirection = -((Vector2)transform.position - rb.position).normalized;
+        Vector2 distanceFromCar = (Vector2)transform.position - rb.position;
+
+        //adds an increase in velocity based on the direction
+        Vector2 force = launchDirection * new Vector2(punchStrength - Mathf.Abs(distanceFromCar.x), punchStrength - Mathf.Abs(distanceFromCar.y));
+        rb.velocity += force;
     }
 
     /// <summary>
