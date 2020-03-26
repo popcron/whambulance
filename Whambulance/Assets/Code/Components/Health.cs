@@ -47,6 +47,11 @@ public class Health : MonoBehaviour
     /// </summary>
     public string Team => team;
 
+    /// <summary>
+    /// The team that last damaged this component.
+    /// </summary>
+    public string LastDamageTeam { get; private set; }
+
     private void OnEnable()
     {
         All.Add(this);
@@ -83,6 +88,7 @@ public class Health : MonoBehaviour
                     return;
                 }
 
+                LastDamageTeam = team;
                 int oldHealth = health;
                 health = Mathf.Clamp(health - amount, 0, maxHealth);
                 if (oldHealth > health)

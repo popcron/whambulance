@@ -39,7 +39,7 @@ public class Destination : Prop
                 {
                     //drop the patient and win the game
                     Player.Instance.Drop();
-                    GameManager.Win();
+                    GameManager.Win("Player has delivering the patient.");
                     Destroy(obj.gameObject);
                 }
             }
