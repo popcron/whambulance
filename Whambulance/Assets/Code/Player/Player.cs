@@ -36,7 +36,10 @@ public class Player : MonoBehaviour
     /// </summary>
     public PlayerMovement Movement { get; private set; }
 
-    public int health;
+    /// <summary>
+    /// The health component on this player.
+    /// </summary>
+    public Health Health { get; private set; }
 
     /// <summary>
     /// The direction that the player should be moving in based on inputs.
@@ -76,6 +79,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         Movement = GetComponent<PlayerMovement>();
+        Health = GetComponent<Health>();
     }
 
     private void OnEnable()
