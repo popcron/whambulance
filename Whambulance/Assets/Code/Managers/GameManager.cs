@@ -163,17 +163,17 @@ public class GameManager : MonoBehaviour
         Objective objective = Instantiate(prefab);
         objective.name = prefab.name;
 
-        //find a spawnpoint
-        Spawnpoint randomSpawnpoint = Spawnpoint.GetRandomSpawnpoint(false);
-        if (randomSpawnpoint)
-        {
-            randomSpawnpoint.transform.position = randomSpawnpoint.transform.position;
-        }
-
         //find a level to parent to
         if (Level.All.Count > 0)
         {
             objective.transform.SetParent(Level.All[0].transform);
+        }
+
+        //find a spawnpoint
+        Spawnpoint randomSpawnpoint = Spawnpoint.GetRandomSpawnpoint(false);
+        if (randomSpawnpoint)
+        {
+            objective.transform.position = randomSpawnpoint.transform.position;
         }
 
         return objective;
