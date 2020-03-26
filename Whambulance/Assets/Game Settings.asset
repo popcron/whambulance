@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settings:
     tips: {fileID: 11400000, guid: 0ec47c56688b8654099bd4f83f074651, type: 2}
-    levelToLoad: TestLevel
+    levelToLoad: Level
     playerPrefab: {fileID: 8553454928102178898, guid: df1f4e9d32dfa1f4dad2451f76dcd43c,
       type: 3}
-    maxRoadAngle: 14
     sideWalkSize: 0.5
     levels:
-    - {fileID: 3229553100082925995, guid: 6acfe3588dcc38f419ad909b32a8ff76, type: 3}
+    - {fileID: 6848700646035842915, guid: 7add3c02350822d41a1148ce4a1a9604, type: 3}
+    - {fileID: -2528275122131165190, guid: 313b3c7de429da3469c6950eaf3a4613, type: 3}
     - {fileID: -2528275122131165190, guid: 313b3c7de429da3469c6950eaf3a4613, type: 3}
     vehicles:
     - {fileID: 7860498384184217907, guid: 97fe88d470fd9394b9a3ffdd334c1b50, type: 3}
