@@ -131,7 +131,7 @@ public class GameManager : MonoBehaviour
 
         IsPlaying = true;
         SpawnPlayer();
-        SpawnPatient();
+        SpawnPatients(1);
         onStartedPlaying?.Invoke();
     }
 
@@ -157,26 +157,27 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Spawns an objective into the currently loaded level.
     /// </summary>
-    private static Objective SpawnPatient()
+    private static void SpawnPatients(int patientsToSpawn)
     {
-        Objective prefab = Settings.patients[Random.Range(0, Settings.patients.Count)];
-        Objective objective = Instantiate(prefab);
-        objective.name = prefab.name;
-
-        //find a level to parent to
-        if (Level.All.Count > 0)
+        for (int i = 0; i < patientsToSpawn; i++)
         {
-            objective.transform.SetParent(Level.All[0].transform);
-        }
+            Objective prefab = Settings.patients[Random.Range(0, Settings.patients.Count)];
+            Objective objective = Instantiate(prefab);
+            objective.name = prefab.name;
 
-        //find a spawnpoint
-        Spawnpoint randomSpawnpoint = Spawnpoint.GetRandomSpawnpoint(false);
-        if (randomSpawnpoint)
-        {
-            objective.transform.position = randomSpawnpoint.transform.position;
-        }
+            //find a level to parent to
+            if (Level.All.Count > 0)
+            {
+                objective.transform.SetParent(Level.All[0].transform);
+            }
 
-        return objective;
+            //find a spawnpoint
+            Spawnpoint randomSpawnpoint = Spawnpoint.GetRandomSpawnpoint(false);
+            if (randomSpawnpoint)
+            {
+                objective.transform.position = randomSpawnpoint.transform.position;
+            }
+        }
     }
 
     /// <summary>
