@@ -24,6 +24,8 @@ MonoBehaviour:
     - {fileID: -2528275122131165190, guid: 313b3c7de429da3469c6950eaf3a4613, type: 3}
     vehicles:
     - {fileID: 7860498384184217907, guid: 97fe88d470fd9394b9a3ffdd334c1b50, type: 3}
+    patients:
+    - {fileID: 7807551888972605824, guid: c4356376de3ee0e409e23033feebc34f, type: 3}
     enemyUnits:
     - {fileID: 7758334764196151990, guid: ce7dad18c9607b043bb64e3b605a4ee2, type: 3}
     pedestrians:
