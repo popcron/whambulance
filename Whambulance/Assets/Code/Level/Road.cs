@@ -8,6 +8,11 @@ public class Road
     public Intersection start;
     public Intersection end;
 
+    private Vector2? startA;
+    private Vector2? startB;
+    private Vector2? endA;
+    private Vector2? endB;
+
     public Vector2 Start => !start ? default : start.transform.position;
     public Vector2 End => !end ? default : (Vector2)end.transform.position;
     public Vector2 Position => Vector3.Lerp(Start, End, 0.5f);
@@ -16,28 +21,33 @@ public class Road
     {
         get
         {
-            int index = -1;
-            float closestCorner = float.MaxValue;
-            Vector2 origin = End;
-            List<Line> sides = start.Sides;
-            for (int i = 0; i < sides.Count; i++)
+            if (startA == null)
             {
-                float sqrDistance = Vector2.SqrMagnitude(sides[i].Position - origin);
-                if (closestCorner > sqrDistance)
+                int index = -1;
+                float closestCorner = float.MaxValue;
+                Vector2 origin = End;
+                List<Line> sides = start.Sides;
+                for (int i = 0; i < sides.Count; i++)
                 {
-                    closestCorner = sqrDistance;
-                    index = i;
+                    float sqrDistance = Vector2.SqrMagnitude(sides[i].Position - origin);
+                    if (closestCorner > sqrDistance)
+                    {
+                        closestCorner = sqrDistance;
+                        index = i;
+                    }
+                }
+
+                if (index != -1)
+                {
+                    startA = sides[index].a;
+                }
+                else
+                {
+                    startA = Start;
                 }
             }
 
-            if (index != -1)
-            {
-                return sides[index].a;
-            }
-            else
-            {
-                return Start;
-            }
+            return startA.Value;
         }
     }
 
@@ -45,28 +55,33 @@ public class Road
     {
         get
         {
-            int index = -1;
-            float closestCorner = float.MaxValue;
-            Vector2 origin = End;
-            List<Line> sides = start.Sides;
-            for (int i = 0; i < sides.Count; i++)
+            if (startB == null)
             {
-                float sqrDistance = Vector2.SqrMagnitude(sides[i].Position - origin);
-                if (closestCorner > sqrDistance)
+                int index = -1;
+                float closestCorner = float.MaxValue;
+                Vector2 origin = End;
+                List<Line> sides = start.Sides;
+                for (int i = 0; i < sides.Count; i++)
                 {
-                    closestCorner = sqrDistance;
-                    index = i;
+                    float sqrDistance = Vector2.SqrMagnitude(sides[i].Position - origin);
+                    if (closestCorner > sqrDistance)
+                    {
+                        closestCorner = sqrDistance;
+                        index = i;
+                    }
+                }
+
+                if (index != -1)
+                {
+                    startB = sides[index].b;
+                }
+                else
+                {
+                    startB = Start;
                 }
             }
 
-            if (index != -1)
-            {
-                return sides[index].b;
-            }
-            else
-            {
-                return Start;
-            }
+            return startB.Value;
         }
     }
 
@@ -74,28 +89,33 @@ public class Road
     {
         get
         {
-            int index = -1;
-            float closestCorner = float.MaxValue;
-            Vector2 origin = Start;
-            List<Line> sides = end.Sides;
-            for (int i = 0; i < sides.Count; i++)
+            if (endA == null)
             {
-                float sqrDistance = Vector2.SqrMagnitude(sides[i].Position - origin);
-                if (closestCorner > sqrDistance)
+                int index = -1;
+                float closestCorner = float.MaxValue;
+                Vector2 origin = Start;
+                List<Line> sides = end.Sides;
+                for (int i = 0; i < sides.Count; i++)
                 {
-                    closestCorner = sqrDistance;
-                    index = i;
+                    float sqrDistance = Vector2.SqrMagnitude(sides[i].Position - origin);
+                    if (closestCorner > sqrDistance)
+                    {
+                        closestCorner = sqrDistance;
+                        index = i;
+                    }
+                }
+
+                if (index != -1)
+                {
+                    endA = sides[index].b;
+                }
+                else
+                {
+                    endA = End;
                 }
             }
 
-            if (index != -1)
-            {
-                return sides[index].b;
-            }
-            else
-            {
-                return End;
-            }
+            return endA.Value;
         }
     }
 
@@ -103,30 +123,40 @@ public class Road
     {
         get
         {
-            int index = -1;
-            float closestCorner = float.MaxValue;
-            Vector2 origin = Start;
-            List<Line> sides = end.Sides;
-            for (int i = 0; i < sides.Count; i++)
+            if (endB == null)
             {
-                float sqrDistance = Vector2.SqrMagnitude(sides[i].Position - origin);
-                if (closestCorner > sqrDistance)
+                int index = -1;
+                float closestCorner = float.MaxValue;
+                Vector2 origin = Start;
+                List<Line> sides = end.Sides;
+                for (int i = 0; i < sides.Count; i++)
                 {
-                    closestCorner = sqrDistance;
-                    index = i;
+                    float sqrDistance = Vector2.SqrMagnitude(sides[i].Position - origin);
+                    if (closestCorner > sqrDistance)
+                    {
+                        closestCorner = sqrDistance;
+                        index = i;
+                    }
+                }
+
+                if (index != -1)
+                {
+                    endB = sides[index].a;
+                }
+                else
+                {
+                    endB = End;
                 }
             }
 
-            if (index != -1)
-            {
-                return sides[index].a;
-            }
-            else
-            {
-                return End;
-            }
+            return endB.Value;
         }
     }
+
+    /// <summary>
+    /// The length of the road.
+    /// </summary>
+    public float Length => Vector2.Distance(start.transform.position, end.transform.position);
 
     /// <summary>
     /// Normalized direction of this road.

@@ -95,6 +95,26 @@ public class Level : MonoBehaviour
     }
 
     /// <summary>
+    /// Returns an intersection that has these two intersections.
+    /// </summary>
+    public Road GetRoad(Intersection a, Intersection b)
+    {
+        for (int i = 0; i < roads.Count; i++)
+        {
+            if (roads[i].start == a && roads[i].end == b)
+            {
+                return roads[i];
+            }
+            else if (roads[i].end == a && roads[i].start == b)
+            {
+                return roads[i];
+            }
+        }
+
+        return null;
+    }
+
+    /// <summary>
     /// Returns a road that has this position in it.
     /// </summary>
     public Road GetRoad(Vector2 position)
@@ -130,6 +150,33 @@ public class Level : MonoBehaviour
         }
 
         return connected;
+    }
+
+    /// <summary>
+    /// Returns a list of all intersections that are connected to this one.
+    /// </summary>
+    public List<Intersection> GetConnectedIntersections(Intersection intersection)
+    {
+        List<Intersection> adj = new List<Intersection>();
+        for (int i = 0; i < roads.Count; i++)
+        {
+            if (roads[i].end == intersection)
+            {
+                if (!adj.Contains(roads[i].start))
+                {
+                    adj.Add(roads[i].start);
+                }
+            }
+            else if (roads[i].start == intersection)
+            {
+                if (!adj.Contains(roads[i].end))
+                {
+                    adj.Add(roads[i].end);
+                }
+            }
+        }
+
+        return adj;
     }
 
     /// <summary>

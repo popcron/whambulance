@@ -38,6 +38,8 @@ public class Pedestrian : Player
     private float talkTime;
     private float nextCanTalk;
     private float avoidTime;
+    private float nextScreenCheck;
+    private bool isVisible;
 
     /// <summary>
     /// The city block that this pedestrian belongs to.
@@ -97,6 +99,20 @@ public class Pedestrian : Player
     public override void Update()
     {
         base.Update();
+
+        //check if on screen
+        if (nextScreenCheck > Time.time)
+        {
+            nextScreenCheck = Time.time + 0.5f;
+            Vector2 vp = Camera.main.WorldToScreenPoint(transform.position);
+            isVisible = vp.x > 0 && vp.y > 0 && vp.x < 1 && vp.y < 1;
+        }
+
+        if (!isVisible)
+        {
+            return;
+        }
+
         if (state != PedestrianState.Talking)
         {
             if (Time.time > nextCanTalk)

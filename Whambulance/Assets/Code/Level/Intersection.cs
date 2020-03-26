@@ -73,7 +73,32 @@ public class Intersection : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns the closest intersection to this position.
+    /// Returns an intersection that is closest to this position.
+    /// </summary>
+    public static Intersection GetClosest(Vector2 position)
+    {
+        int index = -1;
+        float closest = float.MaxValue;
+        for (int i = 0; i < All.Count; i++)
+        {
+            float sqrMagnitude = Vector2.SqrMagnitude(position - (Vector2)All[i].transform.position);
+            if (sqrMagnitude < closest)
+            {
+                closest = sqrMagnitude;
+                index = i;
+            }
+        }
+
+        if (index != -1)
+        {
+            return All[index];
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// Returns an intersection that contains this position.
     /// </summary>
     public static Intersection Get(Vector2 position)
     {

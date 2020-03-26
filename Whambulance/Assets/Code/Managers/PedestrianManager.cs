@@ -2,6 +2,8 @@
 
 public class PedestrianManager : MonoBehaviour
 {
+    private float nextUpdate;
+
     private void OnEnable()
     {
         LevelManager.onLevelLoaded += OnLevelLoaded;
@@ -20,22 +22,26 @@ public class PedestrianManager : MonoBehaviour
         SpawnAllPedestrians(level);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (Level.All.Count > 0)
+        if (nextUpdate > Time.time)
         {
-            Level level = Level.All[0];
-            if (level)
+            nextUpdate = Time.time + 0.1f;
+            if (Level.All.Count > 0)
             {
-                float maxPerBlock = GameManager.Settings.maxPedestrians / (float)level.CityBlocks.Length;
-                for (int i = 0; i < level.CityBlocks.Length; i++)
+                Level level = Level.All[0];
+                if (level)
                 {
-                    CityBlock block = level.CityBlocks[i];
-                    int count = PedestriansInCityBlock(block);
-                    if (count < maxPerBlock)
+                    float maxPerBlock = GameManager.Settings.maxPedestrians / (float)level.CityBlocks.Length;
+                    for (int i = 0; i < level.CityBlocks.Length; i++)
                     {
-                        //spawn a new one to replace it
-                        Spawn(block);
+                        CityBlock block = level.CityBlocks[i];
+                        int count = PedestriansInCityBlock(block);
+                        if (count < maxPerBlock)
+                        {
+                            //spawn a new one to replace it
+                            Spawn(block);
+                        }
                     }
                 }
             }

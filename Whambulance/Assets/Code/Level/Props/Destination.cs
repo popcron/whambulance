@@ -1,12 +1,25 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// This is the thing that is expecting an Objective to be dropped off at.
 /// </summary>
 public class Destination : Prop
 {
+    public static List<Destination> All { get; set; } = new List<Destination>();
+
     [SerializeField]
     private Vector2 area = new Vector2(2f, 2f);
+
+    private void OnEnable()
+    {
+        All.Add(this);
+    }
+
+    private void OnDisable()
+    {
+        All.Remove(this);
+    }
 
     private void OnDrawGizmos()
     {
