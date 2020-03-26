@@ -47,7 +47,7 @@ public class Projectile : MonoBehaviour
         {
             if (other.gameObject.tag == "Player")
             {
-                GetComponentInParent<Damage>().PlayerTakeDamage(projectileDamage);
+                other.gameObject.GetComponentInParent<Damage>().PlayerTakeDamage(projectileDamage);
             }
             Destroy(this.gameObject);
         }
