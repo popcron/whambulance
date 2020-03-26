@@ -121,9 +121,22 @@ public class Player : MonoBehaviour
 
         transform.eulerAngles = new Vector3(0f, 0f, Rotation);
 
+        //the true player!
         if (GetType() == typeof(Player))
         {
             Instance = this;
+
+#if UNITY_EDITOR
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                Health.Damage(1, "");
+            }
+
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                Health.Heal(1);
+            }
+#endif
         }
     }
 
