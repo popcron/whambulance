@@ -109,6 +109,19 @@ public class Enemy : MonoBehaviour
         canSee = false;
     }
 
+    /// <summary>
+    /// Returns true if this object is a player.
+    /// </summary>
+    private bool IsObjectPlayer(GameObject gameObject)
+    {
+        if (!gameObject)
+        {
+            return false;
+        }
+
+        return gameObject.GetComponentInParent<Player>() != null;
+    }
+
     bool IsPlayerInView()
     {
         if (!fired)
@@ -117,7 +130,7 @@ public class Enemy : MonoBehaviour
             for (int i = 0; i < objectsInRange.Count; i++)
             {
                 go = objectsInRange[i];
-                if (go && go.GetComponentInParent<Damage>() && go.GetComponentInParent<Player>())
+                if (IsObjectPlayer(go))
                 {
                     canSee = true;
                 }
@@ -126,7 +139,7 @@ public class Enemy : MonoBehaviour
             if (canSee)
             {
                 //figure out whether or not the objects in the radius are the player or not
-                if (go && go.GetComponentInParent<Damage>() && go.GetComponentInParent<Player>())
+                if (IsObjectPlayer(go))
                 {
                     currentState = EnemyState.SHOOTING;
                     return true;

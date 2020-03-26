@@ -50,13 +50,10 @@ public class Projectile : MonoBehaviour
             health.Damage(projectileDamage, "enemy");
         }
 
-        if (other.gameObject.layer != 10)
+        int layer = LayerMask.NameToLayer("Police");
+        if (other.gameObject.layer != layer)
         {
-            if (other.gameObject.tag == "Player")
-            {
-                other.gameObject.GetComponentInParent<Damage>().PlayerTakeDamage(projectileDamage);
-            }
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
 }
