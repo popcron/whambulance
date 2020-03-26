@@ -29,6 +29,7 @@ public class Pathfinding
         List<Intersection> path = new List<Intersection>();
         Intersection currentNode = endNode;
 
+        //soft recursion, kinda scary
         while (currentNode != startNode)
         {
             path.Add(currentNode);
