@@ -33,6 +33,8 @@ public class Player : MonoBehaviour
     /// </summary>
     public PlayerMovement Movement { get; private set; }
 
+    public int health;
+
     /// <summary>
     /// The direction that the player should be moving in based on inputs.
     /// </summary>
