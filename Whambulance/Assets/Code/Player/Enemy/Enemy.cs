@@ -120,7 +120,7 @@ public class Enemy : MonoBehaviour
             return false;
         }
 
-        return gameObject.GetComponentInParent<Player>() != null;
+        return gameObject.GetComponentInParent<Player>() == Player.Instance;
     }
 
     bool IsPlayerInView()
@@ -194,7 +194,7 @@ public class Enemy : MonoBehaviour
 
     void Kill()
     {
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
 
     //GIZMO DRAWING FOR INTERNAL TESTING

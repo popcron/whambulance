@@ -143,7 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0d08143b2e8e624a8e96775cf2626a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileSpeed: 1.5
+  projectileSpeed: 0.7
   projectileLifetime: 3
   projectileDamage: 1
   timePassed: 0
