@@ -104,7 +104,7 @@ public class Pedestrian : Player
         if (nextScreenCheck > Time.time)
         {
             nextScreenCheck = Time.time + 0.5f;
-            Vector2 vp = Camera.main.WorldToScreenPoint(transform.position);
+            Vector2 vp = Camera.main.WorldToViewportPoint(transform.position);
             isVisible = vp.x > 0 && vp.y > 0 && vp.x < 1 && vp.y < 1;
         }
 
