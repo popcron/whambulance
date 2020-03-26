@@ -24,49 +24,82 @@ public class Pathfinding
         return nodes[index];
     }
 
+    private static List<Intersection> RetracePath(Intersection startNode, Intersection endNode)
+    {
+        List<Intersection> path = new List<Intersection>();
+        Intersection currentNode = endNode;
+
+        //soft recursion, kinda scary
+        while (currentNode != startNode)
+        {
+            path.Add(currentNode);
+            currentNode = currentNode.parent;
+        }
+
+        path.Reverse();
+        return path;
+    }
+
     /// <summary>
     /// Returns a path using A*
     /// </summary>
-    public static List<Vector2> GetPath(Level level, Vector2 startPosition, Vector2 destinationPosition)
+    public static List<Vector2> GetPath(Level level, Vector2 startPosition, Vector2 tagetPosition)
     {
         Intersection start = Intersection.GetClosest(startPosition);
-        Intersection destination = Intersection.GetClosest(destinationPosition);
-        if (start == destination)
+        Intersection target = Intersection.GetClosest(tagetPosition);
+        if (start == target)
         {
-            return new List<Vector2>() { startPosition, destinationPosition };
+            return new List<Vector2>() { startPosition, tagetPosition };
         }
 
         List<Intersection> path = new List<Intersection>();
-        path.Add(start);
-        Intersection current = start;
-        while (true)
+        List<Intersection> openSet = new List<Intersection>();
+        HashSet<Intersection> closedSet = new HashSet<Intersection>();
+        openSet.Add(start);
+
+        while (openSet.Count > 0)
         {
-            //get all neighbors of current-node (nodes within transmission range)
-            List<Intersection> allNeighbors = level.GetConnectedIntersections(current);
-
-            //remove neighbors that are already added to path
-            IEnumerable<Intersection> neighbors = from neighbor in allNeighbors
-                                                  where !path.Contains(neighbor)
-                                                  select neighbor;
-
-            //stop if no neighbors or destination reached
-            if (neighbors.Count() == 0)
+            Intersection currentNode = openSet[0];
+            for (int i = 1; i < openSet.Count; i++)
             {
+                if (openSet[i].fCost < currentNode.fCost || openSet[i].fCost == currentNode.fCost && openSet[i].hCost < currentNode.hCost)
+                {
+                    currentNode = openSet[i];
+                }
+            }
+
+            openSet.Remove(currentNode);
+            closedSet.Add(currentNode);
+
+            if (currentNode == target)
+            {
+                path = RetracePath(start, target);
                 break;
             }
 
-            if (neighbors.Contains(destination))
+            foreach (Intersection neighbour in level.GetConnectedIntersections(currentNode))
             {
-                path.Add(destination);
-                break;
-            }
+                if (closedSet.Contains(neighbour))
+                {
+                    continue;
+                }
 
-            //choose next-node (the neighbor with shortest distance to destination)
-            Intersection nearestNode = GetClosest(neighbors.ToList(), current);
-            path.Add(nearestNode);
-            current = nearestNode;
+                float newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbour);
+                if (newMovementCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour))
+                {
+                    neighbour.gCost = newMovementCostToNeighbour;
+                    neighbour.hCost = GetDistance(neighbour, target);
+                    neighbour.parent = currentNode;
+
+                    if (!openSet.Contains(neighbour))
+                    {
+                        openSet.Add(neighbour);
+                    }
+                }
+            }
         }
 
+        //sanitizie it
         List<Vector2> list = new List<Vector2>();
         list.Add(startPosition);
 
@@ -84,6 +117,14 @@ public class Pathfinding
             {
                 if (Vector2.SqrMagnitude(closest - (Vector2)path[0].transform.position) > 2f * 2f)
                 {
+                    float path0Dist = Vector2.SqrMagnitude((Vector2)path[0].transform.position - tagetPosition);
+                    float path1Dist = Vector2.SqrMagnitude((Vector2)path[1].transform.position - tagetPosition);
+                    if (path1Dist > path0Dist)
+                    {
+                        //the second point is way closer to destination, so remove the first
+                        path.RemoveAt(0);
+                    }
+
                     list.Add(closest);
                 }
             }
@@ -94,7 +135,21 @@ public class Pathfinding
             list.Add(path[i].transform.position);
         }
 
-        list.Add(destinationPosition);
+        list.Add(tagetPosition);
         return list;
+    }
+
+    private static float GetDistance(Intersection nodeA, Intersection nodeB)
+    {
+        float dstX = Mathf.Abs(nodeA.transform.position.x - nodeB.transform.position.x);
+        float dstY = Mathf.Abs(nodeA.transform.position.y - nodeB.transform.position.y);
+        if (dstX > dstY)
+        {
+            return (14 * dstY) + (10 * (dstX - dstY));
+        }
+        else
+        {
+            return (14 * dstX) + (10 * (dstY - dstX));
+        }
     }
 }
