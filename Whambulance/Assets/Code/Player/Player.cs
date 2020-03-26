@@ -24,6 +24,9 @@ public class Player : MonoBehaviour
     private Transform carriedObjectRoot;
 
     [SerializeField]
+    private GameObject punchHitEffect;
+
+    [SerializeField]
     private float punchRadius = 0.8f;
 
     [SerializeField]
@@ -193,6 +196,12 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void CreatePunchEffect(Vector2 position)
+    {
+        GameObject instance = Instantiate(punchHitEffect, position, Quaternion.identity);
+        Destroy(instance, 0.07f);
+    }
+
     /// <summary>
     /// Finds the cars within the circle collider's range.
     /// </summary>
@@ -204,16 +213,26 @@ public class Player : MonoBehaviour
         {
             for (int i = 0; i < collidersHit.Length; i++)
             {
-                if (collidersHit[i].transform.IsChildOf(transform))
+                if (collidersHit[i].transform.IsChildOf(transform) || collidersHit[i].isTrigger)
                 {
                     continue;
                 }
+
+                bool hit = false;
 
                 //damage stuff
                 Health healthHit = collidersHit[i].GetComponentInParent<Health>();
                 if (healthHit)
                 {
                     healthHit.Damage(punchDamage, "player");
+                    hit = true;
+                }
+
+                Player player = collidersHit[i].GetComponentInParent<Player>();
+                if (player)
+                {
+                    player.Movement.Stun(0.15f);
+                    hit = true;
                 }
 
                 //punch rb
@@ -221,6 +240,7 @@ public class Player : MonoBehaviour
                 if (rb)
                 {
                     PunchRigidbody(rb);
+                    hit = true;
                 }
 
                 CarHit carHit = collidersHit[i].GetComponentInParent<CarHit>();
@@ -228,6 +248,12 @@ public class Player : MonoBehaviour
                 {
                     //Calls the hit car's launch function
                     carHit.LaunchCar();
+                    hit = true;
+                }
+
+                if (hit)
+                {
+                    CreatePunchEffect(collidersHit[i].transform.position);
                 }
             }
         }
