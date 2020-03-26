@@ -2,8 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public class PrefabInstance
+{
+    public static GameObject projectileInstance;
+    public static Vector3 direction;
+}
+
 public class Enemy : MonoBehaviour
 {
+
     public enum EnemyState
     {
         FOLLOWING,
@@ -121,7 +129,6 @@ public class Enemy : MonoBehaviour
                 if (go && go.GetComponentInParent<Damage>() && go.GetComponentInParent<Player>())
                 {
                     currentState = EnemyState.SHOOTING;
-                    Debug.Log("PLAYER IN SIGHT");
                     return true;
                 }
                 else
@@ -150,7 +157,8 @@ public class Enemy : MonoBehaviour
     {
         if (!fired)
         {
-            GameObject projectileInstance = Instantiate(projectilePrefab, transform.parent);
+            PrefabInstance.projectileInstance = Instantiate(projectilePrefab, transform.position + transform.forward, Quaternion.identity);
+            PrefabInstance.direction = FiringDirection();
             currentState = EnemyState.FOLLOWING;
             fired = true;
         }

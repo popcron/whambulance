@@ -20,7 +20,6 @@ public class Projectile : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         timePassed = 0;
-        direction = GetComponentInParent<Enemy>().FiringDirection();
     }
 
     // Update is called once per frame
@@ -29,20 +28,28 @@ public class Projectile : MonoBehaviour
         timePassed += Time.deltaTime;
         if (timePassed >= projectileLifetime)
         {
-            Destroy(this);
+            Destroy(this.gameObject);
         }
         else
         {
-            rb.MovePosition(transform.position + (direction * projectileSpeed) * Time.deltaTime);
+            ProjectileTravel(-PrefabInstance.direction);
         }
+    }
+
+    public void ProjectileTravel(Vector3 direction)
+    {
+        rb.MovePosition(transform.position + (direction * projectileSpeed) * Time.deltaTime);
     }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.layer != 10)
         {
-            GetComponentInParent<Damage>().PlayerTakeDamage(projectileDamage);
+            if (other.gameObject.tag == "Player")
+            {
+                GetComponentInParent<Damage>().PlayerTakeDamage(projectileDamage);
+            }
+            Destroy(this.gameObject);
         }
-        Destroy(this);
     }
 }
