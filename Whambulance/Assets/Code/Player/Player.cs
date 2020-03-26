@@ -101,6 +101,9 @@ public class Player : MonoBehaviour
         {
             //the player has died, game over
             GameManager.Lose();
+
+            //destroy self
+            Destroy(gameObject);
         }
     }
 
