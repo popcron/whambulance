@@ -17,6 +17,9 @@ public class Health : MonoBehaviour
     public static OnHealed onHealed;
 
     [SerializeField]
+    private string team = "good";
+
+    [SerializeField]
     private int health = 12;
 
     [SerializeField]
@@ -36,6 +39,11 @@ public class Health : MonoBehaviour
     /// The maximum health.
     /// </summary>
     public int MaxHP => maxHealth;
+
+    /// <summary>
+    /// The team that this health component belongs to.
+    /// </summary>
+    public string Team => team;
 
     private void OnEnable()
     {
@@ -57,12 +65,18 @@ public class Health : MonoBehaviour
     }
 
     /// <summary>
-    /// Damages this component.
+    /// Damages this component as long as the team provided isnt the same as the team on this health component.
     /// </summary>
-    public void Damage(int amount)
+    public void Damage(int amount, string team)
     {
         if (amount > 0 && !IsDead)
         {
+            //check if team is not the same
+            if (team == Team)
+            {
+                return;
+            }
+
             int oldHealth = health;
             health = Mathf.Clamp(health - amount, 0, maxHealth);
             if (oldHealth > health)
