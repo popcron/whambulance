@@ -179,7 +179,7 @@ public class Enemy : MonoBehaviour
 
     void Kill()
     {
-        Destroy(this);
+        Destroy(this.gameObject);
     }
 
     //GIZMO DRAWING FOR INTERNAL TESTING

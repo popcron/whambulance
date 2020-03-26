@@ -20,19 +20,20 @@ public class Projectile : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         timePassed = 0;
+        direction = PrefabInstance.direction;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        timePassed += Time.deltaTime;
+        timePassed += Time.fixedDeltaTime;
         if (timePassed >= projectileLifetime)
         {
             Destroy(this.gameObject);
         }
         else
         {
-            ProjectileTravel(-PrefabInstance.direction);
+            ProjectileTravel(-direction);
         }
     }
 
