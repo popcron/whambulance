@@ -25,6 +25,8 @@ public class Health : MonoBehaviour
     [SerializeField]
     private int maxHealth = 12;
 
+    private float nextAllowedDamage;
+
     /// <summary>
     /// Is this health component considered dead?
     /// </summary>
@@ -69,24 +71,29 @@ public class Health : MonoBehaviour
     /// </summary>
     public void Damage(int amount, string team)
     {
-        if (amount > 0 && !IsDead)
+        if (Time.time > nextAllowedDamage)
         {
-            //check if team is not the same
-            if (team == Team)
+            //only allow for damage to happen every 0.5 seconds
+            nextAllowedDamage = Time.time + 0.5f;
+            if (amount > 0 && !IsDead)
             {
-                return;
-            }
+                //check if team is not the same
+                if (team == Team)
+                {
+                    return;
+                }
 
-            int oldHealth = health;
-            health = Mathf.Clamp(health - amount, 0, maxHealth);
-            if (oldHealth > health)
-            {
-                onDamaged?.Invoke(this, amount);
-            }
+                int oldHealth = health;
+                health = Mathf.Clamp(health - amount, 0, maxHealth);
+                if (oldHealth > health)
+                {
+                    onDamaged?.Invoke(this, amount);
+                }
 
-            if (health == 0)
-            {
-                onDied?.Invoke(this);
+                if (health == 0)
+                {
+                    onDied?.Invoke(this);
+                }
             }
         }
     }
