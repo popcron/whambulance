@@ -34,6 +34,25 @@ public class Level : MonoBehaviour
     /// </summary>
     public CityBlock[] CityBlocks => cityBlocks;
 
+    public Bounds Bounds
+    {
+        get
+        {
+            Bounds bounds = default;
+            for (int i = 0; i < intersections.Length; i++)
+            {
+                bounds.Encapsulate(intersections[i].transform.position);
+            }
+            
+            for (int i = 0; i < cityBlocks.Length; i++)
+            {
+                bounds.Encapsulate(cityBlocks[i].GetBounds());
+            }
+
+            return bounds;
+        }
+    }
+
     private void Awake()
     {
         BuildRoadLayout();

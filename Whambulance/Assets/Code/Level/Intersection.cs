@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Intersection : MonoBehaviour
@@ -10,6 +11,18 @@ public class Intersection : MonoBehaviour
     public bool blockRight = false;
     public bool blockUp = false;
     public bool blockDown = false;
+
+    //pathfinding only thing, useless otherwise
+    [HideInInspector, NonSerialized]
+    public Intersection parent;
+
+    [HideInInspector, NonSerialized]
+    public float gCost;
+
+    [HideInInspector, NonSerialized]
+    public float hCost;
+
+    public float fCost => gCost + hCost;
 
     public Vector2[] Corners => new Vector2[] { UpLeft, UpRight, DownLeft, DownRight };
 
