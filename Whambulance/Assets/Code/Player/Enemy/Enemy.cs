@@ -7,7 +7,6 @@ public class Enemy : MonoBehaviour
     public enum EnemyState
     {
         FOLLOWING,
-        ADJUSTING,
         SHOOTING,
         DEAD
     }
@@ -19,16 +18,21 @@ public class Enemy : MonoBehaviour
     private float avoidanceRadius = 0.5f;
 
     [SerializeField]
-    private float firingRadius = 1.5f;
+    private float firingRate = 2f;
+
+    private float firingCoolDown = 0;
 
     private bool canSee;
+    private bool fired;
     private List<GameObject> objectsInRange;
     GameObject go;
 
     EnemyState currentState = EnemyState.FOLLOWING;
 
+    public GameObject projectilePrefab;
     public float moveSpeed = 1.2f;
     public LayerMask playerMask;
+    public int health;
 
     // Start is called before the first frame update
     void Start()
@@ -49,12 +53,8 @@ public class Enemy : MonoBehaviour
                 FollowPlayer();
                 break;
 
-            case EnemyState.ADJUSTING:
-                AdjustRotation();
-                break;
-
             case EnemyState.SHOOTING:
-                Firing(FiringDirection());
+                Firing();
                 break;
 
             case EnemyState.DEAD:
@@ -62,6 +62,14 @@ public class Enemy : MonoBehaviour
                 break;
         }
         IsPlayerInView();
+        if (fired)
+        {
+            firingCoolDown += Time.deltaTime;
+            if (firingCoolDown >= firingRate)
+            {
+                fired = false;
+            }
+        }
     }
 
     void FollowPlayer()
@@ -71,28 +79,15 @@ public class Enemy : MonoBehaviour
 
     void RotateTowardsTarget()
     {
-        if (currentState != EnemyState.ADJUSTING)
-        {
-            float rotationSpeed = 10f;
-            float offset = 90f;
-            Vector3 direction = player.position - transform.position;
-            direction.Normalize();
-            float angle = Mathf.Atan2(-direction.y, -direction.x) * Mathf.Rad2Deg;
-            Quaternion rotation = Quaternion.AngleAxis(angle + offset, Vector3.forward);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
-        }
+        float rotationSpeed = 10f;
+        float offset = 90f;
+        Vector3 direction = player.position - transform.position;
+        direction.Normalize();
+        float angle = Mathf.Atan2(-direction.y, -direction.x) * Mathf.Rad2Deg;
+        Quaternion rotation = Quaternion.AngleAxis(angle + offset, Vector3.forward);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
     }
 
-    void AdjustRotation()
-    {
-        //Adjusting state logic will go here
-    }
-
-    IEnumerator Rotate()
-    {
-        //jic we need a coroutine for rotating the enemy around obstacles
-        yield return new WaitForEndOfFrame();
-    }
 
     private void OnTriggerStay2D(Collider2D other)
     {
@@ -108,23 +103,31 @@ public class Enemy : MonoBehaviour
 
     bool IsPlayerInView()
     {
-        //Check all objects within the radius that the enemy can shoot
-        for (int i = 0; i < objectsInRange.Count; i++)
+        if (!fired)
         {
-            go = objectsInRange[i];
-            if (go != null)
+            //Check all objects within the radius that the enemy can shoot
+            for (int i = 0; i < objectsInRange.Count; i++)
             {
-                canSee = true;
+                go = objectsInRange[i];
+                if (go && go.GetComponentInParent<Damage>() && go.GetComponentInParent<Player>())
+                {
+                    canSee = true;
+                }
             }
-        }
 
-        if (canSee)
-        {
-            //figure out whether or not the objects in the radius are the player or not
-            if (go && Player.Instance && go.gameObject == Player.Instance.gameObject)
+            if (canSee)
             {
-                Debug.Log("PLAYER IN SIGHT");
-                return true;
+                //figure out whether or not the objects in the radius are the player or not
+                if (go && go.GetComponentInParent<Damage>() && go.GetComponentInParent<Player>())
+                {
+                    currentState = EnemyState.SHOOTING;
+                    Debug.Log("PLAYER IN SIGHT");
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             else
             {
@@ -137,20 +140,38 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    Vector3 FiringDirection()
+    public Vector3 FiringDirection()
     {
         Vector3 directionToPlayer = transform.position - player.position;
         return directionToPlayer;
     }
 
-    void Firing(Vector3 direction)
+    void Firing()
     {
+        if (!fired)
+        {
+            GameObject projectileInstance = Instantiate(projectilePrefab, transform.parent);
+            currentState = EnemyState.FOLLOWING;
+            fired = true;
+        }
+    }
 
+    bool IsAlive()
+    {
+        if (health > 0)
+        {
+            return true;
+        }
+        else
+        {
+            currentState = EnemyState.DEAD;
+            return false;
+        }
     }
 
     void Kill()
     {
-
+        Destroy(this);
     }
 
     //GIZMO DRAWING FOR INTERNAL TESTING
