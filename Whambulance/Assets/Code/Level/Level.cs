@@ -201,6 +201,11 @@ public class Level : MonoBehaviour
         {
             foreach (Vector2 roadDirection in directions)
             {
+                if (intersection.IsDirectionBlocked(roadDirection))
+                {
+                    continue;
+                }
+
                 float closestDistance = float.MaxValue;
                 int index = -1;
                 for (int i = 0; i < intersections.Length; i++)
@@ -211,9 +216,14 @@ public class Level : MonoBehaviour
                         continue;
                     }
 
+                    if (other.IsDirectionBlocked(-roadDirection))
+                    {
+                        continue;
+                    }
+
                     //is this intersection kinda close in angle?
                     Vector2 dir = intersection.transform.position - other.transform.position;
-                    if (Vector2.Angle(dir.normalized, intersection.transform.TransformDirection(roadDirection)) <= GameManager.Settings.maxRoadAngle)
+                    if (Vector2.Angle(dir.normalized, intersection.transform.TransformDirection(roadDirection)) <= intersection.angleLeniency)
                     {
                         if (closestDistance > dir.sqrMagnitude)
                         {
