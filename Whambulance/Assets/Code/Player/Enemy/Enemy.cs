@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,7 +12,6 @@ public class PrefabInstance
 
 public class Enemy : MonoBehaviour
 {
-
     public enum EnemyState
     {
         FOLLOWING,
@@ -52,6 +52,24 @@ public class Enemy : MonoBehaviour
         objectsInRange = new List<GameObject>();
     }
 
+    private void OnEnable()
+    {
+        Health.onDied += OnDied;
+    }
+
+    private void OnDisable()
+    {
+        Health.onDied -= OnDied;
+    }
+
+    private void OnDied(Health health)
+    {
+        if (health == this.health)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -70,6 +88,7 @@ public class Enemy : MonoBehaviour
                 Kill();
                 break;
         }
+
         IsPlayerInView();
         if (fired)
         {
@@ -173,12 +192,22 @@ public class Enemy : MonoBehaviour
 
     public Vector3 FiringDirection()
     {
+        if (!player)
+        {
+            return default;
+        }
+
         Vector3 directionToPlayer = transform.position - player.position;
         return directionToPlayer;
     }
 
     void Firing()
     {
+        if (!player)
+        {
+            return;
+        }
+
         if (!fired)
         {
             PrefabInstance.projectileInstance = Instantiate(projectilePrefab, transform.position + transform.forward, Quaternion.identity);

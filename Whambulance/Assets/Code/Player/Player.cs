@@ -117,7 +117,7 @@ public class Player : MonoBehaviour
 
     private void OnDied(Health health)
     {
-        if (health == Health && this == Instance)
+        if (health == Health)
         {
             if (this == Instance)
             {

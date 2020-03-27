@@ -7,7 +7,7 @@ public class CameraFollow : MonoBehaviour
     [Range(0.01f, 0.99f)]
     public float smoothing;
 
-    private void FixedUpdate()
+    private void LateUpdate()
     {
         if (Player.Instance)
         {
