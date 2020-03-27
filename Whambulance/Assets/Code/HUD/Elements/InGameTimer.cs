@@ -78,6 +78,6 @@ public class InGameTimer : HUDElement
     private void UpdateTimerColor()
     {
         Color timerColor = timerGradient.Evaluate(radialDecimal);
-        GetComponentInChildren<Image>().color = timerColor;
+        gameObject.transform.GetChild(1).GetComponentInChildren<Image>().color = timerColor;
     }
 }
