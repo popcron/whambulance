@@ -83,11 +83,21 @@ public class Enemy : MonoBehaviour
 
     void FollowPlayer()
     {
+        if (!player)
+        {
+            return;
+        }
+
         transform.position = Vector2.MoveTowards(transform.position, player.position, moveSpeed * Time.fixedDeltaTime);
     }
 
     void RotateTowardsTarget()
     {
+        if (!player)
+        {
+            return;
+        }
+
         float rotationSpeed = 10f;
         float offset = 90f;
         Vector3 direction = player.position - transform.position;
