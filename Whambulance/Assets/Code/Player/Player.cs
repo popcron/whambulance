@@ -192,7 +192,7 @@ public class Player : MonoBehaviour
             FindCar();
         }
 
-        if (SelfHeal && Health.IsFull)
+        if (SelfHeal && !Health.IsFull)
         {
             Heal();
         }
