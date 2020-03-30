@@ -140,6 +140,7 @@ public class GameManager : MonoBehaviour
 
     private float rescueTime;
     private float deliveryTime;
+    private bool shownIntroDialog;
 
     /// <summary>
     /// Starts the game, thats about it.
@@ -211,6 +212,7 @@ public class GameManager : MonoBehaviour
         Player.DestroyAll();
 
         Time.timeScale = 1f;
+        Manager.shownIntroDialog = false;
         Manager.won = false;
         Manager.lost = false;
         Manager.rescueTime = 0f;
@@ -309,6 +311,14 @@ public class GameManager : MonoBehaviour
             else
             {
                 rescueTime += Time.deltaTime;
+
+                //show call to action here after 1s
+                if (rescueTime > 1f && !shownIntroDialog)
+                {
+                    shownIntroDialog = true;
+                    string dialog = Settings.introDialogs[Random.Range(0, Settings.introDialogs.Length)];
+                    TextDialog.Show("Hospital", dialog);
+                }
 
                 //limit reached, die
                 if (rescueTime > Settings.maxRescueTime)

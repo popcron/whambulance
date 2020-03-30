@@ -151,7 +151,7 @@ public class Player : MonoBehaviour
 
     public virtual void Update()
     {
-        if (Health && Health.IsDead)
+        if (Health && Health.IsDead && !GameManager.IsPaused)
         {
             return;
         }
@@ -235,6 +235,9 @@ public class Player : MonoBehaviour
 
             //so now its the delivery stage
             Analytics.NowDelivering(this);
+
+            string dialog = GameManager.Settings.patientDialogs[Random.Range(0, GameManager.Settings.patientDialogs.Length)];
+            TextDialog.Show("Patient", dialog);
         }
     }
 

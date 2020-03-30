@@ -18,6 +18,8 @@ public class GameSettings
     public int maxVehicles = 48;
     public float vehicleLifeTime = 16f;
     public int maxPedestrians = 48;
+    public string[] introDialogs = { };
+    public string[] patientDialogs = { };
 
     [Header("Gameplay")]
     public AnimationCurve maxEnemiesOverTime = new AnimationCurve();

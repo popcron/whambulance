@@ -43,6 +43,10 @@ MonoBehaviour:
     maxVehicles: 80
     vehicleLifeTime: 18
     maxPedestrians: 100
+    introDialogs:
+    - Go get em!
+    patientDialogs:
+    - Finally, you're here!
     maxEnemiesOverTime:
       serializedVersion: 2
       m_Curve:

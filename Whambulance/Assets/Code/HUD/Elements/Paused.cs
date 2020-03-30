@@ -9,6 +9,11 @@ public class Paused : HUDElement
     {
         get
         {
+            if (TextDialog.IsShowing)
+            {
+                return false;
+            }
+
             return GameManager.IsPlaying && GameManager.IsPaused;
         }
     }
