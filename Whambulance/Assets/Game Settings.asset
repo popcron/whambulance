@@ -40,6 +40,10 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 5513e6cec357aeb459acbbfd5738d2d3, type: 2}
     - {fileID: 11400000, guid: 16cebe072f99ff4439abaf8202b3e173, type: 2}
     - {fileID: 11400000, guid: 38fa47c4c0328404c9df0a80c14d1350, type: 2}
+    - {fileID: 11400000, guid: 664f172b97d775743aa27062c6a938e2, type: 2}
+    - {fileID: 11400000, guid: a58c5fb5f4347e246ba4b3f0d5e35d9b, type: 2}
+    - {fileID: 11400000, guid: bbeea1df62f58b14b9d03db28158baa7, type: 2}
+    - {fileID: 11400000, guid: 97a73551311c7a94a92f97c3b4a49473, type: 2}
     maxVehicles: 80
     vehicleLifeTime: 18
     maxPedestrians: 100

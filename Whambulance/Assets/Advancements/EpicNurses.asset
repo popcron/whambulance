@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dd46a78e00065684f97b18bb602c7d00, type: 3}
-  m_Name: Advancement6
+  m_Name: EpicNurses
   m_EditorClassIdentifier: 
   advancement:
-    uniqueId: blender
-    displayName: Industrial Blender
-    description: To make juice.
-    icon: {fileID: 21300000, guid: dd54a88a09ed0f6409c0ae2bac56b800, type: 3}
-    cost: 32102.23
+    uniqueId: epicNurses
+    displayName: Promote all Nurses
+    description: "Promotes all nurses from normal status, to epic status boosting
+      their work ethic.\t"
+    icon: {fileID: 21300000, guid: 0b2a2cf70dd896b42bdb90b19cf99fec, type: 3}
+    cost: 2410002
