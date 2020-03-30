@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Health : MonoBehaviour
@@ -24,6 +25,9 @@ public class Health : MonoBehaviour
 
     [SerializeField]
     private int maxHealth = 12;
+
+    [SerializeField]
+    private GameObject bloodHitEffect;
 
     private float nextAllowedDamage;
 
@@ -98,6 +102,7 @@ public class Health : MonoBehaviour
                 health = Mathf.Clamp(health - amount, 0, maxHealth);
                 if (oldHealth > health)
                 {
+                    MakeHitEffect();
                     onDamaged?.Invoke(this, amount);
                 }
 
@@ -105,6 +110,18 @@ public class Health : MonoBehaviour
                 {
                     onDied?.Invoke(this);
                 }
+            }
+        }
+    }
+
+    private void MakeHitEffect()
+    {
+        if (bloodHitEffect)
+        {
+            GameObject effect = Instantiate(bloodHitEffect, transform.position, Quaternion.identity);
+            if (effect)
+            {
+                Destroy(effect, 2f);
             }
         }
     }

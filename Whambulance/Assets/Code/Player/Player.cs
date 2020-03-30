@@ -293,10 +293,10 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void CreatePunchEffect(Vector2 position)
+    private void MakePunchEffect(Vector2 position)
     {
         GameObject instance = Instantiate(punchHitEffect, position, Quaternion.identity);
-        Destroy(instance, 0.07f);
+        Destroy(instance, 2f);
     }
 
     /// <summary>
@@ -356,7 +356,7 @@ public class Player : MonoBehaviour
 
                 if (hit)
                 {
-                    CreatePunchEffect(collidersHit[i].transform.position);
+                    MakePunchEffect(collidersHit[i].transform.position);
                 }
             }
         }

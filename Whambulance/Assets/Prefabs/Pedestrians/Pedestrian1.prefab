@@ -242,9 +242,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d9bfc9340d298f43945d77e19da65bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  footstepEffect: {fileID: 2072346444390675067, guid: 431affc4185e33e4ca476c5b4f764a65,
+    type: 3}
   movementSpeed: 1
   accelerationFactor: 0.6
   decelerationFactor: 0.2
+  footstepRate: 24
 --- !u!50 &8553454928102178894
 Rigidbody2D:
   serializedVersion: 4
@@ -281,6 +284,8 @@ MonoBehaviour:
   team: good
   health: 4
   maxHealth: 4
+  bloodHitEffect: {fileID: 7249808396684109342, guid: 40f647379cd92e0458c947f9022535bc,
+    type: 3}
 --- !u!114 &5398592024384121542
 MonoBehaviour:
   m_ObjectHideFlags: 0
