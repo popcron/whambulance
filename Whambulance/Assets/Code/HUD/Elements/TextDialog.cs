@@ -7,6 +7,9 @@ public class TextDialog : HUDElement
     public static bool IsShowing => HUDManager.GetElement<TextDialog>().show;
 
     [SerializeField]
+    private TMP_Text closeHint;
+
+    [SerializeField]
     private TMP_Text titleText;
 
     [SerializeField]
@@ -22,8 +25,14 @@ public class TextDialog : HUDElement
     private string body;
     private float time;
 
+    private void Awake()
+    {
+        window.gameObject.SetActive(false);
+    }
+
     private void OnDisable()
     {
+        window.gameObject.SetActive(false);
         show = false;
     }
 
@@ -40,10 +49,19 @@ public class TextDialog : HUDElement
             bodyText.text = body.Substring(0, length);
 
             //press any key to essentially close
-            if (!string.IsNullOrEmpty(Input.inputString) && fullyShown)
+            if (Input.GetKey(KeyCode.Space) && fullyShown)
             {
                 show = false;
                 GameManager.Unpause();
+            }
+
+            //show the close hint after 3 seconds
+            float extraSeconds = 3f * showSpeed;
+            if (time > body.Length + extraSeconds)
+            {
+                Color color = closeHint.color;
+                color.a = Mathf.Lerp(color.a, 0.8f, Time.unscaledDeltaTime * 2f);
+                closeHint.color = color;
             }
         }
     }
@@ -59,5 +77,9 @@ public class TextDialog : HUDElement
         dialog.titleText.text = title;
         dialog.bodyText.text = null;
         dialog.body = body;
+
+        Color color = dialog.closeHint.color;
+        color.a = 0f;
+        dialog.closeHint.color = color;
     }
 }

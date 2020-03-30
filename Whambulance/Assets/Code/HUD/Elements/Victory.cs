@@ -30,6 +30,8 @@ public class Victory : HUDElement
 
     private void OnEnable()
     {
+        root.gameObject.SetActive(false);
+
         GameManager.onWon += OnWon;
         GameManager.onStartedPlaying += OnStartedPlaying;
         GameManager.onStoppedPlaying += OnStoppedPlaying;

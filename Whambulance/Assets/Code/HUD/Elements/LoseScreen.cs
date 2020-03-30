@@ -24,6 +24,8 @@ public class LoseScreen : HUDElement
 
     private void OnEnable()
     {
+        root.gameObject.SetActive(false);
+
         GameManager.onLost += OnLost;
         GameManager.onStartedPlaying += OnStartedPlaying;
         GameManager.onStoppedPlaying += OnStoppedPlaying;
