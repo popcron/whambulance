@@ -2,6 +2,29 @@
 
 public class EnemyManager : MonoBehaviour
 {
+    /// <summary>
+    /// The level of the enemies in a 0 to 1 range.
+    /// </summary>
+    public static float Difficulty
+    {
+        get
+        {
+            float time = GameManager.TotalTime;
+            float t = Mathf.Clamp01(time / GameManager.Settings.maxRescueTime);
+            t *= 0.5f;
+
+            //if the player has the patient, then delivery phase
+            if (Player.Instance.CarryingObjective)
+            {
+                t = Mathf.Clamp01(time / GameManager.Settings.maxDeliveryTime);
+                t *= 0.5f;
+                t += 0.5f;
+            }
+
+            return GameManager.Settings.maxEnemiesOverTime.Evaluate(t);
+        }
+    }
+
     private float nextSpawn;
     private float time;
 
@@ -53,18 +76,7 @@ public class EnemyManager : MonoBehaviour
 
             //get current amount
             int enemies = FindObjectsOfType<Enemy>().Length;
-            float t = Mathf.Clamp01(time / GameManager.Settings.maxRescueTime);
-            t *= 0.5f;
-
-            //if the player has the patient, then delivery phase
-            if (Player.Instance.CarryingObjective)
-            {
-                t = Mathf.Clamp01(time / GameManager.Settings.maxDeliveryTime);
-                t *= 0.5f;
-                t += 0.5f;
-            }
-
-            int maxEnemies = (int)(GameManager.Settings.maxEnemiesOverTime.Evaluate(t) * GameManager.Settings.maxEnemiesAlive);
+            int maxEnemies = (int)(Difficulty * GameManager.Settings.maxEnemiesAlive);
             if (enemies >= maxEnemies)
             {
                 //too many

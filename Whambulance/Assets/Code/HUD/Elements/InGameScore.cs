@@ -1,14 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using TMPro;
 using UnityEngine;
-using TMPro;
-using UnityEngine.UI;
 
 public class InGameScore : HUDElement
 {
-    public TextMeshProUGUI scoreText;
-    private bool inGame = true;
-    InGameScore inGameScore;
+    [SerializeField]
+    private TextMeshProUGUI scoreText;
 
     public override bool ShouldDisplay
     {
@@ -18,31 +14,8 @@ public class InGameScore : HUDElement
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (inGame)
-            UpdateScore();
-    }
-
-    private void OnEnable()
-    {
-        inGameScore = this;
-        GameManager.onWon += OnWon;
-    }
-
-    private void OnDisable()
-    {
-        GameManager.onWon -= OnWon;
-    }
-
-    private void OnWon()
-    {
-        inGame = false;
-    }
-
-    void UpdateScore()
-    {
-       scoreText.text = "$" + ScoreManager.Bill.TotalValue.ToString();
+        scoreText.text = ScoreManager.Bill.TotalValue.ToString("C");
     }
 }

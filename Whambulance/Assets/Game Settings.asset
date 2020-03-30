@@ -94,6 +94,6 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    maxEnemiesAlive: 60
-    maxRescueTime: 60
-    maxDeliveryTime: 60
+    maxEnemiesAlive: 30
+    maxRescueTime: 35
+    maxDeliveryTime: 35
