@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Analytics;
+﻿using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
@@ -269,12 +267,8 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0.5f;
             onWon?.Invoke();
 
-            Analytics.CustomEvent("won", new Dictionary<string, object>
-            {
-                { "time", TotalTime },
-                { "reason", reason }
-            });
-            
+            Analytics.Won(reason);
+
             //add scrore from bill to game
             Currency += ScoreManager.Bill.TotalValue;
 
@@ -294,11 +288,7 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0.5f;
             onLost?.Invoke();
 
-            Analytics.CustomEvent("lost", new Dictionary<string, object>
-            {
-                { "time", TotalTime },
-                { "reason", reason }
-            });
+            Analytics.Lost(reason);
         }
     }
 

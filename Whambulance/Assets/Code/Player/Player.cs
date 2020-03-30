@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Analytics;
 
 public class Player : MonoBehaviour
 {
@@ -121,12 +119,7 @@ public class Player : MonoBehaviour
         {
             if (this == Instance)
             {
-                Analytics.CustomEvent("playerDeath", new Dictionary<string, object>
-                {
-                    { "time", GameManager.TotalTime },
-                    { "isDelivering", GameManager.IsDelivering },
-                    { "cause", health.LastDamageTeam }
-                });
+                Analytics.PlayerDeath(health.LastDamageTeam);
 
                 //the player has died, game over
                 GameManager.Lose("Player has died.");
@@ -139,12 +132,7 @@ public class Player : MonoBehaviour
                 if (GetType() == typeof(Pedestrian) && health.LastDamageTeam != "police")
                 {
                     //ped died, rip
-                    Analytics.CustomEvent("pedestrianDeath", new Dictionary<string, object>
-                    {
-                        { "time", GameManager.TotalTime },
-                        { "isDelivering", GameManager.IsDelivering },
-                        { "cause", health.LastDamageTeam }
-                    });
+                    Analytics.PedestrianDeath(health.LastDamageTeam);
                 }
             }
         }
@@ -189,6 +177,9 @@ public class Player : MonoBehaviour
         {
             Instance = this;
 
+            //report on the kind of input used
+            ReportInputsUsed();
+
 #if UNITY_EDITOR
             if (Input.GetKeyDown(KeyCode.I))
             {
@@ -200,6 +191,29 @@ public class Player : MonoBehaviour
                 Health.Heal(1);
             }
 #endif
+        }
+    }
+
+    private void ReportInputsUsed()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Analytics.UsedControl("space");
+        }
+
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D))
+        {
+            Analytics.UsedControl("wasd");
+        }
+
+        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            Analytics.UsedControl("arrow keys");
+        }
+
+        if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
+        {
+            Analytics.UsedControl("mouse clicks");
         }
     }
 
@@ -220,11 +234,7 @@ public class Player : MonoBehaviour
             onPickedUpObjective?.Invoke(this);
 
             //so now its the delivery stage
-            Analytics.CustomEvent("delivering", new Dictionary<string, object>
-            {
-                { "playerHealth", Health.HP },
-                { "timeToRescue", GameManager.RescuingTime }
-            });
+            Analytics.NowDelivering(this);
         }
     }
 
