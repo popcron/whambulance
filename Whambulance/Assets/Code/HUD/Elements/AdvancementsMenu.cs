@@ -99,7 +99,7 @@ public class AdvancementsMenu : HUDElement
                 buyButton.onClick.AddListener(() =>
                 {
                     //this is called an anonymous method/delegate
-                    UnlockAdvancement(advancement.uniqueId);
+                    UnlockAdvancement(advancement);
                     FillInAdvancements();
                 });
             }
@@ -156,20 +156,19 @@ public class AdvancementsMenu : HUDElement
     /// <summary>
     /// Unlocks this advancement. Will also subtract currency from the player.
     /// </summary>
-    public static void UnlockAdvancement(string name)
+    public static void UnlockAdvancement(Advancement advancement)
     {
-        int cost = 20000;
-        GameManager.Currency -= cost;
+        GameManager.Currency -= advancement.cost;
 
         string data = PlayerPrefs.GetString("advancements", "");
         if (string.IsNullOrEmpty(data))
         {
-            data = name;
+            data = advancement.uniqueId;
         }
         else
         {
             List<string> unlocked = data.Split('|').ToList();
-            unlocked.Add(name);
+            unlocked.Add(advancement.uniqueId);
             data = string.Join("|", unlocked);
         }
 
