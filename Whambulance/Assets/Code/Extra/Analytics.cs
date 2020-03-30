@@ -36,11 +36,12 @@ public static class Analytics
         });
     }
 
-    public static void Healed()
+    public static void Healed(Player player)
     {
         A.CustomEvent("healed", new Dictionary<string, object>
         {
             { "time", GameManager.TotalTime },
+            { "health", player.Health.HP },
             { "score", ScoreManager.Bill.TotalValue },
         });
     }

@@ -175,7 +175,7 @@ public class Player : MonoBehaviour
             if (healingTime > 2f)
             {
                 //fully healed!
-                Analytics.Healed();
+                Analytics.Healed(this);
                 ScoreManager.Deduct("Self Healing", 100000);
                 Health.HealToMax();
                 healing = false;
