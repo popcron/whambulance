@@ -62,7 +62,13 @@ public class Victory : HUDElement
 
         //in case the bill is empty, show the no offence case
         noOffences.gameObject.SetActive(bill.TotalValue == 0);
-        string totalString = bill.TotalValue.ToString("C");
+        float totalValue = bill.TotalValue;
+        string totalString = totalValue.ToString("C");
+        if (totalValue < 0)
+        {
+            totalString = $"-{Mathf.Abs(totalValue).ToString("C")}";
+        }
+
         totalValueText.text = totalString;
 
         for (int i = 0; i < bill.entries.Count; i++)
@@ -76,6 +82,10 @@ public class Victory : HUDElement
 
             //set the strings here
             entryValue.text = entry.value.ToString("C");
+            if (entry.value < 0)
+            {
+                entryValue.text = $"-{Mathf.Abs(entry.value).ToString("C")}";
+            }
 
             if (entry.count > 1)
             {

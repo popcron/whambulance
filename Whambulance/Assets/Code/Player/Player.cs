@@ -36,6 +36,8 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private float radius = 0.3f;
+    private bool healing;
+    private float healingTime;
 
     /// <summary>
     /// The movement component attached to this player.
@@ -68,7 +70,18 @@ public class Player : MonoBehaviour
     {
         get
         {
-            return Input.GetButtonDown("Jump");
+            return Input.GetButtonDown("Punch");
+        }
+    }
+
+    /// <summary>
+    /// Should this player self heal?
+    /// </summary>
+    public virtual bool SelfHeal
+    {
+        get
+        {
+            return Input.GetButtonDown("SelfHeal");
         }
     }
 
@@ -156,12 +169,32 @@ public class Player : MonoBehaviour
             return;
         }
 
+        if (healing)
+        {
+            healingTime += Time.deltaTime;
+            if (healingTime > 2f)
+            {
+                //fully healed!
+                Analytics.Healed();
+                ScoreManager.Deduct("Self Healing", 100000);
+                Health.HealToMax();
+                healing = false;
+            }
+
+            return;
+        }
+
         //send inputs to the movement thingy
-        Vector2 input = MovementInput;
+        Vector2 input = healing ? Vector2.zero : MovementInput;
         Movement.Input = input;
-        if (Punch)
+        if (Punch && !healing)
         {
             FindCar();
+        }
+
+        if (SelfHeal && Health.IsFull)
+        {
+            Heal();
         }
 
         //rotate the root
@@ -192,6 +225,13 @@ public class Player : MonoBehaviour
             }
 #endif
         }
+    }
+
+    private void Heal()
+    {
+        healing = true;
+        healingTime = 0f;
+        Movement.Input = Vector2.zero;
     }
 
     private void ReportInputsUsed()

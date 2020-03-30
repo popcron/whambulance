@@ -36,6 +36,15 @@ public static class Analytics
         });
     }
 
+    public static void Healed()
+    {
+        A.CustomEvent("healed", new Dictionary<string, object>
+        {
+            { "time", GameManager.TotalTime },
+            { "score", ScoreManager.Bill.TotalValue },
+        });
+    }
+
     /// <summary>
     /// Reports how the player controls.
     /// </summary>

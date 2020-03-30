@@ -33,6 +33,11 @@ public class Health : MonoBehaviour
     public bool IsDead => health <= 0;
 
     /// <summary>
+    /// Is this health component fully healed?
+    /// </summary>
+    public bool IsFull => health >= maxHealth;
+
+    /// <summary>
     /// The current amount of health.
     /// </summary>
     public int HP => health;
@@ -101,6 +106,19 @@ public class Health : MonoBehaviour
                     onDied?.Invoke(this);
                 }
             }
+        }
+    }
+
+    /// <summary>
+    /// Heals this component to its max health value.
+    /// </summary>
+    public void HealToMax()
+    {
+        if (health < maxHealth)
+        {
+            int amount = maxHealth - health;
+            health = maxHealth;
+            onHealed?.Invoke(this, amount);
         }
     }
 

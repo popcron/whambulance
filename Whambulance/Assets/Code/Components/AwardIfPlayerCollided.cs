@@ -19,7 +19,7 @@ public class AwardIfPlayerCollided : Prop
         }
 
         Player player = collision.collider.GetComponentInParent<Player>();
-        if (player)
+        if (player && player.GetType() == typeof(Player))
         {
             //collided with the player, therefor, got disturbed, therefor, give points
             disturbed = true;

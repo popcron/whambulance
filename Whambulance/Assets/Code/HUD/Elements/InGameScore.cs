@@ -16,6 +16,14 @@ public class InGameScore : HUDElement
 
     private void Update()
     {
-        scoreText.text = ScoreManager.Bill.TotalValue.ToString("C");
+        float value = ScoreManager.Bill.TotalValue;
+        if (value < 0f)
+        {
+            scoreText.text = $"-{Mathf.Abs(value).ToString("C")}";
+        }
+        else
+        {
+            scoreText.text = value.ToString("C");
+        }
     }
 }

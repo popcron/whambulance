@@ -29,7 +29,7 @@ public class Projectile : MonoBehaviour
         timePassed += Time.fixedDeltaTime;
         if (timePassed >= projectileLifetime)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
         else
         {
