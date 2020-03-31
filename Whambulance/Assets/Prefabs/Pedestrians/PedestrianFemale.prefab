@@ -889,6 +889,7 @@ GameObject:
   - component: {fileID: -2489530165724335737}
   - component: {fileID: 5398592024384121542}
   - component: {fileID: 6800890903704638022}
+  - component: {fileID: -5547723901398264800}
   m_Layer: 0
   m_Name: PedestrianFemale
   m_TagString: Untagged
@@ -1029,3 +1030,39 @@ MonoBehaviour:
   idleFrames:
   - {fileID: 9026631683172299935}
   punchFrames: []
+--- !u!114 &-5547723901398264800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8553454928102178895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f44668d68f4f40a41bee86433f69300e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parts:
+  - spriteRenderer:
+    - {fileID: 8372949341143298807}
+    - {fileID: 4675618968475064828}
+    - {fileID: 1690076204184853950}
+    colors:
+    - {r: 0.4056604, g: 0.33601806, b: 0.24684052, a: 1}
+    - {r: 0.3584906, g: 0.21813814, b: 0.21813814, a: 1}
+    - {r: 0.30721915, g: 0.3030883, b: 0.46226418, a: 1}
+  - spriteRenderer:
+    - {fileID: 6638453215257166183}
+    - {fileID: 8824327672784893716}
+    - {fileID: 4303421016406049324}
+    colors:
+    - {r: 0.11320752, g: 0.09996437, b: 0.09665359, a: 1}
+    - {r: 0.1137255, g: 0.5845067, b: 0.63529414, a: 1}
+    - {r: 0.8490566, g: 0.55461895, b: 0.26032397, a: 1}
+    - {r: 0.1509434, g: 0.074233085, b: 0.071911715, a: 1}
+  - spriteRenderer:
+    - {fileID: 8351941867403370611}
+    - {fileID: 8827890517634844620}
+    colors:
+    - {r: 0.11249555, g: 0.15533894, b: 0.3018868, a: 1}
+    - {r: 0.11361065, g: 0.101726584, b: 0.16981131, a: 1}
