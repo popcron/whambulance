@@ -4,6 +4,9 @@ using UnityEngine;
 public class DamageOverTime : MonoBehaviour
 {
     [SerializeField]
+    private GameObject damageEffect;
+
+    [SerializeField]
     private float damageInterval = 1f;
 
     [SerializeField]
@@ -11,6 +14,15 @@ public class DamageOverTime : MonoBehaviour
 
     private float damageTime;
     private List<Health> healthsInside = new List<Health>();
+    
+    private void MakeDamageEffect(Vector2 position)
+    {
+        if (damageEffect)
+        {
+            GameObject instance = Instantiate(damageEffect, position, Quaternion.identity);
+            Destroy(instance, 2f);
+        }
+    }
 
     private void FixedUpdate()
     {

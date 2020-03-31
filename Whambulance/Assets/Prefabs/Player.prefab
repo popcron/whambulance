@@ -689,6 +689,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   footstepEffect: {fileID: 2072346444390675067, guid: 431affc4185e33e4ca476c5b4f764a65,
     type: 3}
+  waterSplash: {fileID: 2072346444390675067, guid: a7ffb895adf7b3846b0f0d60639a36ca,
+    type: 3}
   movementSpeed: 3
   accelerationFactor: 0.6
   decelerationFactor: 0.2

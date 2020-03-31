@@ -6,6 +6,9 @@ public class PlayerMovement : MonoBehaviour
     private GameObject footstepEffect;
 
     [SerializeField]
+    private GameObject waterSplash;
+
+    [SerializeField]
     private float movementSpeed = 3f;
 
     [SerializeField]
@@ -54,10 +57,26 @@ public class PlayerMovement : MonoBehaviour
 
     private void MakeFootstepEffect(Vector2 position)
     {
-        if (footstepEffect)
+        GameObject prefab = footstepEffect;
+
+        if (waterSplash)
         {
-            GameObject instance = Instantiate(footstepEffect, position, Quaternion.identity);
-            Destroy(instance, 2f);
+            //check if inside water
+            for (int i = 0; i < Water.All.Count; i++)
+            {
+                if (Water.All[i].Contains(position))
+                {
+                    prefab = waterSplash;
+                    break;
+                }
+            }
+        }
+
+        //spawn effect
+        if (prefab)
+        {
+            GameObject instance = Instantiate(prefab, position, Quaternion.identity);
+            Destroy(instance, 8f);
         }
     }
 
