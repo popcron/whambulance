@@ -47,8 +47,8 @@ public class Pedestrian : Player
     public CityBlock CityBlock { get; set; }
 
     public override Vector2 MovementInput => input;
-    public override bool Punch => false;
-    public override bool SelfHeal => false;
+    public override bool WantsToPunch => false;
+    public override bool WantsToHeal => false;
 
     private void Start()
     {

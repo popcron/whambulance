@@ -3,6 +3,9 @@
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
+    private GameObject footstepEffect;
+
+    [SerializeField]
     private float movementSpeed = 3f;
 
     [SerializeField]
@@ -11,7 +14,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float decelerationFactor = 16f;
 
+    [SerializeField]
+    private float footstepRate = 1f;
+
     private float stunTimer;
+    private float distanceMoved;
 
     /// <summary>
     /// The input that this player should move with.
@@ -45,6 +52,15 @@ public class PlayerMovement : MonoBehaviour
         stunTimer -= Time.deltaTime;
     }
 
+    private void MakeFootstepEffect(Vector2 position)
+    {
+        if (footstepEffect)
+        {
+            GameObject instance = Instantiate(footstepEffect, position, Quaternion.identity);
+            Destroy(instance, 2f);
+        }
+    }
+
     private void FixedUpdate()
     {
         if (stunTimer > 0f)
@@ -55,6 +71,16 @@ public class PlayerMovement : MonoBehaviour
         float acceleration = IsMoving ? accelerationFactor : decelerationFactor;
         Vector2 target = Input.normalized * movementSpeed;
         Vector2 velocityChange = target - Rigidbody.velocity;
+
+        if (IsMoving)
+        {
+            distanceMoved += Rigidbody.velocity.magnitude;
+            if (distanceMoved > footstepRate)
+            {
+                distanceMoved = 0f;
+                MakeFootstepEffect(transform.position);
+            }
+        }
 
         //apply a force that attempts to reach the target
         velocityChange.x = Mathf.Clamp(velocityChange.x, -acceleration, acceleration);

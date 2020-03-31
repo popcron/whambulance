@@ -6,8 +6,10 @@ public class Player : MonoBehaviour
     public static List<Player> All { get; set; } = new List<Player>();
 
     public delegate void OnPickedUpObjective(Player player);
+    public delegate void OnPunch(Player player);
 
     public static OnPickedUpObjective onPickedUpObjective;
+    public static OnPunch onPunch;
 
     /// <summary>
     /// The current player in existence.
@@ -24,6 +26,12 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private GameObject punchHitEffect;
+
+    [SerializeField]
+    private GameObject healChargeEffect;
+
+    [SerializeField]
+    private GameObject healedEffect;
 
     [SerializeField]
     private float punchRadius = 0.8f;
@@ -66,7 +74,7 @@ public class Player : MonoBehaviour
     /// <summary>
     /// Should this player be punching?
     /// </summary>
-    public virtual bool Punch
+    public virtual bool WantsToPunch
     {
         get
         {
@@ -77,7 +85,7 @@ public class Player : MonoBehaviour
     /// <summary>
     /// Should this player self heal?
     /// </summary>
-    public virtual bool SelfHeal
+    public virtual bool WantsToHeal
     {
         get
         {
@@ -136,9 +144,6 @@ public class Player : MonoBehaviour
 
                 //the player has died, game over
                 GameManager.Lose("Player has died.");
-
-                //destroy self
-                Destroy(gameObject);
             }
             else
             {
@@ -147,7 +152,11 @@ public class Player : MonoBehaviour
                     //ped died, rip
                     Analytics.PedestrianDeath(health.LastDamageTeam);
                 }
+
             }
+
+            //destroy self
+            Destroy(gameObject);
         }
     }
 
@@ -176,6 +185,7 @@ public class Player : MonoBehaviour
             {
                 //fully healed!
                 Analytics.Healed(this);
+                MakeEffect(healedEffect, transform.position);
                 ScoreManager.Deduct("Self Healing", 100000);
                 Health.HealToMax();
                 healing = false;
@@ -187,12 +197,12 @@ public class Player : MonoBehaviour
         //send inputs to the movement thingy
         Vector2 input = healing ? Vector2.zero : MovementInput;
         Movement.Input = input;
-        if (Punch && !healing)
+        if (WantsToPunch && !healing)
         {
-            FindCar();
+            Punch();
         }
 
-        if (SelfHeal && !Health.IsFull)
+        if (WantsToHeal && !Health.IsFull)
         {
             Heal();
         }
@@ -229,6 +239,7 @@ public class Player : MonoBehaviour
 
     private void Heal()
     {
+        MakeEffect(healChargeEffect, transform.position);
         healing = true;
         healingTime = 0f;
         Movement.Input = Vector2.zero;
@@ -293,17 +304,20 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void CreatePunchEffect(Vector2 position)
+    private GameObject MakeEffect(GameObject effect, Vector2 position)
     {
-        GameObject instance = Instantiate(punchHitEffect, position, Quaternion.identity);
-        Destroy(instance, 0.07f);
+        GameObject instance = Instantiate(effect, position, Quaternion.identity);
+        Destroy(instance, 3f);
+        return instance;
     }
 
     /// <summary>
     /// Finds the cars within the circle collider's range.
     /// </summary>
-    private void FindCar()
+    private void Punch()
     {
+        onPunch?.Invoke(this);
+
         //Collects car's hit info and stores it in array
         Collider2D[] collidersHit = Physics2D.OverlapCircleAll(transform.position + transform.up, punchRadius);
         if (collidersHit.Length > 0)
@@ -356,7 +370,7 @@ public class Player : MonoBehaviour
 
                 if (hit)
                 {
-                    CreatePunchEffect(collidersHit[i].transform.position);
+                    MakeEffect(punchHitEffect, collidersHit[i].transform.position);
                 }
             }
         }

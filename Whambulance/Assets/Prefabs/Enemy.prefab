@@ -146,6 +146,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c7bb7e05cb88f4881e4920431bb9c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shootEffect: {fileID: 3150045495023039728, guid: 1baa4708aa0cd5249aaae0a890271069,
+    type: 3}
   avoidanceRadius: 1
   firingRate: 2
   projectilePrefab: {fileID: 6602324269836694498, guid: bc1dfd4f23d6aeb48a5f3808d33cafec,
@@ -167,8 +169,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   team: police
-  health: 12
-  maxHealth: 12
+  health: 8
+  maxHealth: 8
+  bloodHitEffect: {fileID: 7249808396684109342, guid: 40f647379cd92e0458c947f9022535bc,
+    type: 3}
 --- !u!114 &5769265716262176083
 MonoBehaviour:
   m_ObjectHideFlags: 0

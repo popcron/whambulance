@@ -1,7 +1,13 @@
 fileFormatVersion: 2
-guid: dd54a88a09ed0f6409c0ae2bac56b800
+guid: bb7463a5bcf14bb478ba5114c9a3d4f4
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -5396576158882910753
+    second: spr_healing_0
+  - first:
+      213: 6752843871553456465
+    second: spr_healing_1
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -40,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -84,7 +90,49 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: spr_healing_0
+      rect:
+        serializedVersion: 2
+        x: 291
+        y: 384
+        width: 1127
+        height: 1133
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fdd217663928b15b0800000000000000
+      internalID: -5396576158882910753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spr_healing_1
+      rect:
+        serializedVersion: 2
+        x: 1443
+        y: 187
+        width: 411
+        height: 397
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1590e9b19bbe6bd50800000000000000
+      internalID: 6752843871553456465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

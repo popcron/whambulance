@@ -30,6 +30,7 @@ MonoBehaviour:
     - {fileID: 7758334764196151990, guid: ce7dad18c9607b043bb64e3b605a4ee2, type: 3}
     pedestrians:
     - {fileID: 8712031752904700130, guid: a6fd16b3df63d0a41b6737f13d07496a, type: 3}
+    - {fileID: 4178943671508494849, guid: 8b6666d782f41e14891e3804423ba5f1, type: 3}
     advancements:
     - {fileID: 11400000, guid: 4a63640866294f44a9caae8579b24946, type: 2}
     - {fileID: 11400000, guid: adbfc0908c98d3a4d8222f7a1637929a, type: 2}

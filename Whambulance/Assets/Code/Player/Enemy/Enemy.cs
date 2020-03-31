@@ -23,6 +23,9 @@ public class Enemy : MonoBehaviour
     Transform player;
 
     [SerializeField]
+    private GameObject shootEffect;
+
+    [SerializeField]
     private float avoidanceRadius = 0.5f;
 
     [SerializeField]
@@ -210,10 +213,22 @@ public class Enemy : MonoBehaviour
 
         if (!fired)
         {
-            PrefabInstance.projectileInstance = Instantiate(projectilePrefab, transform.position + transform.forward, Quaternion.identity);
+            Vector2 spawnpoint = transform.position + transform.forward;
+            PrefabInstance.projectileInstance = Instantiate(projectilePrefab, spawnpoint, Quaternion.identity);
             PrefabInstance.direction = FiringDirection();
             currentState = EnemyState.FOLLOWING;
             fired = true;
+
+            MakeShootEffect(spawnpoint);
+        }
+    }
+
+    private void MakeShootEffect(Vector2 position)
+    {
+        if (shootEffect)
+        {
+            GameObject instance = Instantiate(shootEffect, position, Quaternion.identity);
+            Destroy(instance, 2f);
         }
     }
 
