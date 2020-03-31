@@ -220,6 +220,10 @@ MonoBehaviour:
   carriedObjectRoot: {fileID: 7351508285212589555}
   punchHitEffect: {fileID: 3150045495023039728, guid: 7f30e296248587c479b0fa1a21267142,
     type: 3}
+  healChargeEffect: {fileID: 3150045495023039728, guid: af4a9c9db87389547b5d1c38c0be89c2,
+    type: 3}
+  healedEffect: {fileID: 3150045495023039728, guid: b99c28457ca885a4a931270d7a2b065a,
+    type: 3}
   punchRadius: 0.8
   punchDamage: 1
   punchStrength: 3

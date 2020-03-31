@@ -26,6 +26,12 @@ public class Player : MonoBehaviour
     private GameObject punchHitEffect;
 
     [SerializeField]
+    private GameObject healChargeEffect;
+
+    [SerializeField]
+    private GameObject healedEffect;
+
+    [SerializeField]
     private float punchRadius = 0.8f;
 
     [SerializeField]
@@ -136,9 +142,6 @@ public class Player : MonoBehaviour
 
                 //the player has died, game over
                 GameManager.Lose("Player has died.");
-
-                //destroy self
-                Destroy(gameObject);
             }
             else
             {
@@ -147,7 +150,11 @@ public class Player : MonoBehaviour
                     //ped died, rip
                     Analytics.PedestrianDeath(health.LastDamageTeam);
                 }
+
             }
+
+            //destroy self
+            Destroy(gameObject);
         }
     }
 
@@ -176,6 +183,7 @@ public class Player : MonoBehaviour
             {
                 //fully healed!
                 Analytics.Healed(this);
+                MakeEffect(healedEffect, transform.position);
                 ScoreManager.Deduct("Self Healing", 100000);
                 Health.HealToMax();
                 healing = false;
@@ -229,6 +237,7 @@ public class Player : MonoBehaviour
 
     private void Heal()
     {
+        MakeEffect(healChargeEffect, transform.position);
         healing = true;
         healingTime = 0f;
         Movement.Input = Vector2.zero;
@@ -293,10 +302,11 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void MakePunchEffect(Vector2 position)
+    private GameObject MakeEffect(GameObject effect, Vector2 position)
     {
-        GameObject instance = Instantiate(punchHitEffect, position, Quaternion.identity);
-        Destroy(instance, 2f);
+        GameObject instance = Instantiate(effect, position, Quaternion.identity);
+        Destroy(instance, 3f);
+        return instance;
     }
 
     /// <summary>
@@ -356,7 +366,7 @@ public class Player : MonoBehaviour
 
                 if (hit)
                 {
-                    MakePunchEffect(collidersHit[i].transform.position);
+                    MakeEffect(punchHitEffect, collidersHit[i].transform.position);
                 }
             }
         }

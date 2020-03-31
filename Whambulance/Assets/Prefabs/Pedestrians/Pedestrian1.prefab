@@ -282,8 +282,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   team: good
-  health: 4
-  maxHealth: 4
+  health: 3
+  maxHealth: 3
   bloodHitEffect: {fileID: 7249808396684109342, guid: 40f647379cd92e0458c947f9022535bc,
     type: 3}
 --- !u!114 &5398592024384121542
