@@ -1036,6 +1036,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   footstepEffect: {fileID: 2072346444390675067, guid: 431affc4185e33e4ca476c5b4f764a65,
     type: 3}
+  waterSplash: {fileID: 0}
   movementSpeed: 1
   accelerationFactor: 0.6
   decelerationFactor: 0.2
@@ -1109,6 +1110,7 @@ MonoBehaviour:
   - {fileID: 8422411083632232895}
   - {fileID: 9026631683172299935}
   - {fileID: 8457276838260883797}
+  - {fileID: 9026631683172299935}
   idleFrames:
   - {fileID: 9026631683172299935}
   punchFrames: []
