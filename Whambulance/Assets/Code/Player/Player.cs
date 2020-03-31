@@ -6,8 +6,10 @@ public class Player : MonoBehaviour
     public static List<Player> All { get; set; } = new List<Player>();
 
     public delegate void OnPickedUpObjective(Player player);
+    public delegate void OnPunch(Player player);
 
     public static OnPickedUpObjective onPickedUpObjective;
+    public static OnPunch onPunch;
 
     /// <summary>
     /// The current player in existence.
@@ -72,7 +74,7 @@ public class Player : MonoBehaviour
     /// <summary>
     /// Should this player be punching?
     /// </summary>
-    public virtual bool Punch
+    public virtual bool WantsToPunch
     {
         get
         {
@@ -83,7 +85,7 @@ public class Player : MonoBehaviour
     /// <summary>
     /// Should this player self heal?
     /// </summary>
-    public virtual bool SelfHeal
+    public virtual bool WantsToHeal
     {
         get
         {
@@ -195,12 +197,12 @@ public class Player : MonoBehaviour
         //send inputs to the movement thingy
         Vector2 input = healing ? Vector2.zero : MovementInput;
         Movement.Input = input;
-        if (Punch && !healing)
+        if (WantsToPunch && !healing)
         {
-            FindCar();
+            Punch();
         }
 
-        if (SelfHeal && !Health.IsFull)
+        if (WantsToHeal && !Health.IsFull)
         {
             Heal();
         }
@@ -312,8 +314,10 @@ public class Player : MonoBehaviour
     /// <summary>
     /// Finds the cars within the circle collider's range.
     /// </summary>
-    private void FindCar()
+    private void Punch()
     {
+        onPunch?.Invoke(this);
+
         //Collects car's hit info and stores it in array
         Collider2D[] collidersHit = Physics2D.OverlapCircleAll(transform.position + transform.up, punchRadius);
         if (collidersHit.Length > 0)
