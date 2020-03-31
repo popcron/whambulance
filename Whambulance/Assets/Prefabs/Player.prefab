@@ -664,6 +664,7 @@ MonoBehaviour:
   fps: 10
   walkFrames:
   - {fileID: 2383077479762434443}
+  - {fileID: 82489229263276361}
   - {fileID: 2605648189927293066}
   idleFrames:
   - {fileID: 82489229263276361}

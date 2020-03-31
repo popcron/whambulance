@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Threading.Tasks;
+using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class PlayerAnimation : MonoBehaviour
     private int punchF;
     private int walkF;
     private int idleF;
-    private bool isMoving;
+    private bool? isMoving;
 
     public Player Player { get; private set; }
 
@@ -69,11 +70,17 @@ public class PlayerAnimation : MonoBehaviour
         frame.gameObject.SetActive(true);
     }
 
-    private void PlayPunchAnimation()
+    private async void PlayPunchAnimation()
     {
         frameTime = 0f;
         SetFrame(punchFrames[punchF]);
-        SafeIncrement(ref idleF, punchFrames.Length);
+        SafeIncrement(ref punchF, punchFrames.Length);
+
+        await Task.Delay(300);
+        idleF = 0;
+        walkF = 0;
+        frameTime = 0f;
+        isMoving = null;
     }
 
     private void SafeIncrement(ref int frame, int limit)
@@ -92,7 +99,7 @@ public class PlayerAnimation : MonoBehaviour
         //moving state changed, so reset timer
         if (Player.Movement.IsMoving != isMoving)
         {
-            isMoving = !isMoving;
+            isMoving = Player.Movement.IsMoving;
             idleF = 0;
             walkF = 0;
             frameTime = interval;
@@ -104,12 +111,12 @@ public class PlayerAnimation : MonoBehaviour
             frameTime = 0f;
 
             //update frame if moving or not
-            if (isMoving)
+            if (isMoving == true)
             {
                 SetFrame(walkFrames[walkF]);
                 SafeIncrement(ref walkF, walkFrames.Length);
             }
-            else
+            else if (isMoving == false)
             {
                 SetFrame(idleFrames[idleF]);
                 SafeIncrement(ref idleF, idleFrames.Length);
