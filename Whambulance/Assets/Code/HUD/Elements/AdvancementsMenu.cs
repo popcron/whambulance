@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -52,7 +53,7 @@ public class AdvancementsMenu : HUDElement
         }
     }
 
-    private void FillInAdvancements()
+    private async void FillInAdvancements()
     {
         Clear();
 
@@ -107,6 +108,8 @@ public class AdvancementsMenu : HUDElement
             {
                 buyButton.interactable = false;
             }
+
+            await Task.Delay(32); //about 2 frame time for 60fps
         }
 
         //resize the scroll view content
