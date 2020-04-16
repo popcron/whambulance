@@ -22,8 +22,12 @@ public class Intersection : MonoBehaviour
     [HideInInspector, NonSerialized]
     public float hCost;
 
-    public float fCost => gCost + hCost;
+    private Vector2? upLeft;
+    private Vector2? upRight;
+    private Vector2? downLeft;
+    private Vector2? downRight;
 
+    public float FCost => gCost + hCost;
     public Vector2[] Corners => new Vector2[] { UpLeft, UpRight, DownLeft, DownRight };
 
     /// <summary>
@@ -42,10 +46,57 @@ public class Intersection : MonoBehaviour
         }
     }
 
-    public Vector2 UpLeft => TransformPoint(-transform.localScale.x, transform.localScale.y);
-    public Vector2 UpRight => TransformPoint(transform.localScale.x, transform.localScale.y);
-    public Vector2 DownLeft => TransformPoint(-transform.localScale.x, -transform.localScale.y);
-    public Vector2 DownRight => TransformPoint(transform.localScale.x, -transform.localScale.y);
+    public Vector2 UpLeft
+    {
+        get
+        {
+            if (upLeft == null)
+            {
+                upLeft = TransformPoint(-transform.localScale.x, transform.localScale.y);
+            }
+
+            return upLeft.Value;
+        }
+    }
+
+    public Vector2 UpRight
+    {
+        get
+        {
+            if (upRight == null)
+            {
+                upRight = TransformPoint(transform.localScale.x, transform.localScale.y);
+            }
+
+            return upRight.Value;
+        }
+    }
+
+    public Vector2 DownLeft
+    {
+        get
+        {
+            if (downLeft == null)
+            {
+                downLeft = TransformPoint(-transform.localScale.x, -transform.localScale.y);
+            }
+
+            return downLeft.Value;
+        }
+    }
+
+    public Vector2 DownRight
+    {
+        get
+        {
+            if (downRight == null)
+            {
+                downRight = TransformPoint(transform.localScale.x, -transform.localScale.y);
+            }
+
+            return downRight.Value;
+        }
+    }
 
     private void OnEnable()
     {
