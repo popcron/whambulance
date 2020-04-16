@@ -13,14 +13,23 @@ public class Projectile : MonoBehaviour
     [SerializeField]
     private float timePassed;
 
+    [SerializeField]
+    private Collider2D[] colliders = { };
+
     private Vector3 direction;
 
+    public Collider2D[] Colliders => colliders;
+
+    public void Initialize(Vector2 direction)
+    {
+        this.direction = direction;
+    }
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         timePassed = 0;
-        direction = PrefabInstance.direction;
     }
 
     // Update is called once per frame
@@ -29,7 +38,7 @@ public class Projectile : MonoBehaviour
         timePassed += Time.fixedDeltaTime;
         if (timePassed >= projectileLifetime)
         {
-            Destroy(gameObject);
+            Die();
         }
         else
         {
@@ -42,6 +51,11 @@ public class Projectile : MonoBehaviour
         rb.MovePosition(transform.position + (direction * projectileSpeed) * Time.deltaTime);
     }
 
+    private void Die()
+    {
+        Destroy(gameObject);
+    }
+
     private void OnCollisionEnter2D(Collision2D other)
     {
         //if theres a health component, hurt it
@@ -51,10 +65,10 @@ public class Projectile : MonoBehaviour
             health.Damage(projectileDamage, "enemy");
         }
 
-        int layer = LayerMask.NameToLayer("Police");
-        if (other.gameObject.layer != layer)
+        int policeLayer = LayerMask.NameToLayer("Police");
+        if (other.gameObject.layer != policeLayer && other.gameObject.layer != gameObject.layer)
         {
-            Destroy(gameObject);
+            Die();
         }
     }
 }

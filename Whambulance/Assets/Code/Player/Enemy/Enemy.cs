@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-
-public class PrefabInstance
-{
-    public static GameObject projectileInstance;
-    public static Vector3 direction;
-}
+﻿using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
@@ -20,7 +10,6 @@ public class Enemy : MonoBehaviour
     }
 
     Rigidbody2D rb;
-    Transform player;
 
     [SerializeField]
     private GameObject shootEffect;
@@ -31,28 +20,25 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float firingRate = 2f;
 
-    private float firingCoolDown = 0;
+    [SerializeField]
+    private float viewRange = 5f;
 
-    private bool canSee;
+    private float firingCoolDown = 0;
     private bool fired;
     private Health health;
-    private List<GameObject> objectsInRange;
-    GameObject go;
-
-    EnemyState currentState = EnemyState.FOLLOWING;
+    private EnemyState currentState = EnemyState.FOLLOWING;
 
     public GameObject projectilePrefab;
     public float moveSpeed = 1.2f;
     public LayerMask playerMask;
 
-    // Start is called before the first frame update
-    void Start()
+    public Collider2D[] Colliders { get; private set; }
+
+    private void Awake()
     {
+        Colliders = GetComponentsInChildren<Collider2D>();
         health = GetComponent<Health>();
         rb = GetComponent<Rigidbody2D>();
-        player = Player.Instance.transform;
-
-        objectsInRange = new List<GameObject>();
     }
 
     private void OnEnable()
@@ -98,6 +84,7 @@ public class Enemy : MonoBehaviour
             firingCoolDown += Time.deltaTime;
             if (firingCoolDown >= firingRate)
             {
+                firingCoolDown = 0f;
                 fired = false;
             }
         }
@@ -105,16 +92,18 @@ public class Enemy : MonoBehaviour
 
     void FollowPlayer()
     {
+        Player player = Player.Instance;
         if (!player)
         {
             return;
         }
 
-        transform.position = Vector2.MoveTowards(transform.position, player.position, moveSpeed * Time.fixedDeltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, moveSpeed * Time.fixedDeltaTime);
     }
 
     void RotateTowardsTarget()
     {
+        Player player = Player.Instance;
         if (!player)
         {
             return;
@@ -122,90 +111,54 @@ public class Enemy : MonoBehaviour
 
         float rotationSpeed = 10f;
         float offset = 90f;
-        Vector3 direction = player.position - transform.position;
+        Vector3 direction = player.transform.position - transform.position;
         direction.Normalize();
         float angle = Mathf.Atan2(-direction.y, -direction.x) * Mathf.Rad2Deg;
         Quaternion rotation = Quaternion.AngleAxis(angle + offset, Vector3.forward);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
     }
 
-
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        if (objectsInRange.Contains(other.gameObject)) return;
-        objectsInRange.Add(other.gameObject);
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        objectsInRange.Remove(other.gameObject);
-        canSee = false;
-    }
-
     /// <summary>
-    /// Returns true if this object is a player.
+    /// Returns true if a player is seen.
+    /// Will also change the state to shooting if visible.
     /// </summary>
-    private bool IsObjectPlayer(GameObject gameObject)
-    {
-        if (!gameObject)
-        {
-            return false;
-        }
-
-        return gameObject.GetComponentInParent<Player>() == Player.Instance;
-    }
-
-    bool IsPlayerInView()
+    private bool IsPlayerInView()
     {
         if (!fired)
         {
-            //Check all objects within the radius that the enemy can shoot
-            for (int i = 0; i < objectsInRange.Count; i++)
+            //check if any player is visible within the view range
+            for (int i = 0; i < Player.All.Count; i++)
             {
-                go = objectsInRange[i];
-                if (IsObjectPlayer(go))
+                if (!(Player.All[i] is Pedestrian))
                 {
-                    canSee = true;
+                    float sqrMagnitude = Vector2.SqrMagnitude(Player.All[i].transform.position - transform.position);
+                    if (sqrMagnitude <= viewRange * viewRange)
+                    {
+                        currentState = EnemyState.SHOOTING;
+                        return true;
+                    }
                 }
             }
+        }
 
-            if (canSee)
-            {
-                //figure out whether or not the objects in the radius are the player or not
-                if (IsObjectPlayer(go))
-                {
-                    currentState = EnemyState.SHOOTING;
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     public Vector3 FiringDirection()
     {
+        Player player = Player.Instance;
         if (!player)
         {
             return default;
         }
 
-        Vector3 directionToPlayer = transform.position - player.position;
+        Vector3 directionToPlayer = transform.position - player.transform.position;
         return directionToPlayer;
     }
 
     void Firing()
     {
+        Player player = Player.Instance;
         if (!player)
         {
             return;
@@ -214,10 +167,19 @@ public class Enemy : MonoBehaviour
         if (!fired)
         {
             Vector2 spawnpoint = transform.position + transform.forward;
-            PrefabInstance.projectileInstance = Instantiate(projectilePrefab, spawnpoint, Quaternion.identity);
-            PrefabInstance.direction = FiringDirection();
+            Projectile projectile = Instantiate(projectilePrefab, spawnpoint, Quaternion.identity).GetComponent<Projectile>();
+            projectile.Initialize(FiringDirection());
             currentState = EnemyState.FOLLOWING;
             fired = true;
+
+            //ignore this projectile
+            for (int i = 0; i < Colliders.Length; i++)
+            {
+                for (int p = 0; p < projectile.Colliders.Length; p++)
+                {
+                    Physics2D.IgnoreCollision(Colliders[i], projectile.Colliders[p], true);
+                }
+            }
 
             MakeShootEffect(spawnpoint);
         }
@@ -257,17 +219,18 @@ public class Enemy : MonoBehaviour
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, avoidanceRadius);
 
+        Player player = Player.Instance;
         if (player)
         {
             if (!IsPlayerInView())
             {
                 Gizmos.color = Color.red;
-                Gizmos.DrawLine(transform.position, player.position);
+                Gizmos.DrawLine(transform.position, player.transform.position);
             }
             else
             {
                 Gizmos.color = Color.cyan;
-                Gizmos.DrawLine(transform.position, player.position);
+                Gizmos.DrawLine(transform.position, player.transform.position);
             }
         }
     }

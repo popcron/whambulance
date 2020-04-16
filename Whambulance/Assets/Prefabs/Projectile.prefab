@@ -147,3 +147,5 @@ MonoBehaviour:
   projectileLifetime: 3
   projectileDamage: 1
   timePassed: 0
+  colliders:
+  - {fileID: 8712499809746786466}
